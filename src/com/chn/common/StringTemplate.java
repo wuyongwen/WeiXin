@@ -111,19 +111,14 @@ public class StringTemplate {
         }
         @Override
         void append(StringBuilder sb, ReplaceHolder map) {
-            Object replaceObject = map.get(key);
-            if(replaceObject == null) return;
-            if(replaceObject instanceof String) 
-                sb.append((String)replaceObject);
-            if(replaceObject instanceof StringTemplate) 
-                sb.append(((StringTemplate)replaceObject).replace(map));
-//            sb.append(replaceStr == null ? "" : replaceStr);
+            String replaceStr = map.get(key);
+            sb.append(replaceStr == null ? "" : replaceStr);
         }
     }
     
     public static interface ReplaceHolder {
         
-        public Object get(String key);
+        public String get(String key);
     }
     
 }

@@ -10,9 +10,11 @@
 package com.chn.wx.tplate;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.chn.common.StringTemplate;
+import com.chn.wx.vo.Article;
 
 /**
  * @class PassiveResp
@@ -85,6 +87,24 @@ public class PassiveResp {
             + "<ThumbMediaId><![CDATA[${ThumbMediaId}]]></ThumbMediaId>"
             + "</Music>"
             + "</xml>"
+            );
+    private static StringTemplate T_NEWS = StringTemplate.compile(
+              "<xml>"
+            + "<ToUserName><![CDATA[${ToUserName}]]></ToUserName>"
+            + "<FromUserName><![CDATA[${FromUserName}]]></FromUserName>"
+            + "<CreateTime>${CreateTime}</CreateTime>"
+            + "<MsgType><![CDATA[news]]></MsgType>"
+            + "<ArticleCount>${ArticleCount}</ArticleCount>"
+            + "<Articles>${Articles}</Articles>"
+            + "</xml>"
+            );
+    private static StringTemplate T_NEWS_Articles = StringTemplate.compile(
+              "<item>"
+            + "<Title><![CDATA[${Title}]]></Title>"
+            + "<Description><![CDATA[${Description}]]></Description>"
+            + "<PicUrl><![CDATA[${PicUrl}]]></PicUrl>"
+            + "<Url><![CDATA[${Url}]]></Url>"
+            + "</item>"
             );
     
     /**
@@ -209,5 +229,31 @@ public class PassiveResp {
         params.put("HQMusicUrl", HQMusicUrl);
         params.put("ThumbMediaId", ThumbMediaId);
         return T_MUSIC.replace(params);
+    }
+    
+    /**
+     * @param ToUserName 接收方帐号（收到的OpenID）
+     * @param FromUserName 开发者微信号
+     * @param articles 音条新闻
+    */
+    public static String wrapNews(String ToUserName, String FromUserName, List<Article> articles) {
+        
+        StringBuilder articleString = new StringBuilder();
+        Map<String, Object> params = new HashMap<>();
+        for(Article article : articles) {
+            params.put("Title", article.getTitle());
+            params.put("Description", article.getDescription());
+            params.put("PicUrl", article.getPicurl());
+            params.put("Url", article.getUrl());
+            articleString.append(T_NEWS_Articles.replace(params));
+            params.clear();
+        }
+        
+        params.put("ToUserName", ToUserName);
+        params.put("FromUserName", FromUserName);
+        params.put("CreateTime", Long.toString(System.currentTimeMillis()));
+        params.put("ArticleCount", articles.size());
+        params.put("Articles", articleString.toString());
+        return T_NEWS.replace(params);
     }
 }

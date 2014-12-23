@@ -10,9 +10,11 @@
 package com.chn.wx.tplate;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.chn.common.StringTemplate;
+import com.chn.wx.vo.Article;
 
 /**
  * @class ServiceMessage
@@ -67,6 +69,23 @@ public class ServiceMessage {
             + "      \"hqmusicurl\":\"${hqmusicurl}\","
             + "      \"thumb_media_id\":\"${thumb_media_id}\""
             + "    }"
+            + "}"
+            );
+    private static StringTemplate T_NEWS = StringTemplate.compile(
+              "{"
+            + "    \"touser\":\"${touser}\","
+            + "    \"msgtype\":\"news\","
+            + "    \"news\":{"
+            + "        \"articles\": [${articles}]"
+            + "    }"
+            + "}"
+            );
+    private static StringTemplate T_NEWS_Article = StringTemplate.compile(
+              "{"
+            + "    \"title\":\"${title}\","
+            + "    \"description\":\"${description}\","
+            + "    \"url\":\"${url}\","
+            + "    \"picurl\":\"${picurl}\""
             + "}"
             );
     
@@ -155,4 +174,28 @@ public class ServiceMessage {
         params.put("thumb_media_id", thumb_media_id);
         return T_MUSIC.replace(params);
     }
+    
+    /**
+     * @param touser 普通用户openid
+     * @param articles 
+    */
+    public static String wrapNews(String touser, List<Article> articles) {
+        
+        StringBuilder sb = new StringBuilder();
+        Map<String, Object> params = new HashMap<>();
+        for(Article article : articles) {
+            params.put("title", article.getTitle());
+            params.put("description", article.getDescription());
+            params.put("url", article.getUrl());
+            params.put("picurl", article.getPicurl());
+            sb.append(T_NEWS_Article.replace(params)).append(',');
+            params.clear();
+        }
+        if(sb.length() > 0) sb.deleteCharAt(sb.length() - 1);
+        
+        params.put("touser", touser);
+        params.put("articles", sb.toString());
+        return T_NEWS.replace(params);
+    }
+    
 }

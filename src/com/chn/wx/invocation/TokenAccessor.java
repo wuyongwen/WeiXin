@@ -19,7 +19,7 @@ import com.chn.common.Assert;
 import com.chn.common.StringTemplate;
 import com.chn.wx.dto.Context;
 import com.chn.wx.util.HttpUtils;
-import com.chn.wx.vo.AccessTokenResult;
+import com.chn.wx.vo.result.AccessTokenResult;
 
 /**
  * @class TokenAccessor

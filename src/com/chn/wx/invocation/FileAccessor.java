@@ -17,7 +17,7 @@ import com.alibaba.fastjson.JSON;
 import com.chn.common.Assert;
 import com.chn.common.StringTemplate;
 import com.chn.wx.util.HttpUtils;
-import com.chn.wx.vo.UploadFileResult;
+import com.chn.wx.vo.result.UploadFileResult;
 
 /**
  * @class FileAccessor

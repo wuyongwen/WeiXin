@@ -19,7 +19,7 @@ import com.chn.wx.vo.Article;
 /**
  * @class ServiceMessage
  * @author lzxz1234
- * @description 
+ * @description 客服消息
  * @version v1.0
  */
 public class ServiceMessage {

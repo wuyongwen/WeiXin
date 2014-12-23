@@ -7,7 +7,7 @@
  * @version V1.0
  * Copyright (c) 2014 ChineseAll.com All Right Reserved
  */
-package com.chn.wx.vo;
+package com.chn.wx.vo.message;
 
 /**
  * @class VoiceMessage

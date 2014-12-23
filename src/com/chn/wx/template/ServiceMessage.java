@@ -7,7 +7,7 @@
  * @version V1.0
  * Copyright (c) 2014 ChineseAll.com All Right Reserved
  */
-package com.chn.wx.tplate;
+package com.chn.wx.template;
 
 import java.util.HashMap;
 import java.util.List;

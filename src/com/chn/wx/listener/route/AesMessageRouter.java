@@ -19,7 +19,7 @@ import com.chn.wx.dto.Context;
 import com.chn.wx.invocation.TokenAccessor;
 import com.chn.wx.listener.Service;
 import com.chn.wx.listener.ServiceTree;
-import com.chn.wx.tplate.PassiveResp;
+import com.chn.wx.template.PassiveMessage;
 import com.qq.weixin.mp.aes.WXBizMsgCrypt;
 
 /**
@@ -57,7 +57,7 @@ public class AesMessageRouter implements Service {
             //加密并组 XML 返回
             String Encrypt = msgCrypt.encryptMsg(result, timestamp, nonce);
             //FromUserName(用户OpenID) 会在后续结点被解析并放入，不能通过 @Param 直接注入
-            return PassiveResp.wrapAES((String)context.getAttribute("FromUserName"), Encrypt);
+            return PassiveMessage.wrapAES((String)context.getAttribute("FromUserName"), Encrypt);
         } catch (Exception e) {
             throw new RuntimeException("编码/解码错误！", e);
         }

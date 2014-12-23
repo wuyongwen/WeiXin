@@ -7,7 +7,7 @@
  * @version V1.0
  * Copyright (c) 2014 ChineseAll.com All Right Reserved
  */
-package com.chn.wx.tplate;
+package com.chn.wx.template;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +22,7 @@ import com.chn.wx.vo.Article;
  * @description 被动回复
  * @version v1.0
  */
-public class PassiveResp {
+public class PassiveMessage {
 
     private static StringTemplate T_AES = StringTemplate.compile(
               "<xml>"

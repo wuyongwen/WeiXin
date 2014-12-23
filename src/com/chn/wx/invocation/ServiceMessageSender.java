@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.chn.common.StringTemplate;
-import com.chn.wx.tplate.ServiceMessage;
+import com.chn.wx.template.ServiceMessage;
 import com.chn.wx.util.HttpUtils;
 
 /**

@@ -2,7 +2,7 @@
 
 微信公众号接口。
 
-[接口文档](http://mp.weixin.qq.com/wiki/home/index.html "接口文档")
+参考：[接口文档](http://mp.weixin.qq.com/wiki/home/index.html "接口文档")
 
 ## 起步 ##
 
@@ -66,4 +66,4 @@
 
 ## 语法糖 ##
 
-`@Param` 注解，`Service` 实现类中被该注解标记的字段，会被注入成 `Context` 中对应的属性值，当然也可以直接通过 `Context` 读取。
+`Service` 实现类中被`@Param`注解标记的字段，会被注入成 `Context` 中对应的属性值，当然也可以直接通过 `Context` 读取。

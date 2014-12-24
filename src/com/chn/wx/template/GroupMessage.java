@@ -20,7 +20,7 @@ import com.chn.common.StringTemplate;
  * @description 用户管理
  * @version v1.0
  */
-public class UserMessage {
+public class GroupMessage {
 
     private static StringTemplate T_CREATE_GROUP = StringTemplate.compile(
             "{\"group\":{\"name\":\"${name}\"}}"
@@ -48,7 +48,7 @@ public class UserMessage {
     /**
      * @param openid 用户的OpenID
     */
-    public static String wrapQueryGroup(String openid) {
+    public static String wrapQueryUserGroup(String openid) {
         
         Map<String, Object> params = new HashMap<>();
         params.put("openid", openid);

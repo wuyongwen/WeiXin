@@ -9,6 +9,8 @@
  */
 package com.chn.wx.invocation;
 
+import static com.chn.common.StringTemplate.compile;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +26,7 @@ import com.chn.wx.util.HttpUtils;
  */
 public class ServiceMessageSender {
 
-    private static final StringTemplate sendServiceUrl = StringTemplate.compile(WeiXinURL.SEND_SERVICE);
+    private static final StringTemplate sendServiceUrl = compile(WeiXinURL.SEND_SERVICE);
     
     /**
      * @param touser 普通用户openid

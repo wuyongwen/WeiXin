@@ -1,6 +1,6 @@
 /**
  * WeiXin
- * @title FileAccessor.java
+ * @title FileManager.java
  * @package com.chn.wx.invocation
  * @author lzxz1234<lzxz1234@gmail.com>
  * @date 2014年12月18日-下午3:40:55
@@ -20,12 +20,12 @@ import com.chn.wx.util.HttpUtils;
 import com.chn.wx.vo.result.UploadFileResult;
 
 /**
- * @class FileAccessor
+ * @class FileManager
  * @author lzxz1234
  * @description 
  * @version v1.0
  */
-public class FileAccessor {
+public class FileManager {
 
     private static final StringTemplate postFileUrl = StringTemplate.compile(WeiXinURL.POST_FILE);
     //private static final StringTemplate getFileUrl = StringTemplate.compile(WeiXinURL.GET_FILE);

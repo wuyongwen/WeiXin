@@ -1,6 +1,6 @@
 /**
  * WeiXin
- * @title SearchGroupsResult.java
+ * @title QueryGroupsResult.java
  * @package com.chn.wx.vo.result
  * @author lzxz1234<lzxz1234@gmail.com>
  * @date 2014年12月23日-下午6:17:47
@@ -15,12 +15,12 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.chn.wx.vo.Group;
 
 /**
- * @class SearchGroupsResult
+ * @class QueryGroupsResult
  * @author lzxz1234
  * @description 
  * @version v1.0
  */
-public class SearchGroupsResult {
+public class QueryGroupsResult {
 
     @JSONField(name="errcode") private String errcode;
     @JSONField(name="errmsg") private String errmsg;

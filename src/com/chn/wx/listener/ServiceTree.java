@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.log4j.Logger;
+
 import com.chn.common.Assert;
 import com.chn.wx.annotation.Node;
 import com.chn.wx.dto.Context;
@@ -26,6 +28,7 @@ import com.chn.wx.dto.Context;
  */
 public class ServiceTree {
 
+    private static Logger log = Logger.getLogger(ServiceTree.class);
     private Map<Class<?>, Map<String, Class<? extends Service>>> map = new ConcurrentHashMap<>();
     private ServiceFactory factory = new ServiceFactory();
     
@@ -67,7 +70,14 @@ public class ServiceTree {
                     childrenNodes = new HashMap<>();
                     map.put(node.parent(), childrenNodes);
                 }
-                childrenNodes.put(node.value(), allNodes.get(node));
+                Class<? extends Service> previous = childrenNodes.put(node.value(), allNodes.get(node));
+                if(previous != null)
+                    log.info(String.format("类[%s]的后续结点[%s]从[%s]切换到[%s]", 
+                            node.parent().getName(), node.value(), previous.getName(), 
+                            allNodes.get(node).getName()));
+                else 
+                    log.info(String.format("类[%s]的后续结点[%s]为[%s]", 
+                            node.parent().getName(), node.value(), allNodes.get(node).getName()));
             }
         } while(nodeSize > (nodeSize = allNodes.size()));
     }

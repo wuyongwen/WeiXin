@@ -12,6 +12,7 @@ package com.chn.wx;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -23,6 +24,7 @@ import org.apache.commons.io.IOUtils;
 
 import com.chn.common.Assert;
 import com.chn.common.Scans;
+import com.chn.common.StringUtils;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
 import com.chn.wx.listener.ServiceTree;
@@ -51,7 +53,12 @@ public class WeiXinServlet extends HttpServlet implements Service {
         tree = new ServiceTree(new ClassProvider() {
             @Override
             public Set<Class<?>> getClasses() {
-                return Scans.getClasses(WeiXinServlet.this.getInitParameter("package"));
+                String packages = WeiXinServlet.this.getInitParameter("package");
+                Set<Class<?>> result = new HashSet<>();
+                for(String pkg : packages.split("\\|"))
+                    if(!StringUtils.isEmpty(pkg))
+                        result.addAll(Scans.getClasses(pkg));
+                return result;
             }
         });
         String appId = getInitParameter("appid");

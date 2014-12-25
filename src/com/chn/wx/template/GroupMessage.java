@@ -17,7 +17,7 @@ import com.chn.common.StringTemplate;
 /**
  * @class UserMessage
  * @author lzxz1234
- * @description 用户管理
+ * @description 组管理消息模板
  * @version v1.0
  */
 public class GroupMessage {

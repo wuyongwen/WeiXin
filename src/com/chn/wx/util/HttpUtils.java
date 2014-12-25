@@ -63,13 +63,13 @@ public class HttpUtils {
         return result;
     }
     
-    public static String get(String urlLocation) throws IOException {
+    public static String get(String urlLocation) {
         
-        URL url = new URL(urlLocation);
         
         HttpURLConnection conn = null;
         InputStream is = null;
         try {
+            URL url = new URL(urlLocation);
             conn = (HttpURLConnection)url.openConnection();
             conn.setDoInput(true);
             conn.setDoOutput(false);
@@ -80,20 +80,22 @@ public class HttpUtils {
             
             is = conn.getInputStream();
             return IOUtils.toString(is);
+        } catch (Exception e) {
+            throw new RuntimeException("请求错误！", e);
         } finally {
             conn.disconnect();
             IOUtils.closeQuietly(is);
         }
     }
     
-    public static String post(String urlLocation, String content) throws IOException {
+    public static String post(String urlLocation, String content) {
         
-        URL url = new URL(urlLocation);
         
         HttpURLConnection conn = null;
         InputStream is = null;
         OutputStream os = null;
         try {
+            URL url = new URL(urlLocation);
             conn = (HttpURLConnection)url.openConnection();
             conn.setDoInput(true);
             conn.setDoOutput(true);
@@ -108,20 +110,22 @@ public class HttpUtils {
             
             is = conn.getInputStream();
             return IOUtils.toString(is);
+        } catch (Exception e) {
+            throw new RuntimeException("请求错误！", e);
         } finally {
             IOUtils.closeQuietly(is);
             conn.disconnect();
         }
     }
 
-    public static String post(String urlLocation, byte[] fileContent) throws IOException {
+    public static String post(String urlLocation, byte[] fileContent) {
         
-        URL url = new URL(urlLocation);
         
         HttpURLConnection conn = null;
         OutputStream os = null;
         InputStream is = null;
         try {
+            URL url = new URL(urlLocation);
             conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(TIME_OUT);
             conn.setConnectTimeout(TIME_OUT);
@@ -142,6 +146,8 @@ public class HttpUtils {
             
             is = conn.getInputStream();
             return IOUtils.toString(is);
+        } catch (Exception e) {
+            throw new RuntimeException("请求错误！", e);
         } finally {
             IOUtils.closeQuietly(is);
             conn.disconnect();

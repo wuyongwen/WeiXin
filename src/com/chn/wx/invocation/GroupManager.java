@@ -48,12 +48,8 @@ public class GroupManager {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("accessToken", TokenAccessor.getAccessToken());
         String urlLocation = createGroupUrl.replace(params);
-        try {
-            String respString = HttpUtils.post(urlLocation, GroupMessage.wrapCreateGroup(groupName));
-            return JSON.parseObject(respString, CreateGroupResult.class);
-        } catch (Exception e) {
-            throw new RuntimeException("请求错误！", e);
-        }
+        String postString = GroupMessage.wrapCreateGroup(groupName);
+        return postAndDecode(urlLocation, postString, CreateGroupResult.class);
     }
     
     /**
@@ -65,12 +61,8 @@ public class GroupManager {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("accessToken", TokenAccessor.getAccessToken());
         String urlLocation = queryGroupsUrl.replace(params);
-        try {
-            String respString = HttpUtils.get(urlLocation);
-            return JSON.parseObject(respString, QueryGroupsResult.class);
-        } catch (Exception e) {
-            throw new RuntimeException("请求错误！", e);
-        }
+        String respString = HttpUtils.get(urlLocation);
+        return JSON.parseObject(respString, QueryGroupsResult.class);
     }
     
     /**
@@ -83,12 +75,8 @@ public class GroupManager {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("accessToken", TokenAccessor.getAccessToken());
         String urlLocation = queryUserGroupUrl.replace(params);
-        try {
-            String respString = HttpUtils.post(urlLocation, GroupMessage.wrapQueryUserGroup(userId));
-            return JSON.parseObject(respString, QueryUserGroupResult.class);
-        } catch (Exception e) {
-            throw new RuntimeException("请求错误！", e);
-        }
+        String postString = GroupMessage.wrapQueryUserGroup(userId);
+        return postAndDecode(urlLocation, postString, QueryUserGroupResult.class);
     }
     
     /**
@@ -102,12 +90,8 @@ public class GroupManager {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("accessToken", TokenAccessor.getAccessToken());
         String urlLocation = modifyGroupUrl.replace(params);
-        try {
-            String respString = HttpUtils.post(urlLocation, GroupMessage.wrapModifyGroup(groupId, groupName));
-            return JSON.parseObject(respString, BasicResult.class);
-        } catch (Exception e) {
-            throw new RuntimeException("请求错误！", e);
-        }
+        String postString = GroupMessage.wrapModifyGroup(groupId, groupName);
+        return postAndDecode(urlLocation, postString, BasicResult.class);
     }
     
     /**
@@ -121,12 +105,14 @@ public class GroupManager {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("accessToken", TokenAccessor.getAccessToken());
         String urlLocation = modifyUserGroupUrl.replace(params);
-        try {
-            String respString = HttpUtils.post(urlLocation, GroupMessage.wrapModifyUserGroup(userId, toGroupId));
-            return JSON.parseObject(respString, BasicResult.class);
-        } catch (Exception e) {
-            throw new RuntimeException("请求错误！", e);
-        }
+        String postString = GroupMessage.wrapModifyUserGroup(userId, toGroupId);
+        return postAndDecode(urlLocation, postString, BasicResult.class);
+    }
+    
+    private static <T> T postAndDecode(String urlLocation, String postString, Class<T> target) {
+        
+        String respString = HttpUtils.post(urlLocation, postString);
+        return JSON.parseObject(respString, target);
     }
     
 }

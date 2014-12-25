@@ -100,11 +100,7 @@ public class ServiceMessageSender {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("accessToken", TokenAccessor.getAccessToken());
         String urlLocation = sendServiceUrl.replace(params);
-        try {
-            HttpUtils.post(urlLocation, xml);
-        } catch (Exception e) {
-            throw new RuntimeException("请求错误！", e);
-        }
+        HttpUtils.post(urlLocation, xml);
     }
     
 }

@@ -9,7 +9,6 @@
  */
 package com.chn.wx.invocation;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,17 +42,13 @@ public class FileManager {
     public static String postFile(Type type, byte[] fileContent) {
         
         UploadFileResult result = null;
-        try {
-            Map<String, Object> params = new HashMap<>();
-            params.put("accessToken", TokenAccessor.getAccessToken());
-            params.put("type", type.toString());
-            String urlLocation = postFileUrl.replace(params);
-            
-            String respJson = HttpUtils.post(urlLocation, fileContent);
-            result = JSON.parseObject(respJson, UploadFileResult.class);
-        } catch (IOException e) {
-            throw new RuntimeException("未知错误！", e);
-        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("accessToken", TokenAccessor.getAccessToken());
+        params.put("type", type.toString());
+        String urlLocation = postFileUrl.replace(params);
+        
+        String respJson = HttpUtils.post(urlLocation, fileContent);
+        result = JSON.parseObject(respJson, UploadFileResult.class);
         Assert.notNull(result.getMediaId(), "文件上传失败[%s][%s]", result.getErrcode(), result.getErrmsg());
         return result.getMediaId();
     }

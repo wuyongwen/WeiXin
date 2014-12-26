@@ -19,6 +19,7 @@ import com.chn.common.StringTemplate;
 import com.chn.wx.template.UserMessage;
 import com.chn.wx.util.HttpUtils;
 import com.chn.wx.vo.result.BasicResult;
+import com.chn.wx.vo.result.QueryUserInfoResult;
 
 /**
  * @class UserManager
@@ -29,14 +30,36 @@ import com.chn.wx.vo.result.BasicResult;
 public class UserManager {
 
     private static StringTemplate remarkUserUrl = compile(WeiXinURL.REMARK_USER);
+    private static StringTemplate queryUserInfoUrl = compile(WeiXinURL.QUERY_USER_INFO);
     
+    /**
+     * @description 修改用户备注名
+     * @param userId
+     * @param remark
+     * @return 
+    */
     public static BasicResult remarkUser(String userId, String remark) {
         
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put("accessToken", TokenAccessor.getAccessToken());
         String urlLocation = remarkUserUrl.replace(params);
         String respString = HttpUtils.post(urlLocation, UserMessage.wrapRemarkUser(userId, remark));
         return JSON.parseObject(respString, BasicResult.class);
+    }
+    
+    /**
+     * @description 获取用户基本信息（包括UnionID机制）
+     * @param userId
+     * @return 
+    */
+    public static QueryUserInfoResult queryUserInfo(String userId) {
+        
+        Map<String, Object> params = new HashMap<>();
+        params.put("accessToken", TokenAccessor.getAccessToken());
+        params.put("openid", userId);
+        String urlLocation = queryUserInfoUrl.replace(params);
+        String respString = HttpUtils.get(urlLocation);
+        return JSON.parseObject(respString, QueryUserInfoResult.class);
     }
     
 }

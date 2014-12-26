@@ -24,5 +24,6 @@ interface WeiXinURL {
     String MODIFY_USER_GROUP = "https://api.weixin.qq.com/cgi-bin/groups/members/update?access_token=${accessToken}";
     
     String REMARK_USER = "https://api.weixin.qq.com/cgi-bin/user/info/updateremark?access_token=${accessToken}";
-    
+    String QUERY_USER_INFO = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=${accessToken}&openid=${openid}&lang=zh_CN";
+
 }

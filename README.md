@@ -2,7 +2,7 @@
 
 微信公众号接口。
 
-参考：[接口文档](http://mp.weixin.qq.com/wiki/home/index.html "接口文档")
+参考：[[接口文档]](http://mp.weixin.qq.com/wiki/home/index.html "接口文档") [[测试地址]](http://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login "测试地址") [[本机公网发布]](https://ngrok.com "ngrok")
 
 ## 起步 ##
 

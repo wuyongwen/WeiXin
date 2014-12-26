@@ -17,6 +17,10 @@
         <param-name>secret</param-name>
         <param-value>cf4347b8c75bb09602d16ad3495ff280</param-value>
     </init-param>
+    <init-param>
+        <param-name>aesKey</param-name>
+        <param-value>cf4347b8c75bb09602d16ad3495ff280</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>weixin</servlet-name>

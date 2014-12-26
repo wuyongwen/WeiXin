@@ -38,14 +38,17 @@ public class Context {
     public static final String RESPONSE = "response";
     public static final AppInfo info = new AppInfo();
     
-    public static void setAppInfo(String appId, String appSecret) {
+    public static void setAppInfo(String appId, String appSecret, String aesKey) {
         
         if(info.id != null)
             log.info(String.format("系统配置项appId从 [%s] 更改为 [%s]！", info.id, appId));
         if(info.secret != null)
             log.info(String.format("系统配置项secret从 [%s] 更改为 [%s]！", info.secret, appSecret));
+        if(info.aesKey != null)
+            log.info(String.format("系统配置项aesKey从 [%s] 更改为 [%s]！", info.aesKey, aesKey));
         info.id = appId;
         info.secret = appSecret;
+        info.aesKey = aesKey;
     }
     
     private Map<String, Object> map;

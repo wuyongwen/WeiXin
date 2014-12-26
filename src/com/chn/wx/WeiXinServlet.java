@@ -63,9 +63,10 @@ public class WeiXinServlet extends HttpServlet implements Service {
         });
         String appId = getInitParameter("appid");
         String appSecret = getInitParameter("secret");
+        String aesKey = getInitParameter("aesKey");
         Assert.notNull(appId, "web.xml未配置appId");
         Assert.notNull(appSecret, "web.xml未配置secret");
-        Context.setAppInfo(appId, appSecret);
+        Context.setAppInfo(appId, appSecret, aesKey);
     }
 
     @Override

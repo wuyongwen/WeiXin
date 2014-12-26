@@ -10,6 +10,7 @@
 package com.chn.wx.listener.end.event;
 
 import com.chn.wx.annotation.Node;
+import com.chn.wx.annotation.Param;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
 import com.chn.wx.listener.ServiceTree;
@@ -24,6 +25,11 @@ import com.chn.wx.listener.route.EventRouter;
 @Node(parent=EventRouter.class, value="VIEW")
 public class ViewEventService implements Service {
 
+    @Param private String ToUserName;
+    @Param private String FromUserName;
+    @Param private String CreateTime;
+    @Param private String EventKey;//事件KEY值，设置的跳转URL
+    
     @Override
     public String doService(ServiceTree tree, Context context) {
 

@@ -10,6 +10,7 @@
 package com.chn.wx.listener.end.event;
 
 import com.chn.wx.annotation.Node;
+import com.chn.wx.annotation.Param;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
 import com.chn.wx.listener.ServiceTree;
@@ -24,6 +25,13 @@ import com.chn.wx.listener.route.EventRouter;
 @Node(parent=EventRouter.class, value="LOCATION")
 public class LocationEventService implements Service {
 
+    @Param private String ToUserName;
+    @Param private String FromUserName;
+    @Param private String CreateTime;
+    @Param private String Latitude;//地理位置纬度
+    @Param private String Longitude;//地理位置经度
+    @Param private String Precision;//地理位置精度
+    
     @Override
     public String doService(ServiceTree tree, Context context) {
 

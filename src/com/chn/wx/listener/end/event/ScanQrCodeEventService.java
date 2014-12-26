@@ -10,6 +10,7 @@
 package com.chn.wx.listener.end.event;
 
 import com.chn.wx.annotation.Node;
+import com.chn.wx.annotation.Param;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
 import com.chn.wx.listener.ServiceTree;
@@ -24,6 +25,12 @@ import com.chn.wx.listener.route.EventRouter;
 @Node(parent=EventRouter.class, value="SCAN")
 public class ScanQrCodeEventService implements Service {
 
+    @Param private String ToUserName;
+    @Param private String FromUserName;
+    @Param private String CreateTime;
+    @Param private String EventKey;//事件KEY值，是一个32位无符号整数，即创建二维码时的二维码scene_id
+    @Param private String Ticket;//二维码的ticket，可用来换取二维码图片
+    
     @Override
     public String doService(ServiceTree tree, Context context) {
         return null;

@@ -25,5 +25,6 @@ interface WeiXinURL {
     
     String REMARK_USER = "https://api.weixin.qq.com/cgi-bin/user/info/updateremark?access_token=${accessToken}";
     String QUERY_USER_INFO = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=${accessToken}&openid=${openid}&lang=zh_CN";
-
+    String QUERY_FOLLOWER = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=${accessToken}&next_openid=${next_openid}";
+    
 }

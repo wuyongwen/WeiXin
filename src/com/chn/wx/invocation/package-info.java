@@ -29,4 +29,6 @@ interface WeiXinURL {
     
     String CREATE_BUTTONS = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=${accessToken}";
     String QUERY_MENU = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=${accessToken}";
+    String DELETE_MENU = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=${accessToken}";
+
 }

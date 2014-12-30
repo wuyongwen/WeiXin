@@ -32,6 +32,7 @@ public class MenuManager {
 
     private static StringTemplate createButtons = compile(WeiXinURL.CREATE_BUTTONS);
     private static StringTemplate queryMenu = compile(WeiXinURL.QUERY_MENU);
+    private static StringTemplate deleteMenu = compile(WeiXinURL.DELETE_MENU);
     
     /**
      * @description 自定义菜单创建接口
@@ -58,6 +59,19 @@ public class MenuManager {
         String urlLocation = queryMenu.replace(params);
         String respString = HttpUtils.get(urlLocation);
         return JSON.parseObject(respString, QueryMenuResult.class);
+    }
+    
+    /**
+     * @description 自定义菜单删除接口
+     * @return 
+     */
+    public static BasicResult deleteMenu() {
+        
+        Map<String, Object> params = new HashMap<>();
+        params.put("accessToken", TokenAccessor.getAccessToken());
+        String urlLocation = deleteMenu.replace(params);
+        String respString = HttpUtils.get(urlLocation);
+        return JSON.parseObject(respString, BasicResult.class);
     }
     
 }

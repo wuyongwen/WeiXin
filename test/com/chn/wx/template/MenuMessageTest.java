@@ -55,7 +55,7 @@ public class MenuMessageTest {
     @Test
     public void testCreateMenu() {
         
-        String wrapJson = MenuMessage.wrapCreateMenu(buttons);
+        String wrapJson = MenuMessage.wrapCreateButtons(buttons);
         System.out.println(wrapJson);
         CreateMenuRequest result = JSON.parseObject(wrapJson, CreateMenuRequest.class);
         Assert.assertEquals(CompareToBuilder.reflectionCompare(buttons, result.getButtons()), 0);

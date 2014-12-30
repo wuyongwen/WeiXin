@@ -43,7 +43,7 @@ public class Button {
         this.type = type;
     }
     public void setType(Type type) {
-        this.type = type.toString();
+        this.type = type == null ? null : type.toString();
     }
     public String getName() {
         return name;

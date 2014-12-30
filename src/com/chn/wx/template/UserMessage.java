@@ -32,7 +32,7 @@ public class UserMessage {
     /**
      * @param userId 用户标识
      * @param remark 新的备注名，长度必须小于30字符
-    */
+     */
     public static String wrapRemarkUser(String userId, String remark) {
         
         Map<String, Object> params = new HashMap<>();

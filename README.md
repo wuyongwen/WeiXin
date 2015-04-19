@@ -67,3 +67,9 @@
 ## 语法糖 ##
 
 `Service` 实现类中被`@Param`注解标记的字段，会被注入成 `Context` 中对应的属性值，当然也可以直接通过 `Context` 读取。
+
+## TODO ##
+
+- 添加 Spring 支持
+- 修改认证接口 Token 为配置 Token 而非 AccessToken
+- 添加 OAuth2 支持

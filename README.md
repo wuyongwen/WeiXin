@@ -16,34 +16,20 @@
             <param-value>com.chn.wx.listener</param-value>
         </init-param>
         
-        <init-param>
-            <param-name>appId</param-name>
-            <param-value>wx391f84dcab2d80bc</param-value>
-        </init-param>
-        <init-param>
-            <param-name>appName</param-name>
-            <param-value>zhaoshangyinhang</param-value>
-        </init-param>
-        <init-param>
-            <param-name>secret</param-name>
-            <param-value>cf4347b8c75bb09602d16ad3495ff280</param-value>
-        </init-param>
-        
-        <init-param>
-            <param-name>aesKey</param-name>
-            <param-value>cf4347b8c75bb09602d16ad3495ff280</param-value>
-        </init-param>
-        <init-param>
-            <!-- 微信服务器作验证时用的 -->
-            <param-name>token</param-name>
-            <param-value>token-of-zhaoshangyinhang</param-value>
-        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>weixin</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
 
+同时在 classpath 下的 weixin.properties 里配置各项参数：
+
+    weixin.app.id=
+    weixin.app.name=
+    weixin.app.secret=
+    weixin.app.aeskey=
+    weixin.app.token=
+    
 ## 关于 ##
 
 `com.chn.wx.listener` 中的所有实现 `Service` 接口的类会被组装成一棵流程树，目前结点如下：

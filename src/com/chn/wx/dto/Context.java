@@ -36,13 +36,6 @@ public class Context {
     
     public static final String REQUEST = "request";
     public static final String RESPONSE = "response";
-    public static AppInfo info;
-    
-    public static synchronized void setAppInfo(String appId, String appName, 
-            String secret, String aesKey, String token) {
-        
-        Context.info = new AppInfo(appId, appName, secret, aesKey, token);
-    }
     
     private Map<String, Object> map;
     
@@ -111,40 +104,6 @@ public class Context {
                     //Ignore
                 }
             }
-        }
-    }
-    
-    public static class AppInfo {
-        
-        private final String appId;
-        private final String appName;
-        private final String secret;
-        private final String aesKey;
-        private final String token;
-        
-        public AppInfo(String appId, String appName, String secret, String aesKey, String token) {
-            
-            this.appId = appId;
-            this.appName = appName;
-            this.secret = secret;
-            this.aesKey = aesKey;
-            this.token = token;
-        }
-        
-        public String getAppId() {
-            return appId;
-        }
-        public String getAppName() {
-            return appName;
-        }
-        public String getSecret() {
-            return secret;
-        }
-        public String getAesKey() {
-            return aesKey;
-        }
-        public String getToken() {
-            return token;
         }
     }
     

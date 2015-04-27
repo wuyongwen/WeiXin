@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
 import com.alibaba.fastjson.JSON;
 import com.chn.common.Assert;
 import com.chn.common.StringTemplate;
-import com.chn.wx.dto.Context;
+import com.chn.wx.dto.App;
 import com.chn.wx.util.HttpUtils;
 import com.chn.wx.vo.result.AccessTokenResult;
 
@@ -41,8 +41,8 @@ public class TokenAccessor {
         if(System.currentTimeMillis() < expireTime) return accessToken;
         
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("appId", Context.info.getAppId());
-        params.put("appSecret", Context.info.getSecret());
+        params.put("appId", App.Info.id);
+        params.put("appSecret", App.Info.secret);
         String urlLocation = accessTokenUrl.replace(params);
         AccessTokenResult result = null;
         try {

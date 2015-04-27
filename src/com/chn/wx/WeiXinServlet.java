@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 
-import com.chn.common.Assert;
 import com.chn.common.Scans;
 import com.chn.common.StringUtils;
 import com.chn.wx.dto.Context;
@@ -61,18 +60,6 @@ public class WeiXinServlet extends HttpServlet implements Service {
                 return result;
             }
         });
-        String appId = getInitParameter("appId");
-        String appName = getInitParameter("appName");
-        String secret = getInitParameter("secret");
-        String aesKey = getInitParameter("aesKey");
-        String token = getInitParameter("token");
-        
-        Assert.notNull(appId, "web.xml未配置appId");
-        Assert.notNull(appName, "web.xml未配置appName");
-        Assert.notNull(secret, "web.xml未配置secret");
-        Assert.notNull(aesKey, "web.xml未配置aesKey");
-        Assert.notNull(token, "web.xml未配置token");
-        Context.setAppInfo(appId, appName, secret, aesKey, token);
     }
 
     @Override

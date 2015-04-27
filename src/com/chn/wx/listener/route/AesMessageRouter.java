@@ -18,6 +18,7 @@ import org.dom4j.io.SAXReader;
 
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
+import com.chn.wx.dto.App;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
 import com.chn.wx.listener.ServiceTree;
@@ -46,9 +47,7 @@ public class AesMessageRouter implements Service {
     public String doService(ServiceTree tree, Context context) {
 
         try {
-            msgCrypt = new WXBizMsgCrypt(Context.info.getToken(), 
-                                         Context.info.getAesKey(), 
-                                         Context.info.getAppId());
+            msgCrypt = new WXBizMsgCrypt(App.Info.token, App.Info.aesKey, App.Info.id);
             
             //解密，并将解密后信息放入上下文
             String encryptText = this.getEncyptText(xmlContent);

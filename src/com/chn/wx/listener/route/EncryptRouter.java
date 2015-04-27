@@ -11,6 +11,8 @@ package com.chn.wx.listener.route;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 import com.chn.wx.WeiXinServlet;
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
@@ -28,6 +30,8 @@ import com.chn.wx.util.HttpUtils;
 @Node(value = "POST", parent = WeiXinServlet.class)
 public class EncryptRouter implements Service {
 
+    private Logger log = Logger.getLogger(EncryptRouter.class);
+    
     @Param(value="encrypt_type", defaultValue="raw") 
     private String encrypt_type; //加密类型
     
@@ -40,6 +44,7 @@ public class EncryptRouter implements Service {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        log.info("根据 encrypt_type : " + encrypt_type + "做路由。");
         return tree.route(context, this.encrypt_type).doService(tree, context);
     }
 

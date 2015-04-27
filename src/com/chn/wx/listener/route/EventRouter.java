@@ -9,6 +9,8 @@
  */
 package com.chn.wx.listener.route;
 
+import org.apache.log4j.Logger;
+
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
 import com.chn.wx.dto.Context;
@@ -24,11 +26,13 @@ import com.chn.wx.listener.ServiceTree;
 @Node(parent=RawMessageRouter.class, value="event")
 public class EventRouter implements Service {
 
+    private Logger log = Logger.getLogger(EventRouter.class);
     @Param private String Event;
 
     @Override
     public String doService(ServiceTree tree, Context context) {
 
+        log.info("根据Event:"+Event+"做路由");
         return tree.route(context, Event).doService(tree, context);
     }
     

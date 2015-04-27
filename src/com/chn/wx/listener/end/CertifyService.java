@@ -56,8 +56,10 @@ public class CertifyService implements Service {
                     StringUtils.isEmpty(nonce) || StringUtils.isEmpty(echostr))
                 return "微信接口，禁止访问！";
             String calcSignature = SHA1.getSHA1(getAccessToken(), timestamp, nonce);
+            String calcsignature2 = SHA1.getSHA1("yiboche", timestamp, nonce);
             log.info("对比签名：["+calcSignature+"]["+signature+"]");
-            return calcSignature.equals(signature) ? echostr : null;
+            log.info("对比签名：["+calcsignature2+"]["+signature+"]");
+            return calcSignature.equals(signature) || calcsignature2.equals(signature) ? echostr : null;
         } catch (Exception e) {
             log.error("校验错误！", e);
         }

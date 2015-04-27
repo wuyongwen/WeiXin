@@ -9,6 +9,9 @@
  */
 package com.chn.wx.listener.route;
 
+import java.io.StringReader;
+
+import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
@@ -16,7 +19,6 @@ import org.dom4j.io.SAXReader;
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
 import com.chn.wx.dto.Context;
-import com.chn.wx.invocation.TokenAccessor;
 import com.chn.wx.listener.Service;
 import com.chn.wx.listener.ServiceTree;
 import com.chn.wx.template.PassiveMessage;
@@ -28,9 +30,11 @@ import com.qq.weixin.mp.aes.WXBizMsgCrypt;
  * @description 
  * @version v1.0
  */
-@Node(value = "raw", parent = EncryptRouter.class)
+@Node(value = "aes", parent = EncryptRouter.class)
 public class AesMessageRouter implements Service {
 
+    private Logger log = Logger.getLogger(AesMessageRouter.class);
+    
     @Param private String msg_signature;//消息体签名
     @Param private String timestamp;
     @Param private String nonce;
@@ -42,9 +46,9 @@ public class AesMessageRouter implements Service {
     public String doService(ServiceTree tree, Context context) {
 
         try {
-            //初始化加密解密组件
-            String accessToken = TokenAccessor.getAccessToken();
-            msgCrypt = new WXBizMsgCrypt(accessToken, Context.info.getAesKey(), Context.info.getId());
+            msgCrypt = new WXBizMsgCrypt(Context.info.getToken(), 
+                                         Context.info.getAesKey(), 
+                                         Context.info.getAppId());
             
             //解密，并将解密后信息放入上下文
             String encryptText = this.getEncyptText(xmlContent);
@@ -72,8 +76,9 @@ public class AesMessageRouter implements Service {
     */
     private String getEncyptText(String xmlContent) throws DocumentException {
         
+        log.debug("解密报文如下：" + xmlContent);
         SAXReader reader = new SAXReader();
-        Document document = reader.read(xmlContent);
+        Document document = reader.read(new StringReader(xmlContent));
         return document.selectSingleNode("/xml/Encrypt").getText();
     }
     

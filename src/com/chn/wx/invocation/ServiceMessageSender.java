@@ -14,6 +14,8 @@ import static com.chn.common.StringTemplate.compile;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import com.chn.common.StringTemplate;
 import com.chn.wx.template.ServiceMessage;
 import com.chn.wx.util.HttpUtils;
@@ -26,6 +28,8 @@ import com.chn.wx.util.HttpUtils;
  */
 public class ServiceMessageSender {
 
+    private static Logger log = Logger.getLogger(ServiceMessageSender.class);
+    
     private static final StringTemplate sendServiceUrl = compile(WeiXinURL.SEND_SERVICE);
     
     /**
@@ -35,6 +39,7 @@ public class ServiceMessageSender {
     public static void sendText(String touser, String content) {
         
         send(ServiceMessage.wrapText(touser, content));
+        log.info(String.format("向用户[%s]发送信息[%s]", touser, content));
     }
     
     /**
@@ -95,12 +100,12 @@ public class ServiceMessageSender {
         send(ServiceMessage.wrapMusic(null, title, description, musicurl, hqmusicurl, thumb_media_id));
     }
     
-    private static void send(String xml) {
+    private static String send(String xml) {
         
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("accessToken", TokenAccessor.getAccessToken());
         String urlLocation = sendServiceUrl.replace(params);
-        HttpUtils.post(urlLocation, xml);
+        return  HttpUtils.post(urlLocation, xml);
     }
     
 }

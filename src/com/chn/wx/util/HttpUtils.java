@@ -43,6 +43,7 @@ public class HttpUtils {
         }
     }
     
+    
     /**
      * @description 解析请求参数，单值请求参数 map.get() 直接返回值，多值参数返回数组
      * @param req
@@ -61,6 +62,30 @@ public class HttpUtils {
             result.put(key, value.length == 0 ? "" : (value.length == 1 ? value[0] : value));
         }
         return result;
+    }
+    
+    public static byte[] download(String urlLocation) {
+        
+        HttpURLConnection conn = null;
+        InputStream is = null;
+        try {
+            URL url = new URL(urlLocation);
+            conn = (HttpURLConnection)url.openConnection();
+            conn.setDoInput(true);
+            conn.setDoOutput(false);
+            conn.setUseCaches(false);
+            conn.setRequestMethod("GET");
+            conn.setConnectTimeout(TIME_OUT);
+            conn.connect();
+            
+            is = conn.getInputStream();
+            return IOUtils.toByteArray(is);
+        } catch (Exception e) {
+            throw new RuntimeException("请求错误！", e);
+        } finally {
+            IOUtils.closeQuietly(is);
+            IOUtils.close(conn);
+        }
     }
     
     public static String get(String urlLocation) {

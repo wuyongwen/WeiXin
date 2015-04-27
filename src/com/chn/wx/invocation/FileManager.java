@@ -27,10 +27,25 @@ import com.chn.wx.vo.result.UploadFileResult;
 public class FileManager {
 
     private static final StringTemplate postFileUrl = StringTemplate.compile(WeiXinURL.POST_FILE);
-    //private static final StringTemplate getFileUrl = StringTemplate.compile(WeiXinURL.GET_FILE);
+    private static final StringTemplate getFileUrl = StringTemplate.compile(WeiXinURL.GET_FILE);
     
     public static enum Type {
         image, voice, video, thumb;
+    }
+    
+    /**
+     * @description downloadFile
+     * @param mediaId
+     * @return 返回可访问的 http 地址
+     */
+    public static byte[] downloadFile(String mediaId) {
+        
+        Map<String, Object> params = new HashMap<>();
+        params.put("accessToken", TokenAccessor.getAccessToken());
+        params.put("mediaId", mediaId);
+        String urlLocation = getFileUrl.replace(params);
+        
+        return HttpUtils.download(urlLocation);
     }
     
     /**

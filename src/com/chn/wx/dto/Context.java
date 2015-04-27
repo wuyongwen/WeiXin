@@ -36,19 +36,12 @@ public class Context {
     
     public static final String REQUEST = "request";
     public static final String RESPONSE = "response";
-    public static final AppInfo info = new AppInfo();
+    public static AppInfo info;
     
-    public static void setAppInfo(String appId, String appSecret, String aesKey) {
+    public static synchronized void setAppInfo(String appId, String appName, 
+            String secret, String aesKey, String token) {
         
-        if(info.id != null)
-            log.info(String.format("系统配置项appId从 [%s] 更改为 [%s]！", info.id, appId));
-        if(info.secret != null)
-            log.info(String.format("系统配置项secret从 [%s] 更改为 [%s]！", info.secret, appSecret));
-        if(info.aesKey != null)
-            log.info(String.format("系统配置项aesKey从 [%s] 更改为 [%s]！", info.aesKey, aesKey));
-        info.id = appId;
-        info.secret = appSecret;
-        info.aesKey = aesKey;
+        Context.info = new AppInfo(appId, appName, secret, aesKey, token);
     }
     
     private Map<String, Object> map;
@@ -123,18 +116,35 @@ public class Context {
     
     public static class AppInfo {
         
-        private String id;
-        private String secret;
-        private String aesKey;
+        private final String appId;
+        private final String appName;
+        private final String secret;
+        private final String aesKey;
+        private final String token;
         
-        public String getId() {
-            return id;
+        public AppInfo(String appId, String appName, String secret, String aesKey, String token) {
+            
+            this.appId = appId;
+            this.appName = appName;
+            this.secret = secret;
+            this.aesKey = aesKey;
+            this.token = token;
+        }
+        
+        public String getAppId() {
+            return appId;
+        }
+        public String getAppName() {
+            return appName;
         }
         public String getSecret() {
             return secret;
         }
         public String getAesKey() {
             return aesKey;
+        }
+        public String getToken() {
+            return token;
         }
     }
     

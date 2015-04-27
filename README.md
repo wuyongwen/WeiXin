@@ -11,18 +11,33 @@
     <servlet>
         <servlet-name>weixin</servlet-name>
         <servlet-class>com.chn.wx.WeiXinServlet</servlet-class>
-	    <init-param>
-	        <param-name>package</param-name>
-	        <param-value>com.chn.wx.listener</param-value>
-	    </init-param>
-	    <init-param>
-	        <param-name>appid</param-name>
-	        <param-value>wx391f84dcab2d80bc</param-value>
-	    </init-param>
-	    <init-param>
-	        <param-name>secret</param-name>
-	        <param-value>cf4347b8c75bb09602d16ad3495ff280</param-value>
-	    </init-param>
+        <init-param>
+            <param-name>package</param-name>
+            <param-value>com.chn.wx.listener</param-value>
+        </init-param>
+        
+        <init-param>
+            <param-name>appId</param-name>
+            <param-value>wx391f84dcab2d80bc</param-value>
+        </init-param>
+        <init-param>
+            <param-name>appName</param-name>
+            <param-value>zhaoshangyinhang</param-value>
+        </init-param>
+        <init-param>
+            <param-name>secret</param-name>
+            <param-value>cf4347b8c75bb09602d16ad3495ff280</param-value>
+        </init-param>
+        
+        <init-param>
+            <param-name>aesKey</param-name>
+            <param-value>cf4347b8c75bb09602d16ad3495ff280</param-value>
+        </init-param>
+        <init-param>
+            <!-- 微信服务器作验证时用的 -->
+            <param-name>token</param-name>
+            <param-value>token-of-zhaoshangyinhang</param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>weixin</servlet-name>
@@ -67,9 +82,3 @@
 ## 语法糖 ##
 
 `Service` 实现类中被`@Param`注解标记的字段，会被注入成 `Context` 中对应的属性值，当然也可以直接通过 `Context` 读取。
-
-## TODO ##
-
-- 添加 Spring 支持
-- 修改认证接口 Token 为配置 Token 而非 AccessToken
-- 添加 OAuth2 支持

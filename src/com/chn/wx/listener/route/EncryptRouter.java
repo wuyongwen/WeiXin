@@ -44,7 +44,7 @@ public class EncryptRouter implements Service {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        log.info("根据 encrypt_type : " + encrypt_type + "做路由。");
+        log.info(String.format("根据加密类型[%s]做路由。", encrypt_type));
         return tree.route(context, this.encrypt_type).doService(tree, context);
     }
 

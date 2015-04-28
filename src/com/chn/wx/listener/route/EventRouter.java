@@ -24,7 +24,7 @@ import com.chn.wx.listener.ServiceTree;
  * @version v1.0
  */
 @Node(parent=RawMessageRouter.class, value="event")
-public class EventRouter implements Service {
+public final class EventRouter implements Service {
 
     private Logger log = Logger.getLogger(EventRouter.class);
     @Param private String Event;
@@ -32,7 +32,7 @@ public class EventRouter implements Service {
     @Override
     public String doService(ServiceTree tree, Context context) {
 
-        log.info("根据Event:"+Event+"做路由");
+        log.info(String.format("根据事件[%s]做路由", Event));
         return tree.route(context, Event).doService(tree, context);
     }
     

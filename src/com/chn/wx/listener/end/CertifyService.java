@@ -9,14 +9,13 @@
  */
 package com.chn.wx.listener.end;
 
-import static com.chn.wx.invocation.TokenAccessor.getAccessToken;
-
 import org.apache.log4j.Logger;
 
 import com.chn.common.StringUtils;
 import com.chn.wx.WeiXinServlet;
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
+import com.chn.wx.dto.App;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
 import com.chn.wx.listener.ServiceTree;
@@ -55,11 +54,9 @@ public class CertifyService implements Service {
             if(StringUtils.isEmpty(signature) || StringUtils.isEmpty(timestamp) ||
                     StringUtils.isEmpty(nonce) || StringUtils.isEmpty(echostr))
                 return "微信接口，禁止访问！";
-            String calcSignature = SHA1.getSHA1(getAccessToken(), timestamp, nonce);
-            String calcsignature2 = SHA1.getSHA1("yiboche", timestamp, nonce);
+            String calcSignature = SHA1.getSHA1(App.Info.token, timestamp, nonce);
             log.info("对比签名：["+calcSignature+"]["+signature+"]");
-            log.info("对比签名：["+calcsignature2+"]["+signature+"]");
-            return calcSignature.equals(signature) || calcsignature2.equals(signature) ? echostr : null;
+            return calcSignature.equals(signature) ? echostr : null;
         } catch (Exception e) {
             log.error("校验错误！", e);
         }

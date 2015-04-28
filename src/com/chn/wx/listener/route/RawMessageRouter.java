@@ -11,6 +11,7 @@ package com.chn.wx.listener.route;
 
 import java.util.Iterator;
 
+import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -28,8 +29,9 @@ import com.chn.wx.listener.ServiceTree;
  * @version v1.0
  */
 @Node(value = "raw", parent = EncryptRouter.class)
-public class RawMessageRouter implements Service {
+public final class RawMessageRouter implements Service {
 
+    protected Logger log = Logger.getLogger(RawMessageRouter.class);
     
     @Param private String xmlContent;
     
@@ -45,6 +47,7 @@ public class RawMessageRouter implements Service {
                 context.addAttribute(ele.getName(), ele.getText());
             }
             String routeKey = context.getAttribute(String.class, "MsgType");
+            log.debug(String.format("根据消息类型[%s]作路由", routeKey));
             return tree.route(context, routeKey).doService(tree, context);
         } catch (Exception e) {
             throw new RuntimeException(e);

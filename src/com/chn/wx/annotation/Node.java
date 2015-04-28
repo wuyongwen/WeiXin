@@ -9,6 +9,7 @@
  */
 package com.chn.wx.annotation;
 
+import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
@@ -19,8 +20,9 @@ import java.lang.annotation.Target;
  * @description 
  * @version v1.0
  */
-@Target({java.lang.annotation.ElementType.TYPE})
+@Inherited
 @Retention(RetentionPolicy.RUNTIME)
+@Target({java.lang.annotation.ElementType.TYPE})
 public @interface Node {
 
     public String value();

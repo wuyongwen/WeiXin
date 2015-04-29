@@ -25,6 +25,6 @@ public interface Service {
      * @param resp
      * @return 
     */
-    public String doService(ServiceTree tree, Context context);
+    public String doService(ServiceTree tree, Context context) throws Exception;
     
 }

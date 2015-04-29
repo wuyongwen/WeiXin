@@ -36,22 +36,17 @@ public final class RawMessageRouter implements Service {
     @Param private String xmlContent;
     
     @Override
-    public String doService(ServiceTree tree, Context context) {
+    public String doService(ServiceTree tree, Context context) throws Exception {
         
-        try {
-            
-            Document document = DocumentHelper.parseText(xmlContent);
-            Element root = document.getRootElement();
-            for(Iterator<?> it = root.elementIterator(); it.hasNext();) {
-                Element ele = (Element)it.next();
-                context.addAttribute(ele.getName(), ele.getText());
-            }
-            String routeKey = context.getAttribute(String.class, "MsgType");
-            log.debug(String.format("根据消息类型[%s]作路由", routeKey));
-            return tree.route(context, routeKey).doService(tree, context);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        Document document = DocumentHelper.parseText(xmlContent);
+        Element root = document.getRootElement();
+        for(Iterator<?> it = root.elementIterator(); it.hasNext();) {
+            Element ele = (Element)it.next();
+            context.addAttribute(ele.getName(), ele.getText());
         }
+        String routeKey = context.getAttribute(String.class, "MsgType");
+        log.debug(String.format("根据消息类型[%s]作路由", routeKey));
+        return tree.route(context, routeKey).doService(tree, context);
     }
 
 }

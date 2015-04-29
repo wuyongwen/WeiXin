@@ -9,8 +9,6 @@
  */
 package com.chn.wx.listener.route;
 
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
 
 import com.chn.wx.WeiXinServlet;
@@ -36,14 +34,10 @@ public class EncryptRouter implements Service {
     private String encrypt_type; //加密类型
     
     @Override
-    public String doService(ServiceTree tree, Context context) {
+    public String doService(ServiceTree tree, Context context) throws Exception {
         
-        try {
-            String xmlContent = HttpUtils.read(context.getRequest());
-            context.addAttribute("xmlContent", xmlContent);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        String xmlContent = HttpUtils.read(context.getRequest());
+        context.addAttribute("xmlContent", xmlContent);
         log.info(String.format("根据加密类型[%s]做路由。", encrypt_type));
         return tree.route(context, this.encrypt_type).doService(tree, context);
     }

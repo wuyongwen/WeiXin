@@ -44,26 +44,22 @@ public class AesMessageRouter implements Service {
     private WXBizMsgCrypt msgCrypt;
     
     @Override
-    public String doService(ServiceTree tree, Context context) {
+    public String doService(ServiceTree tree, Context context) throws Exception {
 
-        try {
-            msgCrypt = new WXBizMsgCrypt(App.Info.token, App.Info.aesKey, App.Info.id);
-            
-            //解密，并将解密后信息放入上下文
-            String encryptText = this.getEncyptText(xmlContent);
-            xmlContent = msgCrypt.decryptMsg(msg_signature, timestamp, nonce, encryptText);
-            context.setAttribute("xmlContent", xmlContent);
-            
-            //调用下一环节
-            String result = tree.route(context, EncryptRouter.class, "raw").doService(tree, context);
-            
-            //加密并组 XML 返回
-            String Encrypt = msgCrypt.encryptMsg(result, timestamp, nonce);
-            //FromUserName(用户OpenID) 会在后续结点被解析并放入，不能通过 @Param 直接注入
-            return PassiveMessage.wrapAES((String)context.getAttribute("FromUserName"), Encrypt);
-        } catch (Exception e) {
-            throw new RuntimeException("编码/解码错误！", e);
-        }
+        msgCrypt = new WXBizMsgCrypt(App.Info.token, App.Info.aesKey, App.Info.id);
+        
+        //解密，并将解密后信息放入上下文
+        String encryptText = this.getEncyptText(xmlContent);
+        xmlContent = msgCrypt.decryptMsg(msg_signature, timestamp, nonce, encryptText);
+        context.setAttribute("xmlContent", xmlContent);
+        
+        //调用下一环节
+        String result = tree.route(context, EncryptRouter.class, "raw").doService(tree, context);
+        
+        //加密并组 XML 返回
+        String Encrypt = msgCrypt.encryptMsg(result, timestamp, nonce);
+        //FromUserName(用户OpenID) 会在后续结点被解析并放入，不能通过 @Param 直接注入
+        return PassiveMessage.wrapAES((String)context.getAttribute("FromUserName"), Encrypt);
     }
     
     /**

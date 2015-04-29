@@ -36,7 +36,7 @@ public class TextMessageAdaptor implements Service {
     @Param protected String Content;      //消息id，64位整型
     
     @Override
-    public String doService(ServiceTree tree, Context context) {
+    public String doService(ServiceTree tree, Context context) throws Exception {
         
         log.debug(String.format("收到来自 %s 的文本信息 %s", FromUserName, Content));
         return null;

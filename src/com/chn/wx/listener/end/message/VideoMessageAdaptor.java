@@ -37,7 +37,7 @@ public class VideoMessageAdaptor implements Service{
     @Param protected String ThumbMediaId; //视频消息缩略图的媒体id，可以调用多媒体文件下载接口拉取数据。
     
     @Override
-    public String doService(ServiceTree tree, Context context) {
+    public String doService(ServiceTree tree, Context context) throws Exception {
 
         log.debug(String.format("收到来自 %s 的视频信息 %s", FromUserName, MediaId));
         return null;

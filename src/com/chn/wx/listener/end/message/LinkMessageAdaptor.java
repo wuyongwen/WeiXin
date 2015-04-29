@@ -38,7 +38,7 @@ public class LinkMessageAdaptor implements Service {
     @Param protected String Url;          //消息链接
     
     @Override
-    public String doService(ServiceTree tree, Context context) {
+    public String doService(ServiceTree tree, Context context) throws Exception {
 
         log.debug(String.format("收到来自 %s 的链接信息 %s", FromUserName, Title));
         return null;

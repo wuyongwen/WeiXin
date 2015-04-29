@@ -37,7 +37,7 @@ public class ImageMessageAdaptor implements Service {
     @Param protected String MediaId;      //图片消息媒体id，可以调用多媒体文件下载接口拉取数据。
     
     @Override
-    public String doService(ServiceTree tree, Context context) {
+    public String doService(ServiceTree tree, Context context) throws Exception {
 
         log.debug(String.format("收到来自 %s 的图片信息 %s", FromUserName, MediaId));
         return null;

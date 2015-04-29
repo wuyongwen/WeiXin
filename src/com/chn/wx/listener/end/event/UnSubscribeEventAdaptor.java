@@ -34,7 +34,7 @@ public class UnSubscribeEventAdaptor implements Service {
     @Param protected String CreateTime;
     
     @Override
-    public String doService(ServiceTree tree, Context context) {
+    public String doService(ServiceTree tree, Context context) throws Exception {
 
         log.debug(String.format("收到 %s 的退订事件", FromUserName));
         return null;

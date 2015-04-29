@@ -30,7 +30,7 @@ public final class EventRouter implements Service {
     @Param private String Event;
 
     @Override
-    public String doService(ServiceTree tree, Context context) {
+    public String doService(ServiceTree tree, Context context) throws Exception {
 
         log.info(String.format("根据事件[%s]做路由", Event));
         return tree.route(context, Event).doService(tree, context);

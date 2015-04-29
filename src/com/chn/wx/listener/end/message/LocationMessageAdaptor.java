@@ -39,7 +39,7 @@ public class LocationMessageAdaptor implements Service {
     @Param protected String Label;        //地理位置信息
 
     @Override
-    public String doService(ServiceTree tree, Context context) {
+    public String doService(ServiceTree tree, Context context) throws Exception {
 
         log.debug(String.format("收到来自 %s 的位置信息 %s-%s", FromUserName, 
                                 Location_X, Location_Y));

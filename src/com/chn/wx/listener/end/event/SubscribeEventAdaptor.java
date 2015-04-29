@@ -36,7 +36,7 @@ public class SubscribeEventAdaptor implements Service {
     @Param protected String Ticket;//二维码的ticket，可用来换取二维码图片
     
     @Override
-    public String doService(ServiceTree tree, Context context) {
+    public String doService(ServiceTree tree, Context context) throws Exception {
 
         log.debug(String.format("收到 %s 的订阅事件", FromUserName));
         return null;

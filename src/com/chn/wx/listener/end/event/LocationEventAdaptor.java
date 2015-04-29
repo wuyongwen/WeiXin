@@ -37,7 +37,7 @@ public class LocationEventAdaptor implements Service {
     @Param protected String Precision;//地理位置精度
     
     @Override
-    public String doService(ServiceTree tree, Context context) {
+    public String doService(ServiceTree tree, Context context) throws Exception {
 
         log.debug(String.format("收到来自 %s 的坐标信息 %s-%s(%s)", FromUserName, 
                                 Latitude, Longitude, Precision));

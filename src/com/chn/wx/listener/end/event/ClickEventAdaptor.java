@@ -35,7 +35,7 @@ public class ClickEventAdaptor implements Service {
     @Param protected String EventKey; //事件KEY值，与自定义菜单接口中KEY值对应
     
     @Override
-    public String doService(ServiceTree tree, Context context) {
+    public String doService(ServiceTree tree, Context context) throws Exception {
         
         log.debug(String.format("收到来自 %s 的点击事件 %s", FromUserName, EventKey));
         return null;

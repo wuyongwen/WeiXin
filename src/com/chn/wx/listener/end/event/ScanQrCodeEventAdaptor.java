@@ -36,7 +36,7 @@ public class ScanQrCodeEventAdaptor implements Service {
     @Param protected String Ticket;//二维码的ticket，可用来换取二维码图片
     
     @Override
-    public String doService(ServiceTree tree, Context context) {
+    public String doService(ServiceTree tree, Context context) throws Exception {
         
         log.debug(String.format("收到来自 %s 的二维码事件 %s-%s", FromUserName, 
                                 EventKey, Ticket));

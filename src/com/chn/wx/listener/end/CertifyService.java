@@ -48,19 +48,14 @@ public class CertifyService implements Service {
      * 3. 开发者获得加密后的字符串可与signature对比，标识该请求来源于微信
      */
     @Override
-    public String doService(ServiceTree tree, Context context) {
+    public String doService(ServiceTree tree, Context context) throws Exception {
         
-        try {
-            if(StringUtils.isEmpty(signature) || StringUtils.isEmpty(timestamp) ||
-                    StringUtils.isEmpty(nonce) || StringUtils.isEmpty(echostr))
-                return "微信接口，禁止访问！";
-            String calcSignature = SHA1.getSHA1(App.Info.token, timestamp, nonce);
-            log.info("对比签名：["+calcSignature+"]["+signature+"]");
-            return calcSignature.equals(signature) ? echostr : null;
-        } catch (Exception e) {
-            log.error("校验错误！", e);
-        }
-        return null;
+        if(StringUtils.isEmpty(signature) || StringUtils.isEmpty(timestamp) ||
+                StringUtils.isEmpty(nonce) || StringUtils.isEmpty(echostr))
+            return "微信接口，禁止访问！";
+        String calcSignature = SHA1.getSHA1(App.Info.token, timestamp, nonce);
+        log.info("对比签名：["+calcSignature+"]["+signature+"]");
+        return calcSignature.equals(signature) ? echostr : null;
     }
 
 }

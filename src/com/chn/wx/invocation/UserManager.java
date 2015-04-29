@@ -5,7 +5,7 @@
  * @author lzxz1234<lzxz1234@gmail.com>
  * @date 2014年12月25日-下午4:08:34
  * @version V1.0
- * Copyright (c) 2014 ChineseAll.com All Right Reserved
+ * All Right Reserved
  */
 package com.chn.wx.invocation;
 

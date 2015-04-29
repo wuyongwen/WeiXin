@@ -5,7 +5,7 @@
  * @author lzxz1234<lzxz1234@gmail.com>
  * @date 2014年12月16日-下午1:35:42
  * @version V1.0
- * Copyright (c) 2014 ChineseAll.com All Right Reserved
+ * All Right Reserved
  */
 package com.chn.wx.listener;
 
@@ -32,9 +32,10 @@ public class ServiceTree {
     private Map<Class<?>, Map<String, Class<? extends Service>>> map = new ConcurrentHashMap<>();
     private ServiceFactory factory = new ServiceFactory();
     
-    public ServiceTree(ClassProvider provider) {
+    public void loadClass(ClassProvider... providers) {
         
-        this.load(provider);
+        for(ClassProvider provider : providers)
+            this.load(provider);
     }
     
     public Service route(Context context, String identify) {

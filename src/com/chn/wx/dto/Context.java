@@ -5,7 +5,7 @@
  * @author lzxz1234<lzxz1234@gmail.com>
  * @date 2014年12月16日-下午4:45:01
  * @version V1.0
- * Copyright (c) 2014 ChineseAll.com All Right Reserved
+ * All Right Reserved
  */
 package com.chn.wx.dto;
 
@@ -13,16 +13,12 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.Logger;
 
 import com.chn.common.Castors;
 import com.chn.common.FieldUtils;
 import com.chn.common.StringUtils;
 import com.chn.wx.annotation.Param;
-import com.chn.wx.util.HttpUtils;
 
 /**
  * @class Context
@@ -34,21 +30,11 @@ public class Context {
     
     private static final Logger log = Logger.getLogger(Context.class);
     
-    public static final String REQUEST = "request";
-    public static final String RESPONSE = "response";
-    
     private Map<String, Object> map;
     
-    public Context(HttpServletRequest req, HttpServletResponse resp) {
+    public Context(Map<String, Object> orginalParams) {
         
-        this.map = HttpUtils.decodeParams(req);
-        this.addAttribute(REQUEST, req);
-        this.addAttribute(RESPONSE, resp);
-    }
-    
-    public HttpServletRequest getRequest() {
-        
-        return (HttpServletRequest) map.get(REQUEST);
+        this.map = orginalParams;
     }
     
     public void setAttribute(String key, Object value) {

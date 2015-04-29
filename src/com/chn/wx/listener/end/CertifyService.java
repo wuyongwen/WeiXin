@@ -5,20 +5,20 @@
  * @author lzxz1234<lzxz1234@gmail.com>
  * @date 2014年12月15日-下午6:16:07
  * @version V1.0
- * Copyright (c) 2014 ChineseAll.com All Right Reserved
+ * All Right Reserved
  */
 package com.chn.wx.listener.end;
 
 import org.apache.log4j.Logger;
 
 import com.chn.common.StringUtils;
-import com.chn.wx.WeiXinServlet;
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
 import com.chn.wx.dto.App;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
 import com.chn.wx.listener.ServiceTree;
+import com.chn.wx.listener.route.MethodRouter;
 import com.chn.wx.util.SHA1;
 
 /**
@@ -27,7 +27,7 @@ import com.chn.wx.util.SHA1;
  * @description 
  * @version v1.0
  */
-@Node(value="GET", parent=WeiXinServlet.class)
+@Node(value="GET", parent=MethodRouter.class)
 public class CertifyService implements Service {
 
     private static Logger log = Logger.getLogger(CertifyService.class);

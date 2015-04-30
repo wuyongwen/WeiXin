@@ -16,9 +16,9 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import com.chn.common.HttpUtils;
 import com.chn.common.StringTemplate;
 import com.chn.wx.template.ServiceMessage;
-import com.chn.wx.util.HttpUtils;
 
 /**
  * @class ServiceMessageSender

@@ -15,9 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
+import com.chn.common.HttpUtils;
 import com.chn.common.StringTemplate;
 import com.chn.wx.template.MenuMessage;
-import com.chn.wx.util.HttpUtils;
 import com.chn.wx.vo.Button;
 import com.chn.wx.vo.result.BasicResult;
 import com.chn.wx.vo.result.QueryMenuResult;

@@ -7,7 +7,7 @@
  * @version V1.0
  * All Right Reserved
  */
-package com.chn.wx.util;
+package com.chn.common;
 
 import java.security.MessageDigest;
 import java.util.Arrays;

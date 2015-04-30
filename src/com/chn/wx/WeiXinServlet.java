@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
+import com.chn.common.HttpUtils;
 import com.chn.wx.dto.Context;
-import com.chn.wx.util.HttpUtils;
 
 /**
  * @class WeiXinServlet

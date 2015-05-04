@@ -7,7 +7,7 @@
  * @version V1.0
  * All Right Reserved
  */
-package com.chn.wx.listener;
+package com.chn.wx.core;
 
 import com.chn.wx.dto.Context;
 
@@ -25,6 +25,6 @@ public interface Service {
      * @param resp
      * @return 
     */
-    public String doService(ServiceTree tree, Context context) throws Exception;
+    public String doService(Context context) throws Exception;
     
 }

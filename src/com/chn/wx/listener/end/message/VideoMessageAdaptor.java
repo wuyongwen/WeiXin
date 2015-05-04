@@ -13,9 +13,8 @@ import org.apache.log4j.Logger;
 
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
+import com.chn.wx.core.Service;
 import com.chn.wx.dto.Context;
-import com.chn.wx.listener.Service;
-import com.chn.wx.listener.ServiceTree;
 import com.chn.wx.listener.route.RawMessageRouter;
 
 /**
@@ -24,7 +23,7 @@ import com.chn.wx.listener.route.RawMessageRouter;
  * @description 
  * @version v1.0
  */
-@Node(parent=RawMessageRouter.class, value="video")
+@Node(parents=RawMessageRouter.class, value="video")
 public class VideoMessageAdaptor implements Service{
 
     protected Logger log = Logger.getLogger(this.getClass());
@@ -37,7 +36,7 @@ public class VideoMessageAdaptor implements Service{
     @Param protected String ThumbMediaId; //视频消息缩略图的媒体id，可以调用多媒体文件下载接口拉取数据。
     
     @Override
-    public String doService(ServiceTree tree, Context context) throws Exception {
+    public String doService(Context context) throws Exception {
 
         log.debug(String.format("收到来自 %s 的视频信息 %s", FromUserName, MediaId));
         return null;

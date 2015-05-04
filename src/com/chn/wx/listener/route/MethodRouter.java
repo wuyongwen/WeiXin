@@ -11,12 +11,11 @@ package com.chn.wx.listener.route;
 
 import org.apache.log4j.Logger;
 
-import com.chn.wx.MessageHandler;
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
+import com.chn.wx.core.Service;
+import com.chn.wx.core.ServiceHolder;
 import com.chn.wx.dto.Context;
-import com.chn.wx.listener.Service;
-import com.chn.wx.listener.ServiceTree;
 
 /**
  * @class MethodRouter
@@ -24,18 +23,20 @@ import com.chn.wx.listener.ServiceTree;
  * @description 
  * @version v1.0
  */
-@Node(parent = MessageHandler.class, value = "root")
+@Node(value = "root", parents = Void.class)
 public class MethodRouter implements Service {
 
     private Logger log = Logger.getLogger(MethodRouter.class);
     
     @Param("method")
     private String method;
+    @Param private ServiceHolder serviceHolder;
     
     @Override
-    public String doService(ServiceTree tree, Context context) throws Exception {
-        log.info(String.format("根据请求方法[%s]做路由。", method));
-        return tree.route(context, method).doService(tree, context);
+    public String doService(Context context) throws Exception {
+        
+    	log.info(String.format("根据请求方法[%s]做路由。", method));
+        return serviceHolder.routeToNext(this.method, context);
     }
 
 }

@@ -27,6 +27,6 @@ public @interface Node {
 
     public String value();
     
-    public Class<?> parent();
+    public Class<?>[] parents();
     
 }

@@ -13,9 +13,9 @@ import org.apache.log4j.Logger;
 
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
+import com.chn.wx.core.Service;
+import com.chn.wx.core.ServiceHolder;
 import com.chn.wx.dto.Context;
-import com.chn.wx.listener.Service;
-import com.chn.wx.listener.ServiceTree;
 
 /**
  * @class EventRouter
@@ -23,17 +23,18 @@ import com.chn.wx.listener.ServiceTree;
  * @description 
  * @version v1.0
  */
-@Node(parent=RawMessageRouter.class, value="event")
+@Node(parents=RawMessageRouter.class, value="event")
 public final class EventRouter implements Service {
 
     private Logger log = Logger.getLogger(EventRouter.class);
     @Param private String Event;
+    @Param private ServiceHolder serviceHolder;
 
     @Override
-    public String doService(ServiceTree tree, Context context) throws Exception {
+    public String doService(Context context) throws Exception {
 
         log.info(String.format("根据事件[%s]做路由", Event));
-        return tree.route(context, Event).doService(tree, context);
+        return serviceHolder.routeToNext(this.Event, context);
     }
     
 }

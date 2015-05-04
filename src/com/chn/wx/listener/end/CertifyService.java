@@ -15,10 +15,9 @@ import com.chn.common.SHA1;
 import com.chn.common.StringUtils;
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
+import com.chn.wx.core.Service;
 import com.chn.wx.dto.App;
 import com.chn.wx.dto.Context;
-import com.chn.wx.listener.Service;
-import com.chn.wx.listener.ServiceTree;
 import com.chn.wx.listener.route.MethodRouter;
 
 /**
@@ -27,7 +26,7 @@ import com.chn.wx.listener.route.MethodRouter;
  * @description 
  * @version v1.0
  */
-@Node(value="GET", parent=MethodRouter.class)
+@Node(value="GET", parents=MethodRouter.class)
 public class CertifyService implements Service {
 
     private static Logger log = Logger.getLogger(CertifyService.class);
@@ -48,7 +47,7 @@ public class CertifyService implements Service {
      * 3. 开发者获得加密后的字符串可与signature对比，标识该请求来源于微信
      */
     @Override
-    public String doService(ServiceTree tree, Context context) throws Exception {
+    public String doService(Context context) throws Exception {
         
         if(StringUtils.isEmpty(signature) || StringUtils.isEmpty(timestamp) ||
                 StringUtils.isEmpty(nonce) || StringUtils.isEmpty(echostr))

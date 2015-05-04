@@ -13,9 +13,8 @@ import org.apache.log4j.Logger;
 
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
+import com.chn.wx.core.Service;
 import com.chn.wx.dto.Context;
-import com.chn.wx.listener.Service;
-import com.chn.wx.listener.ServiceTree;
 import com.chn.wx.listener.route.EventRouter;
 
 /**
@@ -24,7 +23,7 @@ import com.chn.wx.listener.route.EventRouter;
  * @description 订阅事件可能有多个来源，非扫描二维码来的订阅时相关字段不可用
  * @version v1.0
  */
-@Node(parent=EventRouter.class, value="subscribe")
+@Node(parents=EventRouter.class, value="subscribe")
 public class SubscribeEventAdaptor implements Service {
 
     protected Logger log = Logger.getLogger(this.getClass());
@@ -36,7 +35,7 @@ public class SubscribeEventAdaptor implements Service {
     @Param protected String Ticket;//二维码的ticket，可用来换取二维码图片
     
     @Override
-    public String doService(ServiceTree tree, Context context) throws Exception {
+    public String doService(Context context) throws Exception {
 
         log.debug(String.format("收到 %s 的订阅事件", FromUserName));
         return null;

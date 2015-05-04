@@ -13,9 +13,8 @@ import org.apache.log4j.Logger;
 
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
+import com.chn.wx.core.Service;
 import com.chn.wx.dto.Context;
-import com.chn.wx.listener.Service;
-import com.chn.wx.listener.ServiceTree;
 import com.chn.wx.listener.route.RawMessageRouter;
 
 /**
@@ -24,7 +23,7 @@ import com.chn.wx.listener.route.RawMessageRouter;
  * @description 
  * @version v1.0
  */
-@Node(parent=RawMessageRouter.class, value="link")
+@Node(parents=RawMessageRouter.class, value="link")
 public class LinkMessageAdaptor implements Service {
 
     protected Logger log = Logger.getLogger(this.getClass());
@@ -38,7 +37,7 @@ public class LinkMessageAdaptor implements Service {
     @Param protected String Url;          //消息链接
     
     @Override
-    public String doService(ServiceTree tree, Context context) throws Exception {
+    public String doService(Context context) throws Exception {
 
         log.debug(String.format("收到来自 %s 的链接信息 %s", FromUserName, Title));
         return null;

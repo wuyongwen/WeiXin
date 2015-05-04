@@ -18,9 +18,9 @@ import org.dom4j.Element;
 
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
+import com.chn.wx.core.Service;
+import com.chn.wx.core.ServiceHolder;
 import com.chn.wx.dto.Context;
-import com.chn.wx.listener.Service;
-import com.chn.wx.listener.ServiceTree;
 
 /**
  * @class MessageService
@@ -28,15 +28,16 @@ import com.chn.wx.listener.ServiceTree;
  * @description 
  * @version v1.0
  */
-@Node(value = "raw", parent = EncryptRouter.class)
+@Node(value = "raw", parents = {EncryptRouter.class, AesMessageRouter.class})
 public final class RawMessageRouter implements Service {
 
     protected Logger log = Logger.getLogger(RawMessageRouter.class);
     
     @Param private String xmlContent;
+    @Param private ServiceHolder serviceHolder;
     
     @Override
-    public String doService(ServiceTree tree, Context context) throws Exception {
+    public String doService(Context context) throws Exception {
         
         Document document = DocumentHelper.parseText(xmlContent);
         Element root = document.getRootElement();
@@ -46,7 +47,7 @@ public final class RawMessageRouter implements Service {
         }
         String routeKey = context.getAttribute(String.class, "MsgType");
         log.debug(String.format("根据消息类型[%s]作路由", routeKey));
-        return tree.route(context, routeKey).doService(tree, context);
+        return serviceHolder.routeToNext(routeKey, context);
     }
 
 }

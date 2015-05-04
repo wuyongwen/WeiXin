@@ -13,9 +13,8 @@ import org.apache.log4j.Logger;
 
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
+import com.chn.wx.core.Service;
 import com.chn.wx.dto.Context;
-import com.chn.wx.listener.Service;
-import com.chn.wx.listener.ServiceTree;
 import com.chn.wx.listener.route.EventRouter;
 
 /**
@@ -24,7 +23,7 @@ import com.chn.wx.listener.route.EventRouter;
  * @description 
  * @version v1.0
  */
-@Node(parent=EventRouter.class, value="SCAN")
+@Node(parents=EventRouter.class, value="SCAN")
 public class ScanQrCodeEventAdaptor implements Service {
 
     protected Logger log = Logger.getLogger(this.getClass());
@@ -36,7 +35,7 @@ public class ScanQrCodeEventAdaptor implements Service {
     @Param protected String Ticket;//二维码的ticket，可用来换取二维码图片
     
     @Override
-    public String doService(ServiceTree tree, Context context) throws Exception {
+    public String doService(Context context) throws Exception {
         
         log.debug(String.format("收到来自 %s 的二维码事件 %s-%s", FromUserName, 
                                 EventKey, Ticket));

@@ -13,9 +13,9 @@ import org.apache.log4j.Logger;
 
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
+import com.chn.wx.core.Service;
+import com.chn.wx.core.ServiceHolder;
 import com.chn.wx.dto.Context;
-import com.chn.wx.listener.Service;
-import com.chn.wx.listener.ServiceTree;
 
 /**
  * @class EncryptRouter
@@ -23,19 +23,20 @@ import com.chn.wx.listener.ServiceTree;
  * @description 
  * @version v1.0
  */
-@Node(value = "POST", parent = MethodRouter.class)
+@Node(value = "POST", parents = MethodRouter.class)
 public class EncryptRouter implements Service {
 
     private Logger log = Logger.getLogger(EncryptRouter.class);
     
     @Param(value="encrypt_type", defaultValue="raw") 
     private String encrypt_type; //加密类型
+    @Param private ServiceHolder serviceHolder;
     
     @Override
-    public String doService(ServiceTree tree, Context context) throws Exception {
+    public String doService(Context context) throws Exception {
         
         log.info(String.format("根据加密类型[%s]做路由。", encrypt_type));
-        return tree.route(context, this.encrypt_type).doService(tree, context);
+        return serviceHolder.routeToNext(this.encrypt_type, context);
     }
 
 }

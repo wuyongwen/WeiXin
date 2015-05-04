@@ -18,10 +18,10 @@ import org.dom4j.io.SAXReader;
 
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
+import com.chn.wx.core.Service;
+import com.chn.wx.core.ServiceHolder;
 import com.chn.wx.dto.App;
 import com.chn.wx.dto.Context;
-import com.chn.wx.listener.Service;
-import com.chn.wx.listener.ServiceTree;
 import com.chn.wx.template.PassiveMessage;
 import com.qq.weixin.mp.aes.WXBizMsgCrypt;
 
@@ -31,7 +31,7 @@ import com.qq.weixin.mp.aes.WXBizMsgCrypt;
  * @description 
  * @version v1.0
  */
-@Node(value = "aes", parent = EncryptRouter.class)
+@Node(value = "aes", parents = EncryptRouter.class)
 public class AesMessageRouter implements Service {
 
     private Logger log = Logger.getLogger(AesMessageRouter.class);
@@ -41,10 +41,12 @@ public class AesMessageRouter implements Service {
     @Param private String nonce;
     @Param private String xmlContent;
     
+    @Param private ServiceHolder serviceHolder;
+    
     private WXBizMsgCrypt msgCrypt;
     
     @Override
-    public String doService(ServiceTree tree, Context context) throws Exception {
+    public String doService(Context context) throws Exception {
 
         msgCrypt = new WXBizMsgCrypt(App.Info.token, App.Info.aesKey, App.Info.id);
         
@@ -54,7 +56,7 @@ public class AesMessageRouter implements Service {
         context.setAttribute("xmlContent", xmlContent);
         
         //调用下一环节
-        String result = tree.route(context, EncryptRouter.class, "raw").doService(tree, context);
+        String result = serviceHolder.routeToNext("raw", context);
         
         //加密并组 XML 返回
         String Encrypt = msgCrypt.encryptMsg(result, timestamp, nonce);

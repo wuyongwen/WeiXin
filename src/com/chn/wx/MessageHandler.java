@@ -72,8 +72,7 @@ public class MessageHandler {
 				}
 			} else {
 				if (root.getRealService().equals(node.parents())) {
-					root.registNext(node.value(), serviceClass);
-					loopload(allNodes, root.getNext(node.value()));
+					loopload(allNodes, root.registNext(node.value(), serviceClass));
 				}
 			}
 		}

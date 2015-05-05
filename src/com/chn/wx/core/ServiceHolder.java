@@ -48,7 +48,7 @@ public class ServiceHolder {
 		return this.realService;
 	}
 	
-	public void registNext(String key, Class<? extends Service> serviceClass) {
+	public ServiceHolder registNext(String key, Class<? extends Service> serviceClass) {
 		
 		ServiceHolder holder = new ServiceHolder();
 		holder.setRealServiceClass(serviceClass);
@@ -57,11 +57,7 @@ public class ServiceHolder {
 								realService.getSimpleName(), 
 								key, 
 								serviceClass.getSimpleName()));
-	}
-	
-	public ServiceHolder getNext(String key) {
-		
-		return this.nexts.get(key);
+		return holder;
 	}
 	
 }

@@ -38,8 +38,8 @@ public class MessageHandler {
 		Cfg cfg = Cfg.getCfg("/weixin.properties");
 		String packages = cfg.get("weixin.service.package");
 
-		this.loadClass(new PackageClassProvider("com.chn.wx.listener"));
-		this.loadClass(new PackageClassProvider(packages));
+		this.loadClass(new PackageClassProvider("com.chn.wx.listener"),
+		               new PackageClassProvider(packages));
 	}
 
 	public String process(Context context) throws Exception {
@@ -53,8 +53,10 @@ public class MessageHandler {
 
 	public void loadClass(ClassProvider... providers) {
 
+		LinkedHashSet<Class<?>> allClass = new LinkedHashSet<>();
 		for (ClassProvider provider : providers)
-			this.loopload(this.filtService(provider.getClasses()), root);
+			allClass.addAll(provider.getClasses());
+		this.loopload(this.filtService(allClass), root);
 	}
 	
 	private synchronized void loopload(Map<Node, 

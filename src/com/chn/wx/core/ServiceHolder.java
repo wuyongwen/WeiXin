@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.chn.common.Assert;
+import com.chn.wx.annotation.Intercept;
 import com.chn.wx.dto.Context;
 
 public class ServiceHolder {
@@ -14,11 +15,31 @@ public class ServiceHolder {
 	
 	private Class<? extends Service> realService;
 	private Map<String, ServiceHolder> nexts = new HashMap<>();
+	private ServiceInterceptor[] interceptList;
 	
 	public String doService(Context context) throws Exception {
 		
+		String result = null;
 		context.setAttribute("serviceHolder", this);
-		return this.buildService(context).doService(context);
+		
+		for(ServiceInterceptor intercept : interceptList) 
+			if((result = intercept.preConstruct()) != null)
+				return result;
+		
+		Service serviceInstance = realService.newInstance();
+		context.injectField(serviceInstance);
+		
+		for(ServiceInterceptor intercept : interceptList) 
+			if((result = intercept.preService()) != null)
+				return result;
+		
+		String serviceResult = serviceInstance.doService(context);
+		
+		for(ServiceInterceptor intercept : interceptList) 
+			if((result = intercept.postService()) != null)
+				return result;
+		
+		return serviceResult;
 	}
 	
 	public String routeToNext(String identify, Context context) throws Exception {
@@ -31,16 +52,21 @@ public class ServiceHolder {
 		return holder.doService(context);
 	}
 	
-	public Service buildService(Context context) throws Exception {
-		
-		Service result = realService.newInstance();
-		context.injectField(result);
-		return result;
-	}
-	
 	public void setRealServiceClass(Class<? extends Service> serviceClass) {
 		
 		this.realService = serviceClass;
+		Intercept interceptAnno = serviceClass.getAnnotation(Intercept.class);
+		if(interceptAnno != null) {
+			this.interceptList = new ServiceInterceptor[interceptAnno.value().length];
+			for(int i = 0; i < interceptAnno.value().length; i ++) {
+				try {
+					this.interceptList[i] = interceptAnno.value()[i].newInstance();
+				} catch (Exception e) {
+					log.error("不存在无参构造方法", e);
+					System.exit(0);
+				}
+			}
+		}
 	}
 	
 	public Class<? extends Service> getRealService() {

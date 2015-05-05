@@ -15,7 +15,7 @@ public class ServiceHolder {
 	
 	private Class<? extends Service> realService;
 	private Map<String, ServiceHolder> nexts = new HashMap<>();
-	private ServiceInterceptor[] interceptList;
+	private ServiceInterceptor[] interceptList = new ServiceInterceptor[0];
 	
 	public String doService(Context context) throws Exception {
 		

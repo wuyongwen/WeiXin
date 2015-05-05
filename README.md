@@ -11,11 +11,6 @@
     <servlet>
         <servlet-name>weixin</servlet-name>
         <servlet-class>com.chn.wx.WeiXinServlet</servlet-class>
-        <init-param>
-            <param-name>package</param-name>
-            <param-value>com.chn.wx.listener</param-value>
-        </init-param>
-        
     </servlet>
     <servlet-mapping>
         <servlet-name>weixin</servlet-name>
@@ -29,6 +24,8 @@
     weixin.app.secret=
     weixin.app.aeskey=
     weixin.app.token=
+    
+    weixin.service.package=
     
 ## 关于 ##
 
@@ -52,7 +49,6 @@
                                                     └───────────> LinkMessageService
 
 结点与父结点的关系通过 `@Node(value = "raw", parent = EncryptRouter.class)` 指定。
-父结点到子结点的路由通过 `tree.route(context, key)` 完成，key 即为 `Node` 中的 value 属性。
 
 ## 消息返回 ##
 

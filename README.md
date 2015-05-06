@@ -30,8 +30,6 @@
 	weixin.service.async=true
 	weixin.service.innerexec.size=20
 
-解释下参数 weixin.service.async，值为 true 时异步执行，会忽略 Service 返回的任何内容，如有下行需调用客服接口，可以解决压力过大或者网络过慢等导致的“微信号暂时不能提供服务”的问题。
-
 > **关于异步执行:** 当 weixin.service.async 值为 true 时异步执行，会忽略 Service 返回的任何内容，如有下行需调用客服接口，可以解决压力过大或者网络过慢等导致的“微信号暂时不能提供服务”的问题。
     
 ## 主流程 ##

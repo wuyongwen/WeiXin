@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
 import com.chn.wx.core.Service;
-import com.chn.wx.core.ServiceHolder;
+import com.chn.wx.core.ServiceProxy;
 import com.chn.wx.dto.Context;
 
 /**
@@ -30,7 +30,7 @@ public class EncryptRouter implements Service {
     
     @Param(value="encrypt_type", defaultValue="raw") 
     private String encrypt_type; //加密类型
-    @Param private ServiceHolder serviceHolder;
+    @Param private ServiceProxy serviceHolder;
     
     @Override
     public String doService(Context context) throws Exception {

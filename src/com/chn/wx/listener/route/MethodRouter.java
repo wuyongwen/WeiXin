@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
 import com.chn.wx.core.Service;
-import com.chn.wx.core.ServiceHolder;
+import com.chn.wx.core.ServiceProxy;
 import com.chn.wx.dto.Context;
 
 /**
@@ -30,7 +30,7 @@ public class MethodRouter implements Service {
     
     @Param("method")
     private String method;
-    @Param private ServiceHolder serviceHolder;
+    @Param private ServiceProxy serviceHolder;
     
     @Override
     public String doService(Context context) throws Exception {

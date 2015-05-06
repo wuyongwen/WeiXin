@@ -19,7 +19,7 @@ import org.dom4j.io.SAXReader;
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
 import com.chn.wx.core.Service;
-import com.chn.wx.core.ServiceHolder;
+import com.chn.wx.core.ServiceProxy;
 import com.chn.wx.dto.App;
 import com.chn.wx.dto.Context;
 import com.chn.wx.template.PassiveMessage;
@@ -41,7 +41,7 @@ public class AesMessageRouter implements Service {
     @Param private String nonce;
     @Param private String xmlContent;
     
-    @Param private ServiceHolder serviceHolder;
+    @Param private ServiceProxy serviceHolder;
     
     private WXBizMsgCrypt msgCrypt;
     

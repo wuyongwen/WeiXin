@@ -20,14 +20,21 @@
 同时在 classpath 下的 weixin.properties 里配置各项参数：
 
     weixin.app.id=
-    weixin.app.name=
-    weixin.app.secret=
-    weixin.app.aeskey=
-    weixin.app.token=
+	weixin.app.name=
+	weixin.app.secret=
+	weixin.app.aeskey=
+	weixin.app.token=
+	
+	weixin.service.package=
+	
+	weixin.service.async=true
+	weixin.service.innerexec.size=20
+
+解释下参数 weixin.service.async，值为 true 时异步执行，会忽略 Service 返回的任何内容，如有下行需调用客服接口，可以解决压力过大或者网络过慢等导致的“微信号暂时不能提供服务”的问题。
+
+> **关于异步执行:** 当 weixin.service.async 值为 true 时异步执行，会忽略 Service 返回的任何内容，如有下行需调用客服接口，可以解决压力过大或者网络过慢等导致的“微信号暂时不能提供服务”的问题。
     
-    weixin.service.package=
-    
-## 关于 ##
+## 主流程 ##
 
 `com.chn.wx.listener` 中的所有实现 `Service` 接口的类会被组装成一棵流程树，目前结点如下：
 
@@ -53,6 +60,7 @@
 ## 消息返回 ##
 
 `Service` 的实现方法中返回的字符串会被写回到请求流中，需要返回消息时，调用 `com.chn.wx.template.PassiveMessage` 中的对应方法生成报文返回即可。
+> **注意：**仅同步执行时该返回有效
 
 ## 主动调用 ##
 

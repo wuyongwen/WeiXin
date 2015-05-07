@@ -31,4 +31,6 @@ interface WeiXinURL {
     String QUERY_MENU = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=${accessToken}";
     String DELETE_MENU = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=${accessToken}";
 
+    String SHORT_URL = "https://api.weixin.qq.com/cgi-bin/shorturl?access_token=${accessToken}";
+    
 }

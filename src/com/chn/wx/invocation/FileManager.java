@@ -30,7 +30,10 @@ public class FileManager {
     private static final StringTemplate getFileUrl = StringTemplate.compile(WeiXinURL.GET_FILE);
     
     public static enum Type {
-        image, voice, video, thumb;
+        image, //1M，支持JPG格式 
+        voice, //2M，播放长度不超过60s，支持AMR\MP3格式
+        video, //10MB，支持MP4格式
+        thumb; //64KB，支持JPG格式
     }
     
     /**
@@ -49,7 +52,7 @@ public class FileManager {
     }
     
     /**
-     * @description 文件上传
+     * @description 文件上传，媒体文件在后台保存时间为3天，即3天后media_id失效。 
      * @param type
      * @param fileContent
      * @return 返回 media_id

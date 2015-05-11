@@ -18,10 +18,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.apache.tomcat.util.codec.binary.StringUtils;
 
 import com.chn.common.HttpUtils;
+import com.chn.common.IOUtils;
 import com.chn.wx.dto.Context;
 
 /**
@@ -60,8 +61,7 @@ public class WeiXinServlet extends HttpServlet {
         OutputStream os = resp.getOutputStream();
         try {
             String responseString = this.handler.process(context);
-            if(responseString != null)
-                IOUtils.write(responseString, new OutputStreamWriter(os, "UTF-8"));
+            os.write(StringUtils.getBytesUtf8(responseString));
         } catch (Exception e) {
             log.error("消息处理失败", e);
         } finally {

@@ -21,8 +21,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.io.IOUtils;
-
 /**
  * @class HttpUtils
  * @author lzxz1234
@@ -104,7 +102,7 @@ public class HttpUtils {
             conn.connect();
             
             is = conn.getInputStream();
-            return IOUtils.toString(is);
+            return IOUtils.toString(is, "UTF-8");
         } catch (Exception e) {
             throw new RuntimeException("请求错误！", e);
         } finally {
@@ -134,7 +132,7 @@ public class HttpUtils {
             IOUtils.closeQuietly(os);
             
             is = conn.getInputStream();
-            return IOUtils.toString(is);
+            return IOUtils.toString(is, "UTF-8");
         } catch (Exception e) {
             throw new RuntimeException("请求错误！", e);
         } finally {
@@ -170,7 +168,7 @@ public class HttpUtils {
             IOUtils.closeQuietly(os);
             
             is = conn.getInputStream();
-            return IOUtils.toString(is);
+            return IOUtils.toString(is, "UTF-8");
         } catch (Exception e) {
             throw new RuntimeException("请求错误！", e);
         } finally {

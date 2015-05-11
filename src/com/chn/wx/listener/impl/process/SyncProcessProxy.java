@@ -1,8 +1,9 @@
-package com.chn.wx.monitor;
+package com.chn.wx.listener.impl.process;
 
 import org.apache.log4j.Logger;
 
 import com.chn.wx.dto.Context;
+import com.chn.wx.listener.ProcessProxy;
 
 public class SyncProcessProxy extends ProcessProxy {
 

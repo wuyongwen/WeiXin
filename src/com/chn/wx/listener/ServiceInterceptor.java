@@ -1,4 +1,4 @@
-package com.chn.wx.monitor;
+package com.chn.wx.listener;
 
 public interface ServiceInterceptor {
 

@@ -1,4 +1,4 @@
-package com.chn.wx.monitor;
+package com.chn.wx.listener;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -11,7 +11,7 @@ import com.chn.wx.dto.Context;
 
 public abstract class ProcessProxy {
 
-    ServiceProxy root = new ServiceProxy();
+    protected ServiceProxy root = new ServiceProxy();
     
     public abstract String process(Context context);
     

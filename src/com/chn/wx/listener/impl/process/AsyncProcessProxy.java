@@ -1,4 +1,4 @@
-package com.chn.wx.monitor;
+package com.chn.wx.listener.impl.process;
 
 import java.util.concurrent.Callable;
 
@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import com.chn.common.Exec;
 import com.chn.wx.dto.Context;
+import com.chn.wx.listener.ProcessProxy;
 
 public class AsyncProcessProxy extends ProcessProxy {
 

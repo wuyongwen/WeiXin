@@ -1,4 +1,4 @@
-package com.chn.wx.core;
+package com.chn.wx.monitor;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;

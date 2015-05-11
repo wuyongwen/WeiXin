@@ -1,6 +1,6 @@
 package com.chn.wx.annotation;
 
-import com.chn.wx.core.ServiceInterceptor;
+import com.chn.wx.monitor.ServiceInterceptor;
 
 public @interface Intercept {
 

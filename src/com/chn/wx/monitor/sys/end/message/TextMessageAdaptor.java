@@ -1,30 +1,30 @@
 ﻿/**
  * WeiXin
- * @title LinkMessageAdaptor.java
- * @package com.chn.wx.listener.end.message
+ * @title TextMessageAdaptor.java
+ * @package com.chn.wx.Service
  * @author lzxz1234<lzxz1234@gmail.com>
- * @date 2014年12月17日-下午6:17:41
+ * @date 2014年12月16日-下午1:06:17
  * @version V1.0
  * All Right Reserved
  */
-package com.chn.wx.listener.end.message;
+package com.chn.wx.monitor.sys.end.message;
 
 import org.apache.log4j.Logger;
 
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
-import com.chn.wx.core.Service;
 import com.chn.wx.dto.Context;
-import com.chn.wx.listener.route.RawMessageRouter;
+import com.chn.wx.monitor.Service;
+import com.chn.wx.monitor.sys.route.RawMessageRouter;
 
 /**
- * @class LinkMessageAdaptor
+ * @class TextMessageAdaptor
  * @author lzxz1234
  * @description 
  * @version v1.0
  */
-@Node(parents=RawMessageRouter.class, value="link")
-public class LinkMessageAdaptor implements Service {
+@Node(parents=RawMessageRouter.class, value="text")
+public class TextMessageAdaptor implements Service {
 
     protected Logger log = Logger.getLogger(this.getClass());
     
@@ -32,14 +32,12 @@ public class LinkMessageAdaptor implements Service {
     @Param protected String FromUserName; //发送方帐号（一个OpenID）
     @Param protected String CreateTime;   //消息创建时间 （整型）
     @Param protected String MsgId;        //消息id，64位整型
-    @Param protected String Title;        //消息标题
-    @Param protected String Description;  //消息描述
-    @Param protected String Url;          //消息链接
+    @Param protected String Content;      //消息id，64位整型
     
     @Override
     public String doService(Context context) throws Exception {
-
-        log.debug(String.format("收到来自 %s 的链接信息 %s", FromUserName, Title));
+        
+        log.debug(String.format("收到来自 %s 的文本信息 %s", FromUserName, Content));
         return null;
     }
 

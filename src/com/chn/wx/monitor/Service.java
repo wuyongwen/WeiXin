@@ -7,7 +7,7 @@
  * @version V1.0
  * All Right Reserved
  */
-package com.chn.wx.core;
+package com.chn.wx.monitor;
 
 import com.chn.wx.dto.Context;
 

@@ -16,11 +16,11 @@ import com.chn.common.Cfg;
 import com.chn.common.Exec;
 import com.chn.common.Scans;
 import com.chn.common.StringUtils;
-import com.chn.wx.core.AsyncProcessProxy;
-import com.chn.wx.core.ProcessProxy;
-import com.chn.wx.core.ProcessProxy.ClassProvider;
-import com.chn.wx.core.SyncProcessProxy;
 import com.chn.wx.dto.Context;
+import com.chn.wx.monitor.AsyncProcessProxy;
+import com.chn.wx.monitor.ProcessProxy;
+import com.chn.wx.monitor.SyncProcessProxy;
+import com.chn.wx.monitor.ProcessProxy.ClassProvider;
 
 /**
  * @class MessageHandler
@@ -44,7 +44,7 @@ public class MessageHandler {
 		proxy = "TRUE".equalsIgnoreCase(executeMode) ? new AsyncProcessProxy() 
 		                                             : new SyncProcessProxy();
 		
-		proxy.loadClass(new PackageClassProvider("com.chn.wx.listener"),
+		proxy.loadClass(new PackageClassProvider("com.chn.wx.monitor.sys"),
 		                new PackageClassProvider(packages));
 	}
 

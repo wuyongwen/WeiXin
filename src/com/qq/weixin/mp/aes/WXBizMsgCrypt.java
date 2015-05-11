@@ -22,7 +22,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.codec.binary.Base64;
+import com.chn.common.Base64;
 
 /**
  * 提供接收和推送给公众平台消息的加解密接口(UTF8编码的字符串).

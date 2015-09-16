@@ -20,7 +20,7 @@ import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
-import com.chn.wx.listener.ServiceProxy;
+import com.chn.wx.listener.ServiceAgent;
 
 /**
  * @class MessageService
@@ -34,7 +34,7 @@ public final class RawMessageRouter implements Service {
     protected Logger log = Logger.getLogger(RawMessageRouter.class);
     
     @Param private String xmlContent;
-    @Param private ServiceProxy serviceHolder;
+    @Param private ServiceAgent serviceAgent;
     
     @Override
     public String doService(Context context) throws Exception {
@@ -47,7 +47,7 @@ public final class RawMessageRouter implements Service {
         }
         String routeKey = context.getAttribute(String.class, "MsgType");
         log.debug(String.format("根据消息类型[%s]作路由", routeKey));
-        return serviceHolder.routeToNext(routeKey, context);
+        return serviceAgent.routeToNext(routeKey, context);
     }
 
 }

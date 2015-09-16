@@ -17,10 +17,10 @@ import com.chn.common.Exec;
 import com.chn.common.Scans;
 import com.chn.common.StringUtils;
 import com.chn.wx.dto.Context;
-import com.chn.wx.listener.ProcessProxy;
-import com.chn.wx.listener.ProcessProxy.ClassProvider;
-import com.chn.wx.listener.impl.process.AsyncProcessProxy;
-import com.chn.wx.listener.impl.process.SyncProcessProxy;
+import com.chn.wx.listener.ThreadsMode;
+import com.chn.wx.listener.ThreadsMode.ClassProvider;
+import com.chn.wx.listener.impl.process.AsyncThreadMode;
+import com.chn.wx.listener.impl.process.SyncThreadMode;
 
 /**
  * @class MessageHandler
@@ -30,7 +30,7 @@ import com.chn.wx.listener.impl.process.SyncProcessProxy;
  */
 public class MessageHandler {
 
-    private ProcessProxy proxy;
+    private ThreadsMode proxy;
     
 	public void init() {
 
@@ -41,8 +41,8 @@ public class MessageHandler {
 		String innerexecSize = cfg.get("weixin.service.innerexec.size");
 
 		Exec.init(Integer.parseInt(innerexecSize));
-		proxy = "TRUE".equalsIgnoreCase(executeMode) ? new AsyncProcessProxy() 
-		                                             : new SyncProcessProxy();
+		proxy = "TRUE".equalsIgnoreCase(executeMode) ? new AsyncThreadMode() 
+		                                             : new SyncThreadMode();
 		
 		proxy.loadClass(new PackageClassProvider("com.chn.wx.listener.impl.service"),
 		                new PackageClassProvider(packages));

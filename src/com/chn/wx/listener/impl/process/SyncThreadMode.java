@@ -3,11 +3,11 @@ package com.chn.wx.listener.impl.process;
 import org.apache.log4j.Logger;
 
 import com.chn.wx.dto.Context;
-import com.chn.wx.listener.ProcessProxy;
+import com.chn.wx.listener.ThreadsMode;
 
-public class SyncProcessProxy extends ProcessProxy {
+public class SyncThreadMode extends ThreadsMode {
 
-    private final Logger log = Logger.getLogger(SyncProcessProxy.class);
+    private final Logger log = Logger.getLogger(SyncThreadMode.class);
     
     @Override
     public String process(Context context) {

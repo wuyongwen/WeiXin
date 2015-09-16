@@ -15,7 +15,7 @@ import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
-import com.chn.wx.listener.ServiceProxy;
+import com.chn.wx.listener.ServiceAgent;
 
 /**
  * @class MethodRouter
@@ -30,13 +30,13 @@ public class MethodRouter implements Service {
     
     @Param("method")
     private String method;
-    @Param private ServiceProxy serviceHolder;
+    @Param private ServiceAgent serviceAgent;
     
     @Override
     public String doService(Context context) throws Exception {
         
     	log.info(String.format("根据请求方法[%s]做路由。", method));
-        return serviceHolder.routeToNext(this.method, context);
+        return serviceAgent.routeToNext(this.method, context);
     }
 
 }

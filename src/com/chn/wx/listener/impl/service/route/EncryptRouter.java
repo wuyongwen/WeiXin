@@ -15,7 +15,7 @@ import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
-import com.chn.wx.listener.ServiceProxy;
+import com.chn.wx.listener.ServiceAgent;
 
 /**
  * @class EncryptRouter
@@ -30,13 +30,13 @@ public class EncryptRouter implements Service {
     
     @Param(value="encrypt_type", defaultValue="raw") 
     private String encrypt_type; //加密类型
-    @Param private ServiceProxy serviceHolder;
+    @Param private ServiceAgent serviceAgent;
     
     @Override
     public String doService(Context context) throws Exception {
         
         log.info(String.format("根据加密类型[%s]做路由。", encrypt_type));
-        return serviceHolder.routeToNext(this.encrypt_type, context);
+        return serviceAgent.routeToNext(this.encrypt_type, context);
     }
 
 }

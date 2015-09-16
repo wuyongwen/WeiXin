@@ -9,9 +9,9 @@ import java.util.Set;
 import com.chn.wx.annotation.Node;
 import com.chn.wx.dto.Context;
 
-public abstract class ProcessProxy {
+public abstract class ThreadsMode {
 
-    protected ServiceProxy root = new ServiceProxy();
+    protected ServiceAgent root = new ServiceAgent();
     
     public abstract String process(Context context);
     
@@ -25,7 +25,7 @@ public abstract class ProcessProxy {
     
     private synchronized void loopload(Map<Node, 
                                        Class<? extends Service>> allNodes, 
-                                       ServiceProxy holder) {
+                                       ServiceAgent holder) {
 
         for (Entry<Node, Class<? extends Service>> entry : allNodes.entrySet()) {
             Node node = entry.getKey();

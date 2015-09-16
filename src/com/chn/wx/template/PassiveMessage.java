@@ -28,6 +28,8 @@ public class PassiveMessage {
               "<xml>"
             + "<ToUserName><![CDATA[${ToUserName}]]></ToUserName>"
             + "<Encrypt><![CDATA[${Encrypt}]]></Encrypt>"
+            + "<TimeStamp>${TimeStamp}</TimeStamp>"
+            + "<Nonce><![CDATA[${Encrypt}]]></Nonce>"
             + "</xml>");
     private static StringTemplate T_TEXT = StringTemplate.compile(
               "<xml>"
@@ -111,11 +113,13 @@ public class PassiveMessage {
      * @param ToUserName 接收方帐号（收到的OpenID）
      * @param Encrypt
     */
-    public static String wrapAES(String ToUserName, String Encrypt) {
+    public static String wrapAES(String ToUserName, String Encrypt, String TimeStamp, String Nonce) {
         
         Map<String, Object> params = new HashMap<>();
         params.put("ToUserName", ToUserName);
         params.put("Encrypt", Encrypt);
+        params.put("TimeStamp", TimeStamp);
+        params.put("Nonce", Nonce);
         return T_AES.replace(params);
     }
     

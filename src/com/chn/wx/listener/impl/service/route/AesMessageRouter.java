@@ -21,7 +21,7 @@ import com.chn.wx.annotation.Param;
 import com.chn.wx.dto.App;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
-import com.chn.wx.listener.ServiceProxy;
+import com.chn.wx.listener.ServiceAgent;
 import com.chn.wx.template.PassiveMessage;
 import com.qq.weixin.mp.aes.WXBizMsgCrypt;
 
@@ -41,7 +41,7 @@ public class AesMessageRouter implements Service {
     @Param private String nonce;
     @Param private String xmlContent;
     
-    @Param private ServiceProxy serviceHolder;
+    @Param private ServiceAgent serviceAgent;
     
     private WXBizMsgCrypt msgCrypt;
     
@@ -56,12 +56,12 @@ public class AesMessageRouter implements Service {
         context.setAttribute("xmlContent", xmlContent);
         
         //调用下一环节
-        String result = serviceHolder.routeToNext("raw", context);
+        String result = serviceAgent.routeToNext("raw", context);
         
         //加密并组 XML 返回
         String Encrypt = msgCrypt.encryptMsg(result, timestamp, nonce);
         //FromUserName(用户OpenID) 会在后续结点被解析并放入，不能通过 @Param 直接注入
-        return PassiveMessage.wrapAES((String)context.getAttribute("FromUserName"), Encrypt);
+        return PassiveMessage.wrapAES((String)context.getAttribute("FromUserName"), Encrypt, timestamp, nonce);
     }
     
     /**

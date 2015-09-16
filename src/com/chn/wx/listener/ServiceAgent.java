@@ -9,12 +9,12 @@ import com.chn.common.Assert;
 import com.chn.wx.annotation.Intercept;
 import com.chn.wx.dto.Context;
 
-public class ServiceProxy {
+public class ServiceAgent {
 
-	private Logger log = Logger.getLogger(ServiceProxy.class);
+	private Logger log = Logger.getLogger(ServiceAgent.class);
 	
 	private Class<? extends Service> realService;
-	private Map<String, ServiceProxy> nexts = new HashMap<>();
+	private Map<String, ServiceAgent> nexts = new HashMap<>();
 	private ServiceInterceptor[] interceptList = new ServiceInterceptor[0];
 	
 	public String doService(Context context) throws Exception {
@@ -45,7 +45,7 @@ public class ServiceProxy {
 	public String routeToNext(String identify, Context context) throws Exception {
 		
 		if(identify == null) return null;
-		ServiceProxy holder = this.nexts.get(identify);
+		ServiceAgent holder = this.nexts.get(identify);
 		Assert.notNull(holder, String.format("类[%s]无[%s]子节点！", 
 							   realService.getSimpleName(), 
 							   identify));
@@ -74,9 +74,9 @@ public class ServiceProxy {
 		return this.realService;
 	}
 	
-	public ServiceProxy registNext(String key, Class<? extends Service> serviceClass) {
+	public ServiceAgent registNext(String key, Class<? extends Service> serviceClass) {
 		
-		ServiceProxy holder = new ServiceProxy();
+		ServiceAgent holder = new ServiceAgent();
 		holder.setRealServiceClass(serviceClass);
 		this.nexts.put(key, holder);
 		log.info(String.format("类[%s]的后续结点[%s]被标记为[%s]", 

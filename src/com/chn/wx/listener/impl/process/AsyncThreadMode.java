@@ -6,11 +6,11 @@ import org.apache.log4j.Logger;
 
 import com.chn.common.Exec;
 import com.chn.wx.dto.Context;
-import com.chn.wx.listener.ProcessProxy;
+import com.chn.wx.listener.ThreadsMode;
 
-public class AsyncProcessProxy extends ProcessProxy {
+public class AsyncThreadMode extends ThreadsMode {
 
-    private final Logger log = Logger.getLogger(AsyncProcessProxy.class);
+    private final Logger log = Logger.getLogger(AsyncThreadMode.class);
     
     @Override
     public String process(Context context) {
@@ -21,7 +21,7 @@ public class AsyncProcessProxy extends ProcessProxy {
             public String call() throws Exception {
                 
                 try {
-                    AsyncProcessProxy.this.root.doService(context);
+                    AsyncThreadMode.this.root.doService(context);
                 } catch (Exception e) {
                     log.error("任务处理出错", e);
                 }

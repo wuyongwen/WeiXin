@@ -18,10 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.apache.tomcat.util.codec.binary.StringUtils;
 
 import com.chn.common.HttpUtils;
 import com.chn.common.IOUtils;
+import com.chn.common.StringUtils;
 import com.chn.wx.dto.Context;
 
 /**

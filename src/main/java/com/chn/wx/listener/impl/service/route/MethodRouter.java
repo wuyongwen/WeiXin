@@ -23,7 +23,7 @@ import com.chn.wx.listener.ServiceAgent;
  * @description 
  * @version v1.0
  */
-@Node(value = "root", parents = Void.class)
+@Node(value = "root", parents = Service.class)
 public class MethodRouter implements Service {
 
     private Logger log = Logger.getLogger(MethodRouter.class);

@@ -34,20 +34,28 @@ public class MessageHandler {
     
 	public void init() {
 
-		Cfg cfg = Cfg.getCfg("/weixin.properties");
-		
-		String packages = cfg.get("weixin.service.package");
-		String executeMode = cfg.get("weixin.service.async");
-		String innerexecSize = cfg.get("weixin.service.innerexec.size");
+		this.init(Cfg.getCfg("/weixin.properties"));
+	}
+	
+	public void init(Cfg cfg) {
+	    
+	    String packages = cfg.get("weixin.service.package");
+        String executeMode = cfg.get("weixin.service.async");
+        String innerexecSize = cfg.get("weixin.service.innerexec.size");
 
-		Exec.init(Integer.parseInt(innerexecSize));
-		proxy = "TRUE".equalsIgnoreCase(executeMode) ? new AsyncThreadMode() 
-		                                             : new SyncThreadMode();
-		
-		proxy.loadClass(new PackageClassProvider("com.chn.wx.listener.impl.service"),
-		                new PackageClassProvider(packages));
+        Exec.init(Integer.parseInt(innerexecSize));
+        proxy = "TRUE".equalsIgnoreCase(executeMode) ? new AsyncThreadMode() 
+                                                     : new SyncThreadMode();
+        
+        proxy.loadClass(new PackageClassProvider("com.chn.wx.listener.impl.service"),
+                        new PackageClassProvider(packages));
 	}
 
+	public ThreadsMode getThreadsMode() {
+	    
+	    return proxy;
+	}
+	
 	public String process(Context context) {
 
 		return proxy.process(context);
@@ -58,7 +66,7 @@ public class MessageHandler {
 	    Exec.destroy();
 	}
 
-	private static class PackageClassProvider implements ClassProvider {
+	public static class PackageClassProvider implements ClassProvider {
 
         private String packages;
 

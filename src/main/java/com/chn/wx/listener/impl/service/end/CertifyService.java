@@ -32,13 +32,13 @@ public class CertifyService implements Service {
     private static Logger log = Logger.getLogger(CertifyService.class);
     
     @Param
-    private String signature;
+    protected String signature;
     @Param
-    private String timestamp;
+    protected String timestamp;
     @Param
-    private String nonce;
+    protected String nonce;
     @Param
-    private String echostr;
+    protected String echostr;
 
     /* 
      * 加密/校验流程如下：

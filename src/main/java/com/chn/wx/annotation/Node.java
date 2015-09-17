@@ -14,6 +14,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.chn.wx.listener.Service;
+
 /**
  * @class Node
  * @author lzxz1234
@@ -27,6 +29,6 @@ public @interface Node {
 
     public String value();
     
-    public Class<?>[] parents();
+    public Class<? extends Service>[] parents();
     
 }

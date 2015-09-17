@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import com.chn.common.Assert;
 import com.chn.wx.annotation.Intercept;
 import com.chn.wx.dto.Context;
+import com.chn.wx.listener.impl.beanfactory.BeanFactory;
 
 public class ServiceAgent {
 
@@ -20,14 +21,13 @@ public class ServiceAgent {
 	public String doService(Context context) throws Exception {
 		
 		String result = null;
-		context.setAttribute("serviceHolder", this);
+		context.setAttribute("serviceAgent", this);
 		
 		for(ServiceInterceptor intercept : interceptList) 
 			if((result = intercept.preConstruct()) != null)
 				return result;
 		
-		Service serviceInstance = realService.newInstance();
-		context.injectField(serviceInstance);
+		Service serviceInstance = BeanFactory.getInstance(realService, context);
 		
 		for(ServiceInterceptor intercept : interceptList) 
 			if((result = intercept.preService()) != null)
@@ -69,21 +69,17 @@ public class ServiceAgent {
 		}
 	}
 	
-	public Class<? extends Service> getRealService() {
-		
-		return this.realService;
-	}
-	
 	public ServiceAgent registNext(String key, Class<? extends Service> serviceClass) {
 		
-		ServiceAgent holder = new ServiceAgent();
-		holder.setRealServiceClass(serviceClass);
-		this.nexts.put(key, holder);
-		log.info(String.format("类[%s]的后续结点[%s]被标记为[%s]", 
-								realService.getSimpleName(), 
-								key, 
-								serviceClass.getSimpleName()));
-		return holder;
+		ServiceAgent agent = new ServiceAgent();
+		agent.setRealServiceClass(serviceClass);
+		this.registNext(key, agent);
+		return agent;
+	}
+	
+	public void registNext(String key, ServiceAgent agent) {
+	    
+	    this.nexts.put(key, agent);
 	}
 	
 }

@@ -1,13 +1,4 @@
-﻿/**
- * WeiXin
- * @title Context.java
- * @package com.chn.wx.trans
- * @author lzxz1234<lzxz1234@gmail.com>
- * @date 2014年12月16日-下午4:45:01
- * @version V1.0
- * All Right Reserved
- */
-package com.chn.wx.dto;
+﻿package com.chn.wx.dto;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -31,6 +22,11 @@ public class Context {
     private static final Logger log = Logger.getLogger(Context.class);
     
     private Map<String, Object> map;
+    
+    public Context() {
+        
+        this.map = new HashMap<>();
+    }
     
     public Context(Map<String, Object> orginalParams) {
         
@@ -73,7 +69,7 @@ public class Context {
     
     public void injectField(Object target) {
         
-        for(Field field : FieldUtils.getFields(target.getClass(), Param.class)) {
+        for(Field field : FieldUtils.traverseGetFields(target.getClass(), Param.class)) {
             Param param = field.getAnnotation(Param.class);
             if(param.required()) {
                 String paramName = param.value();

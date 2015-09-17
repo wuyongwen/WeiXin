@@ -107,7 +107,7 @@ public class FieldUtils {
     }
     
     /** 
-     * 返回 clazz 类存在 type 注解声明的字段
+     * 返回目标类存在 type 注解声明的字段
      * @param clazz
      * @param type
      * @return
@@ -115,6 +115,23 @@ public class FieldUtils {
     public static List<Field> getFields(Class<?> clazz, final Class<? extends Annotation> type) {
         
         return getFields(clazz, new FieldFilter() {
+            @Override
+            public boolean accept(Field field) {
+                return field.isAnnotationPresent(type);
+            }
+        });
+    }
+    
+    /**
+     * 返回目标类及目标父类中存在 type 注解声明的字段
+     * @param clazz
+     * @param type
+     * @return
+     */
+    public static List<Field> traverseGetFields(Class<?> clazz, final Class<? extends Annotation> type) {
+        
+        
+        return traverseGetFields(clazz, new FieldFilter() {
             @Override
             public boolean accept(Field field) {
                 return field.isAnnotationPresent(type);
@@ -138,6 +155,21 @@ public class FieldUtils {
                 result.add(field);
             }
         }
+        return result;
+    }
+    
+    /**
+     * 根据过滤策略过滤目标类及目标父类中全部字段，并将符合条件的字段组成数组返回
+     * @param clazz
+     * @param filter
+     * @return
+     */
+    public static List<Field> traverseGetFields(Class<?> clazz, FieldFilter filter) {
+        
+        List<Field> result = new ArrayList<Field>();
+        do {
+            result.addAll(getFields(clazz, filter));
+        } while (!(clazz = clazz.getSuperclass()).equals(Object.class));
         return result;
     }
     

@@ -13,7 +13,7 @@ public class AsyncThreadMode extends ThreadsMode {
     private final Logger log = Logger.getLogger(AsyncThreadMode.class);
     
     @Override
-    public String process(Context context) {
+    public String process(final Context context) {
         
         Exec.submit(new Callable<String>() {
 

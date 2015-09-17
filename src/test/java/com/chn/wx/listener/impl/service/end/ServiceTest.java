@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.runner.RunWith;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -26,6 +28,12 @@ public abstract class ServiceTest {
         
         try {
             handler.init();
+            PowerMockito.mockStatic(BeanFactory.class, new Answer<Object>() {
+                @Override
+                public Object answer(InvocationOnMock invocation) throws Throwable {
+                    return invocation.callRealMethod();
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
@@ -64,21 +72,26 @@ public abstract class ServiceTest {
         return params;
     }
     
-    public void reRegistAndLoad(final Class<?>... classes) {
+    public <T> void preparToTest(Class<T> clazz, T instance) throws Exception {
         
-        handler.getThreadsMode().loadClass(new PackageClassProvider("com.chn.wx.listener.impl.service"), 
-                new ClassProvider() {
-                    @Override
-                    public Set<Class<?>> getClasses() {
-                        Set<Class<?>> result = new HashSet<Class<?>>();
-                        for(Class<?> clazz : classes) result.add(clazz);
-                        return result;
-                    }
-        });
+        handler.getThreadsMode().loadClass(
+                new PackageClassProvider("com.chn.wx.listener.impl.service"), 
+                new SingleClassProvider(clazz));
+        PowerMockito.when(BeanFactory.getInstance(clazz)).thenReturn(instance);
     }
     
-    public <T> void registReturn(Class<T> clazz, T result) throws Exception {
+    private static class SingleClassProvider implements ClassProvider {
+
+        private Class<?> clazz;
+        public SingleClassProvider(Class<?> clazz) {
+            this.clazz = clazz;
+        }
+        @Override
+        public Set<Class<?>> getClasses() {
+            Set<Class<?>> result = new HashSet<Class<?>>();
+            result.add(clazz);
+            return result;
+        }
         
-        PowerMockito.whenNew(clazz.getConstructor()).withNoArguments().thenReturn(result);
     }
 }

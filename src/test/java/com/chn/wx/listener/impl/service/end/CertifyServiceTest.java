@@ -22,10 +22,9 @@ public class CertifyServiceTest extends ServiceTest {
         String params = String.format(url, signature, timestamp, nonce, echostr);
         Context context = this.doGetCtxt(params);
         
-        this.registReturn(MockCertifyService.class, service);
+        this.preparToTest(MockCertifyService.class, service);
         Mockito.when(service.doService(context)).thenCallRealMethod();
         
-        this.reRegistAndLoad(MockCertifyService.class);
         Assert.assertEquals(echostr, handler.process(context));
         Mockito.verify(service).doService(context);
     }

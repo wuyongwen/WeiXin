@@ -6,9 +6,11 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -16,15 +18,16 @@ import com.chn.common.StringUtils;
 import com.chn.wx.MessageHandler;
 import com.chn.wx.MessageHandler.PackageClassProvider;
 import com.chn.wx.dto.Context;
+import com.chn.wx.listener.BeanFactory;
 import com.chn.wx.listener.ThreadsMode.ClassProvider;
-import com.chn.wx.listener.impl.beanfactory.BeanFactory;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({BeanFactory.class}) 
+@PowerMockIgnore({"javax.crypto.*" })
 public abstract class ServiceTest {
 
-    protected static MessageHandler handler = new MessageHandler();
-    static {
+    protected MessageHandler handler = new MessageHandler();
+    {
         
         try {
             handler.init();
@@ -50,6 +53,11 @@ public abstract class ServiceTest {
         return doTestCtxt("POST", null, xmlContent);
     }
     
+    protected Context doPostCtxt(String params, String xmlContent) {
+        
+        return doTestCtxt("POST", params, xmlContent);
+    }
+    
     private Context doTestCtxt(String method, String params, String xmlContent) {
         
         Context context = new Context(decodeParams(params));
@@ -72,15 +80,17 @@ public abstract class ServiceTest {
         return params;
     }
     
-    public <T> void preparToTest(Class<T> clazz, T instance) throws Exception {
+    public <T> T preparToTest(Class<T> clazz) throws Exception {
         
+        T instance = Mockito.mock(clazz);
         handler.getThreadsMode().loadClass(
                 new PackageClassProvider("com.chn.wx.listener.impl.service"), 
                 new SingleClassProvider(clazz));
         PowerMockito.when(BeanFactory.getInstance(clazz)).thenReturn(instance);
+        return instance;
     }
     
-    private static class SingleClassProvider implements ClassProvider {
+    private class SingleClassProvider implements ClassProvider {
 
         private Class<?> clazz;
         public SingleClassProvider(Class<?> clazz) {

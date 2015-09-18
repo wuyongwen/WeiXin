@@ -9,13 +9,6 @@
  */
 package com.chn.wx.listener.impl.service.route;
 
-import java.io.StringReader;
-
-import org.apache.log4j.Logger;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.io.SAXReader;
-
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
 import com.chn.wx.dto.App;
@@ -34,8 +27,6 @@ import com.qq.weixin.mp.aes.WXBizMsgCrypt;
 @Node(value = "aes", parents = EncryptRouter.class)
 public class AesMessageRouter implements Service {
 
-    private Logger log = Logger.getLogger(AesMessageRouter.class);
-    
     @Param private String msg_signature;//消息体签名
     @Param private String timestamp;
     @Param private String nonce;
@@ -51,8 +42,7 @@ public class AesMessageRouter implements Service {
         msgCrypt = new WXBizMsgCrypt(App.Info.token, App.Info.aesKey, App.Info.id);
         
         //解密，并将解密后信息放入上下文
-        String encryptText = this.getEncyptText(xmlContent);
-        xmlContent = msgCrypt.decryptMsg(msg_signature, timestamp, nonce, encryptText);
+        xmlContent = msgCrypt.decryptMsg(msg_signature, timestamp, nonce, xmlContent);
         context.setAttribute("xmlContent", xmlContent);
         
         //调用下一环节
@@ -62,21 +52,6 @@ public class AesMessageRouter implements Service {
         String Encrypt = msgCrypt.encryptMsg(result, timestamp, nonce);
         //FromUserName(用户OpenID) 会在后续结点被解析并放入，不能通过 @Param 直接注入
         return PassiveMessage.wrapAES((String)context.getAttribute("FromUserName"), Encrypt, timestamp, nonce);
-    }
-    
-    /**
-     * <xml>
-     *     <ToUserName><![CDATA[gh_10f6c3c3ac5a]]></ToUserName>
-     *     <Encrypt><![CDATA[hQM/NS0ujPGbF+/8yVe61=]]></Encrypt>
-     * </xml>
-     * @throws DocumentException 
-    */
-    private String getEncyptText(String xmlContent) throws DocumentException {
-        
-        log.debug("解密报文如下：" + xmlContent);
-        SAXReader reader = new SAXReader();
-        Document document = reader.read(new StringReader(xmlContent));
-        return document.selectSingleNode("/xml/Encrypt").getText();
     }
     
 }

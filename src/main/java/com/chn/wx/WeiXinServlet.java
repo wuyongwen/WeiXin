@@ -54,6 +54,7 @@ public class WeiXinServlet extends HttpServlet {
             throws ServletException, IOException {
         
         Context context = new Context(HttpUtils.decodeParams(req));
+        context.setAttribute("method", req.getMethod());
         if(req.getMethod().equalsIgnoreCase("POST"))
             context.setAttribute("xmlContent", HttpUtils.read(req));
         

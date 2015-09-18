@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import com.chn.common.Assert;
 import com.chn.wx.annotation.Intercept;
 import com.chn.wx.dto.Context;
-import com.chn.wx.listener.impl.beanfactory.BeanFactory;
 
 public class ServiceAgent {
 

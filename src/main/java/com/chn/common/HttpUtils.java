@@ -35,7 +35,10 @@ public class HttpUtils {
         
         InputStream is = req.getInputStream();
         try {
-            return IOUtils.toString(is, req.getCharacterEncoding());
+            String reqCharsetEncoding = req.getCharacterEncoding();
+            if(reqCharsetEncoding == null)
+                reqCharsetEncoding = "UTF-8";
+            return IOUtils.toString(is, reqCharsetEncoding);
         } finally {
             IOUtils.closeQuietly(is);
         }

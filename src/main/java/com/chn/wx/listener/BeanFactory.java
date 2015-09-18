@@ -1,4 +1,4 @@
-package com.chn.wx.listener.impl.beanfactory;
+package com.chn.wx.listener;
 
 import com.chn.wx.dto.Context;
 

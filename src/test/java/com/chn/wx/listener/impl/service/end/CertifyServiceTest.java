@@ -9,7 +9,6 @@ import com.chn.wx.dto.Context;
 
 public class CertifyServiceTest extends ServiceTest {
 
-    MockCertifyService service = Mockito.mock(MockCertifyService.class);
     private String url = "signature=%s&timestamp=%s&nonce=%s&echostr=%s";
     
     @Test
@@ -22,7 +21,7 @@ public class CertifyServiceTest extends ServiceTest {
         String params = String.format(url, signature, timestamp, nonce, echostr);
         Context context = this.doGetCtxt(params);
         
-        this.preparToTest(MockCertifyService.class, service);
+        MockCertifyService service = this.preparToTest(MockCertifyService.class);
         Mockito.when(service.doService(context)).thenCallRealMethod();
         
         Assert.assertEquals(echostr, handler.process(context));

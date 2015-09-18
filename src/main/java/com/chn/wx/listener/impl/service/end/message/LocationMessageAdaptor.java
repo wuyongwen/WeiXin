@@ -42,7 +42,7 @@ public class LocationMessageAdaptor implements Service {
 
         log.debug(String.format("收到来自 %s 的位置信息 %s-%s", FromUserName, 
                                 Location_X, Location_Y));
-        return null;
+        return DEFAULT_RETURN;
     }
     
     

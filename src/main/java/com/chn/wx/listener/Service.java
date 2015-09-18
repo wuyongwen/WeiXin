@@ -19,6 +19,8 @@ import com.chn.wx.dto.Context;
  */
 public interface Service {
 
+    public static final String DEFAULT_RETURN = "Powered By lzxz1234@gmail.com";
+    
     /**
      * @description service
      * @param req

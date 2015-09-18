@@ -40,7 +40,7 @@ public class LinkMessageAdaptor implements Service {
     public String doService(Context context) throws Exception {
 
         log.debug(String.format("收到来自 %s 的链接信息 %s", FromUserName, Title));
-        return null;
+        return DEFAULT_RETURN;
     }
 
 }

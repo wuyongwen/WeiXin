@@ -40,7 +40,7 @@ public class LocationEventAdaptor implements Service {
 
         log.debug(String.format("收到来自 %s 的坐标信息 %s-%s(%s)", FromUserName, 
                                 Latitude, Longitude, Precision));
-        return null;
+        return DEFAULT_RETURN;
     }
 
 }

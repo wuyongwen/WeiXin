@@ -35,7 +35,7 @@ public class EncryptRouter implements Service {
     @Override
     public String doService(Context context) throws Exception {
         
-        log.info(String.format("根据加密类型[%s]做路由。", encrypt_type));
+        log.debug(String.format("根据加密类型[%s]做路由。", encrypt_type));
         return serviceAgent.routeToNext(this.encrypt_type, context);
     }
 

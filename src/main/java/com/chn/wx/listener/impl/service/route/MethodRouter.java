@@ -35,7 +35,7 @@ public class MethodRouter implements Service {
     @Override
     public String doService(Context context) throws Exception {
         
-    	log.info(String.format("根据请求方法[%s]做路由。", method));
+    	log.debug(String.format("根据请求方法[%s]做路由。", method));
         return serviceAgent.routeToNext(this.method, context);
     }
 

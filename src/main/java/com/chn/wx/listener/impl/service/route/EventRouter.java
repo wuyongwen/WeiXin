@@ -33,7 +33,7 @@ public final class EventRouter implements Service {
     @Override
     public String doService(Context context) throws Exception {
 
-        log.info(String.format("根据事件[%s]做路由", Event));
+        log.debug(String.format("根据事件[%s]做路由", Event));
         return serviceAgent.routeToNext(this.Event, context);
     }
     

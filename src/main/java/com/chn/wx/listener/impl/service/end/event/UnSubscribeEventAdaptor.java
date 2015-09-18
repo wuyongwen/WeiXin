@@ -36,7 +36,7 @@ public class UnSubscribeEventAdaptor implements Service {
     public String doService(Context context) throws Exception {
 
         log.debug(String.format("收到 %s 的退订事件", FromUserName));
-        return null;
+        return DEFAULT_RETURN;
     }
 
 }

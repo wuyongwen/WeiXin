@@ -39,7 +39,7 @@ public class ScanQrCodeEventAdaptor implements Service {
         
         log.debug(String.format("收到来自 %s 的二维码事件 %s-%s", FromUserName, 
                                 EventKey, Ticket));
-        return null;
+        return DEFAULT_RETURN;
     }
 
 }

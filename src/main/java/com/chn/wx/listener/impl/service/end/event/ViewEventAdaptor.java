@@ -37,7 +37,7 @@ public class ViewEventAdaptor implements Service {
     public String doService(Context context) throws Exception {
 
         log.debug(String.format("收到 %s 的点击事件，跳转到 %s", FromUserName, EventKey));
-        return null;
+        return DEFAULT_RETURN;
     }
 
 }

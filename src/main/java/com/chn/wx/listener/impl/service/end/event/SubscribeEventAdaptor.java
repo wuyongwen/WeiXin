@@ -38,7 +38,7 @@ public class SubscribeEventAdaptor implements Service {
     public String doService(Context context) throws Exception {
 
         log.debug(String.format("收到 %s 的订阅事件", FromUserName));
-        return null;
+        return DEFAULT_RETURN;
     }
 
 }

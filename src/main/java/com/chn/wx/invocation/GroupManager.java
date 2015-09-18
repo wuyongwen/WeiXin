@@ -1,12 +1,3 @@
-/**
- * WeiXin
- * @title UserManager.java
- * @package com.chn.wx.invocation
- * @author lzxz1234<lzxz1234@gmail.com>
- * @date 2014年12月24日-上午9:42:25
- * @version V1.0
- * All Right Reserved
- */
 package com.chn.wx.invocation;
 
 import static com.chn.common.StringTemplate.compile;
@@ -26,7 +17,7 @@ import com.chn.wx.vo.result.QueryUserGroupResult;
 /**
  * @class UserManager
  * @author lzxz1234
- * @description 
+ * 
  * @version v1.0
  */
 public class GroupManager {
@@ -38,7 +29,7 @@ public class GroupManager {
     private static StringTemplate modifyUserGroupUrl = compile(WeiXinURL.MODIFY_USER_GROUP);
     
     /**
-     * @description 创建分组<br>
+     * 创建分组<br>
      * 一个公众账号，最多支持创建100个分组
      * @param groupName
      * @return 
@@ -53,7 +44,7 @@ public class GroupManager {
     }
     
     /**
-     * @description 查询所有分组
+     * 查询所有分组
      * @return 
     */
     public static QueryGroupsResult queryGroups() {
@@ -66,7 +57,7 @@ public class GroupManager {
     }
     
     /**
-     * @description 通过用户的OpenID查询其所在的GroupID
+     * 通过用户的OpenID查询其所在的GroupID
      * @param userId
      * @return 
     */
@@ -80,7 +71,7 @@ public class GroupManager {
     }
     
     /**
-     * @description 修改分组名
+     * 修改分组名
      * @param groupId 分组id，由微信分配
      * @param groupName 分组名字（30个字符以内）
      * @return 
@@ -95,7 +86,7 @@ public class GroupManager {
     }
     
     /**
-     * @description 移动用户分组
+     * 移动用户分组
      * @param userId 用户唯一标识符
      * @param toGroupId 分组id
      * @return 

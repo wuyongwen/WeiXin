@@ -33,4 +33,6 @@ interface WeiXinURL {
 
     String SHORT_URL = "https://api.weixin.qq.com/cgi-bin/shorturl?access_token=${accessToken}";
     
+    String GET_PLATFORM_TOKEN = "https://api.weixin.qq.com/cgi-bin/component/api_component_token";
+    
 }

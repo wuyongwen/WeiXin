@@ -31,7 +31,7 @@ public class TokenAccessor {
         
         if(System.currentTimeMillis() < expireTime) return accessToken;
         
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put("appId", App.Info.id);
         params.put("appSecret", App.Info.secret);
         String urlLocation = accessTokenUrl.replace(params);

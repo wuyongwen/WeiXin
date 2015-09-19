@@ -2,7 +2,7 @@ package com.chn.wx.vo.result;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-public class PlatFormPreAuthCodeResult {
+public class PlatFormGetPreAuthCodeResult {
 
     @JSONField(name="pre_auth_code") private String preAuthCode;
     @JSONField(name="expires_in") private Integer expiresIn;

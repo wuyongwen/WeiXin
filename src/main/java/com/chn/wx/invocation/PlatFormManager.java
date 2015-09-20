@@ -10,6 +10,7 @@ import com.chn.common.HttpUtils;
 import com.chn.common.StringTemplate;
 import com.chn.wx.dto.App;
 import com.chn.wx.template.PlatFormMessage;
+import com.chn.wx.vo.result.PlatFormGetAuthInfoResult;
 import com.chn.wx.vo.result.PlatFormGetPreAuthCodeResult;
 
 /**
@@ -24,9 +25,15 @@ public class PlatFormManager {
     private static Logger log = Logger.getLogger(PlatFormManager.class);
     
     private static StringTemplate getPreAuthCodeUrl = StringTemplate.compile(WeiXinURL.PLATFORM_GET_PRE_AUTHCODE);
+    private static StringTemplate getAuthInfoUrl = StringTemplate.compile(WeiXinURL.PLATFORM_GET_AUTHINFO);
+    
     private static long expireTime;
     private static String preAuthCode;
     
+    /**
+     * 该API用于获取预授权码。预授权码用于公众号授权时的第三方平台方安全验证。
+     * @return 
+     */
     public static String getPreAuthCode() {
         
         if(System.currentTimeMillis() < expireTime) return preAuthCode;
@@ -47,6 +54,24 @@ public class PlatFormManager {
         expireTime = System.currentTimeMillis() + result.getExpiresIn() * 900;
         log.info("更新 PreAuthCode：" + preAuthCode);
         return preAuthCode;
+    }
+    
+    /**
+     * 该API用于使用授权码换取授权公众号的授权信息，并换取authorizer_access_token和
+     * authorizer_refresh_token。 授权码的获取，需要在用户在第三方平台授权页中完成授
+     * 权流程后，在回调URI中通过URL参数提供给第三方平台方。
+     * @param appId
+     * @param authCode
+     * @return 
+     */
+    public static PlatFormGetAuthInfoResult getAuthInfo(String appId, String authCode) {
+        
+        Map<String, Object> params = new HashMap<>();
+        params.put("component_access_token", PlatFormTokenAccessor.getAccessToken());
+        String urlLocation = getAuthInfoUrl.replace(params);
+        String postContent = PlatFormMessage.wrapGetAuthInfo(appId, authCode);
+        String respJson = HttpUtils.post(urlLocation, postContent);
+        return JSON.parseObject(respJson, PlatFormGetAuthInfoResult.class);
     }
     
 }

@@ -36,5 +36,5 @@ interface WeiXinURL {
     String GET_PLATFORM_TOKEN = "https://api.weixin.qq.com/cgi-bin/component/api_component_token";
     
     String PLATFORM_GET_PRE_AUTHCODE = "https://api.weixin.qq.com/cgi-bin/component/api_create_preauthcode?component_access_token=${component_access_token}";
-    
+    String PLATFORM_GET_AUTHINFO = "https://api.weixin.qq.com/cgi-bin/component/api_query_auth?component_access_token=${component_access_token}";
 }

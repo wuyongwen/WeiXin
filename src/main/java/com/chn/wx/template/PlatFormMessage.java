@@ -7,9 +7,7 @@ import com.chn.common.StringTemplate;
 
 /**
  * 公众号第三方平台中代公众号调用接口报文模板
- * @class TokenAccessor
- * @author lzxz1234
- * @description 
+ * @author lzxz1234<lzxz1234@gmail.com>
  * @version v1.0
  */
 public class PlatFormMessage {

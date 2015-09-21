@@ -17,7 +17,6 @@ import com.chn.wx.vo.result.QueryUserGroupResult;
 /**
  * @class UserManager
  * @author lzxz1234
- * 
  * @version v1.0
  */
 public class GroupManager {

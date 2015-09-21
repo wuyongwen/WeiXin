@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSON;
 import com.chn.common.HttpUtils;
+import com.chn.common.Refresher;
 import com.chn.common.StringTemplate;
 import com.chn.wx.dto.App;
 import com.chn.wx.template.PlatFormMessage;
@@ -24,11 +25,9 @@ public class PlatFormManager {
 
     private static Logger log = Logger.getLogger(PlatFormManager.class);
     
-    private static StringTemplate getPreAuthCodeUrl = StringTemplate.compile(WeiXinURL.PLATFORM_GET_PRE_AUTHCODE);
     private static StringTemplate getAuthInfoUrl = StringTemplate.compile(WeiXinURL.PLATFORM_GET_AUTHINFO);
     
-    private static long expireTime;
-    private static String preAuthCode;
+    private static Refresher<String> preAuthRefresher = new PreAuthRefresher();
     
     /**
      * 该API用于获取预授权码。预授权码用于公众号授权时的第三方平台方安全验证。
@@ -36,24 +35,7 @@ public class PlatFormManager {
      */
     public static String getPreAuthCode() {
         
-        if(System.currentTimeMillis() < expireTime) return preAuthCode;
-        
-        Map<String, Object> params = new HashMap<>();
-        params.put("component_access_token", PlatFormTokenAccessor.getAccessToken());
-        String urlLocation = getPreAuthCodeUrl.replace(params);
-        
-        PlatFormGetPreAuthCodeResult result = null;
-        try {
-            String respJson = HttpUtils.post(urlLocation, PlatFormMessage.wrapGetPreAuthCode(App.Info.id));
-            result = JSON.parseObject(respJson, PlatFormGetPreAuthCodeResult.class);
-        } catch (Exception e) {
-            log.error("请求 PreAuthCode 失败，继续采用之前 AuthCode！", e);
-            return preAuthCode;
-        }
-        preAuthCode = result.getPreAuthCode();
-        expireTime = System.currentTimeMillis() + result.getExpiresIn() * 900;
-        log.info("更新 PreAuthCode：" + preAuthCode);
-        return preAuthCode;
+        return preAuthRefresher.get();
     }
     
     /**
@@ -74,4 +56,36 @@ public class PlatFormManager {
         return JSON.parseObject(respJson, PlatFormGetAuthInfoResult.class);
     }
     
+    private static class PreAuthRefresher extends Refresher<String> {
+        
+        private StringTemplate getPreAuthCodeUrl = StringTemplate.compile(WeiXinURL.PLATFORM_GET_PRE_AUTHCODE);
+        private long expireTime;
+        
+        @Override
+        public String refresh() {
+            
+            Map<String, Object> params = new HashMap<>();
+            params.put("component_access_token", PlatFormTokenAccessor.getAccessToken());
+            String urlLocation = getPreAuthCodeUrl.replace(params);
+            
+            PlatFormGetPreAuthCodeResult result = null;
+            try {
+                String respJson = HttpUtils.post(urlLocation, PlatFormMessage.wrapGetPreAuthCode(App.Info.id));
+                result = JSON.parseObject(respJson, PlatFormGetPreAuthCodeResult.class);
+            } catch (Exception e) {
+                log.error("请求 PreAuthCode 失败，继续采用之前 AuthCode！", e);
+                return current;
+            }
+            expireTime = System.currentTimeMillis() + result.getExpiresIn() * 900;
+            log.info("更新 PreAuthCode：" + result.getPreAuthCode());
+            return result.getPreAuthCode();
+        }
+
+        @Override
+        public boolean isExpired() {
+            
+            return System.currentTimeMillis() > expireTime;
+        }
+        
+    }
 }

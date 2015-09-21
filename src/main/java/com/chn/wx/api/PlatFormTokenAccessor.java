@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSON;
 import com.chn.common.HttpUtils;
+import com.chn.common.Refresher;
 import com.chn.wx.dto.App;
 import com.chn.wx.template.PlatFormMessage;
 import com.chn.wx.vo.result.PlatFormAccessTokenResult;
@@ -18,33 +19,43 @@ import com.chn.wx.vo.result.PlatFormAccessTokenResult;
 public class PlatFormTokenAccessor {
     
     private static Logger log = Logger.getLogger(PlatFormTokenAccessor.class);
-    private static String platformTokenUrl = WeiXinURL.GET_PLATFORM_TOKEN;
-    private static String componentVerifyTicket;
-    private static long expireTime;
-    private static String accessToken;
+    private static PlatFormTokenRefresher refresher = new PlatFormTokenRefresher();
     
     public static synchronized String getAccessToken() {
         
-        if(System.currentTimeMillis() < expireTime) return accessToken;
-        
-        PlatFormAccessTokenResult result = null;
-        try {
-            String postJson = PlatFormMessage.wrapGetAccessToken(App.Info.id, App.Info.secret, componentVerifyTicket);
-            String respJson = HttpUtils.post(platformTokenUrl, postJson);
-            result = JSON.parseObject(respJson, PlatFormAccessTokenResult.class);
-        } catch (Exception e) {
-            log.error("请求 AccessToken 失败，继续采用之前 Token！", e);
-            return accessToken;
-        }
-        accessToken = result.getComponentAccessToken();
-        expireTime = System.currentTimeMillis() + result.getExpiresIn() * 900;
-        log.info("更新AccessToken：" + accessToken);
-        return accessToken;
+        return refresher.get();
     }
     
     public static void updatePlatFormVerifyTicket(String componentVerifyTicket) {
         
-        PlatFormTokenAccessor.componentVerifyTicket = componentVerifyTicket;
+        refresher.componentVerifyTicket = componentVerifyTicket;
+    }
+    
+    private static class PlatFormTokenRefresher extends Refresher<String> {
+        
+        protected String componentVerifyTicket;
+        private long expireTime;
+        private String platformTokenUrl = WeiXinURL.GET_PLATFORM_TOKEN;
+        @Override
+        public String refresh() {
+            PlatFormAccessTokenResult result = null;
+            try {
+                String postJson = PlatFormMessage.wrapGetAccessToken(App.Info.id, App.Info.secret, componentVerifyTicket);
+                String respJson = HttpUtils.post(platformTokenUrl, postJson);
+                result = JSON.parseObject(respJson, PlatFormAccessTokenResult.class);
+            } catch (Exception e) {
+                log.error("请求 AccessToken 失败，继续采用之前 Token！", e);
+                return current;
+            }
+            expireTime = System.currentTimeMillis() + result.getExpiresIn() * 900;
+            return result.getComponentAccessToken();
+        }
+
+        @Override
+        public boolean isExpired() {
+            return System.currentTimeMillis() > expireTime;
+        }
+        
     }
     
 }

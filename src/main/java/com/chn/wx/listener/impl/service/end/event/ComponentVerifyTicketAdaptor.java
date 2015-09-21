@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
+import com.chn.wx.api.PlatFormTokenAccessor;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
 import com.chn.wx.listener.impl.service.route.EventRouter;
@@ -21,6 +22,7 @@ public class ComponentVerifyTicketAdaptor implements Service {
     @Override
     public String doService(Context context) throws Exception {
         
+        PlatFormTokenAccessor.updatePlatFormVerifyTicket(ComponentVerifyTicket);
         log.debug(String.format("收到刷新授权Ticket请求，新Ticket: %s", ComponentVerifyTicket));
         return DEFAULT_RETURN;
     }

@@ -13,39 +13,39 @@ import com.chn.common.StringTemplate;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.impl.service.end.ServiceTest;
 
-public class ImageMessageAdaptorTest extends ServiceTest {
+public class VoiceMessageAdaptorTest extends ServiceTest {
 
     StringTemplate stp = StringTemplate.compile(
             "<xml>                                            " + 
             "<ToUserName><![CDATA[${toUser}]]></ToUserName>      " + 
             "<FromUserName><![CDATA[${fromUser}]]></FromUserName>" + 
             "<CreateTime>${createTime}</CreateTime>              " + 
-            "<MsgType><![CDATA[image]]></MsgType>             " + 
-            "<PicUrl><![CDATA[${picUrl}]]></PicUrl>       " + 
+            "<MsgType><![CDATA[voice]]></MsgType>             " + 
             "<MediaId><![CDATA[${media_id}]]></MediaId>          " + 
+            "<Format><![CDATA[${Format}]]></Format>              " + 
             "<MsgId>${msgId}</MsgId>                  " + 
             "</xml>");
     String toUserName = "toUserName";
     String fromUserName = "fromUserName";
     String createTime = "" + System.currentTimeMillis();
-    String picUrl = "http://picurl.com";
-    String msgId = UUID.randomUUID().toString();
+    String format = "speex";
     String mediaId = "mediaid";
-
+    String msgId = UUID.randomUUID().toString();
+    
     String expectReturn = "expectString";
     
     @Test
-    public void testRaw() throws Exception {
+    public void test() throws Exception {
         
-        MockImageMessageService service = this.preparToTest(MockImageMessageService.class);
-        
+        MockVoiceMessageService service = this.preparToTest(MockVoiceMessageService.class);
         Map<String, Object> params = new HashMap<>();
         params.put("toUser", toUserName);
         params.put("fromUser", fromUserName);
         params.put("createTime", createTime);
-        params.put("picUrl", picUrl);
+        params.put("Format", format);
         params.put("media_id", mediaId);
         params.put("msgId", msgId);
+        
         Context context = this.doPostCtxt(stp.replace(params));
         Mockito.when(service.doService(context)).thenReturn(expectReturn);
         
@@ -54,17 +54,12 @@ public class ImageMessageAdaptorTest extends ServiceTest {
         Assert.assertEquals(toUserName, service.ToUserName);
         Assert.assertEquals(fromUserName, service.FromUserName);
         Assert.assertEquals(createTime, service.CreateTime);
-        Assert.assertEquals(picUrl, service.PicUrl);
+        Assert.assertEquals(format, service.Format);
         Assert.assertEquals(mediaId, service.MediaId);
         Assert.assertEquals(msgId, service.MsgId);
     }
 
-    public static class MockImageMessageService extends ImageMessageAdaptor {
-
-        @Override
-        public String doService(Context context) throws Exception {
-            return super.doService(context);
-        }
+    public static class MockVoiceMessageService extends VoiceMessageAdaptor {
         
     }
     

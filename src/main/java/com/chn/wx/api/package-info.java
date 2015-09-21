@@ -33,8 +33,12 @@ interface WeiXinURL {
 
     String SHORT_URL = "https://api.weixin.qq.com/cgi-bin/shorturl?access_token=${accessToken}";
     
-    String GET_PLATFORM_TOKEN = "https://api.weixin.qq.com/cgi-bin/component/api_component_token";
-    
+    String PLATFORM_GET_ACCESSTOKEN = "https://api.weixin.qq.com/cgi-bin/component/api_component_token";
     String PLATFORM_GET_PRE_AUTHCODE = "https://api.weixin.qq.com/cgi-bin/component/api_create_preauthcode?component_access_token=${component_access_token}";
     String PLATFORM_GET_AUTHINFO = "https://api.weixin.qq.com/cgi-bin/component/api_query_auth?component_access_token=${component_access_token}";
+    String PLATFORM_GET_AUTHACCESSTOKEN = "https://api.weixin.qq.com/cgi-bin/component/api_authorizer_token?component_access_token=${component_access_token}";
+    String PLATFORM_GET_AUTHORIZER_INFO = "https://api.weixin.qq.com/cgi-bin/component/api_get_authorizer_info?component_access_token=${component_access_token}";
+    String PLATFORM_GET_AUTHORIZER_OPTION = "https://api.weixin.qq.com/cgi-bin/component/api_get_authorizer_option?component_access_token=${component_access_token}";
+    String PLATFORM_SET_AUTHORIZER_OPTION = "https://api.weixin.qq.com/cgi-bin/component/ api_set_authorizer_option?component_access_token=${component_access_token}";
+    
 }

@@ -35,7 +35,7 @@ public class PlatFormTokenAccessor {
         
         protected String componentVerifyTicket;
         private long expireTime;
-        private String platformTokenUrl = WeiXinURL.GET_PLATFORM_TOKEN;
+        private String platformTokenUrl = WeiXinURL.PLATFORM_GET_ACCESSTOKEN;
         @Override
         public String refresh() {
             PlatFormAccessTokenResult result = null;

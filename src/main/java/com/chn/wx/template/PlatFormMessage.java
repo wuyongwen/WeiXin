@@ -124,7 +124,7 @@ public class PlatFormMessage {
      * @param authAppId 授权方appid
      * @return
      */
-    public static String getAuthorizerInfo(String appId, String authAppId) {
+    public static String wrapGetAuthorizerInfo(String appId, String authAppId) {
         
         Map<String, Object> params = new HashMap<>();
         params.put("appid_value", appId);
@@ -140,7 +140,7 @@ public class PlatFormMessage {
      * @param optionName 选项名称
      * @return
      */
-    public static String getAuthorizerOption(String appId, String authAppId, String optionName) {
+    public static String wrapGetAuthorizerOption(String appId, String authAppId, String optionName) {
         
         Map<String, Object> params = new HashMap<>();
         params.put("appid_value", appId);
@@ -168,7 +168,7 @@ public class PlatFormMessage {
      * @param optionValue 设置的选项值
      * @return
      */
-    public static String setAuthorizerOption(String appId, String authAppId, 
+    public static String wrapSetAuthorizerOption(String appId, String authAppId, 
             String optionName, String optionValue) {
         
         Map<String, Object> params = new HashMap<>();

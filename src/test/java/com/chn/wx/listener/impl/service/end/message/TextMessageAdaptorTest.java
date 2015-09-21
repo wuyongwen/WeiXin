@@ -48,6 +48,7 @@ public class TextMessageAdaptorTest extends ServiceTest {
         Assert.assertEquals(timestamp, service.CreateTime);
         Assert.assertEquals(content, service.Content);
         Assert.assertEquals(msgId, service.MsgId);
+        Mockito.verify(service).doService(context);
     }
     
     @Test
@@ -74,6 +75,7 @@ public class TextMessageAdaptorTest extends ServiceTest {
         Assert.assertEquals(timestamp, service.CreateTime);
         Assert.assertEquals(content, service.Content);
         Assert.assertEquals(msgId, service.MsgId);
+        Mockito.verify(service).doService(context);
     }
 
     public static class MockTextMessageService extends TextMessageAdaptor {

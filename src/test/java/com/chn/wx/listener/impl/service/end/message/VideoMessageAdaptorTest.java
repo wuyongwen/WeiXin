@@ -13,60 +13,60 @@ import com.chn.common.StringTemplate;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.impl.service.end.ServiceTest;
 
-public class ImageMessageAdaptorTest extends ServiceTest {
+public class VideoMessageAdaptorTest extends ServiceTest {
 
     StringTemplate stp = StringTemplate.compile(
-            "<xml>                                            " + 
-            "<ToUserName><![CDATA[${toUser}]]></ToUserName>      " + 
-            "<FromUserName><![CDATA[${fromUser}]]></FromUserName>" + 
-            "<CreateTime>${createTime}</CreateTime>              " + 
-            "<MsgType><![CDATA[image]]></MsgType>             " + 
-            "<PicUrl><![CDATA[${picUrl}]]></PicUrl>       " + 
-            "<MediaId><![CDATA[${media_id}]]></MediaId>          " + 
-            "<MsgId>${msgId}</MsgId>                  " + 
+            "<xml>                                                   " + 
+            "<ToUserName><![CDATA[${toUser}]]></ToUserName>             " + 
+            "<FromUserName><![CDATA[${fromUser}]]></FromUserName>       " + 
+            "<CreateTime>${createTime}</CreateTime>                     " + 
+            "<MsgType><![CDATA[video]]></MsgType>                    " + 
+            "<MediaId><![CDATA[${media_id}]]></MediaId>                 " + 
+            "<ThumbMediaId><![CDATA[${thumb_media_id}]]></ThumbMediaId> " + 
+            "<MsgId>${msgId}</MsgId>                         " + 
             "</xml>");
     String toUserName = "toUserName";
     String fromUserName = "fromUserName";
     String createTime = "" + System.currentTimeMillis();
-    String picUrl = "http://picurl.com";
     String msgId = UUID.randomUUID().toString();
     String mediaId = "mediaid";
-
-    String expectReturn = "expectString";
+    String thumbMediaId = "thumbmediaid";
+    
+    static String expectReturn = UUID.randomUUID().toString();
     
     @Test
-    public void testRaw() throws Exception {
+    public void test() throws Exception {
         
-        MockImageMessageService service = this.preparToTest(MockImageMessageService.class);
-        
+        MockVideoMessageService service = this.preparToTest(MockVideoMessageService.class);
         Map<String, Object> params = new HashMap<>();
         params.put("toUser", toUserName);
         params.put("fromUser", fromUserName);
         params.put("createTime", createTime);
-        params.put("picUrl", picUrl);
+        params.put("thumb_media_id", thumbMediaId);
         params.put("media_id", mediaId);
         params.put("msgId", msgId);
+        
         Context context = this.doPostCtxt(stp.replace(params));
-        Mockito.when(service.doService(context)).thenReturn(expectReturn);
+        Mockito.when(service.doService(context)).thenCallRealMethod();
         
         String realReturn = handler.process(context);
         Assert.assertEquals(expectReturn, realReturn);
         Assert.assertEquals(toUserName, service.ToUserName);
         Assert.assertEquals(fromUserName, service.FromUserName);
         Assert.assertEquals(createTime, service.CreateTime);
-        Assert.assertEquals(picUrl, service.PicUrl);
+        Assert.assertEquals(thumbMediaId, service.ThumbMediaId);
         Assert.assertEquals(mediaId, service.MediaId);
         Assert.assertEquals(msgId, service.MsgId);
         Mockito.verify(service).doService(context);
     }
 
-    public static class MockImageMessageService extends ImageMessageAdaptor {
+    public static class MockVideoMessageService extends VideoMessageAdaptor {
 
         @Override
         public String doService(Context context) throws Exception {
-            return super.doService(context);
+            return expectReturn;
         }
-        
+
     }
     
 }

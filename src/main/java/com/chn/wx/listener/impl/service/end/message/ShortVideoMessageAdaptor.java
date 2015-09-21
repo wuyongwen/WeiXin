@@ -1,4 +1,4 @@
-﻿package com.chn.wx.listener.impl.service.end.message;
+package com.chn.wx.listener.impl.service.end.message;
 
 import org.apache.log4j.Logger;
 
@@ -9,13 +9,13 @@ import com.chn.wx.listener.Service;
 import com.chn.wx.listener.impl.service.route.RawMessageRouter;
 
 /**
- * @class VideoMessageAdaptor
+ * @class ShortVideoMessageAdaptor
  * @author lzxz1234
  * @description 
  * @version v1.0
  */
-@Node(parents=RawMessageRouter.class, value="video")
-public class VideoMessageAdaptor implements Service{
+@Node(parents=RawMessageRouter.class, value="shortvideo")
+public class ShortVideoMessageAdaptor implements Service{
 
     protected Logger log = Logger.getLogger(this.getClass());
     

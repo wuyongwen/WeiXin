@@ -14,7 +14,7 @@ public class CertifyServiceTest extends ServiceTest {
     @Test
     public void test() throws Exception {
 
-        String signature = "b32814f098196861fbcbe6fc06a0d4e90a5e121b";
+        String signature = "aab54d32bc6ba920a090952ad26e2a002e5541a6";
         String timestamp = "20150917111708";
         String nonce = "nonce";
         String echostr = "succ";

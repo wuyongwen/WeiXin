@@ -12,6 +12,8 @@ package com.chn.wx;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.chn.common.CacheUtils;
+import com.chn.common.CacheUtils.Provider;
 import com.chn.common.Cfg;
 import com.chn.common.Exec;
 import com.chn.common.Scans;
@@ -77,13 +79,24 @@ public class MessageHandler {
         @Override
         public Set<Class<?>> getClasses() {
 
-            Set<Class<?>> result = new LinkedHashSet<>();
-            if (StringUtils.isEmpty(packages))
-                return result;
-            for (String pkg : packages.split("\\|"))
-                if (!StringUtils.isEmpty(pkg))
-                    result.addAll(Scans.getClasses(pkg));
-            return result;
+            return CacheUtils.getValue(packages, new Provider<String, Set<Class<?>>>() {
+                @Override
+                public Set<Class<?>> get(String key) {
+                    
+                    Set<Class<?>> result = new LinkedHashSet<>();
+                    if (StringUtils.isEmpty(key))
+                        return result;
+                    for (String pkg : key.split("\\|"))
+                        if (!StringUtils.isEmpty(pkg))
+                            result.addAll(Scans.getClasses(pkg));
+                    return result;
+                }
+
+                @Override
+                public int maxSize() {
+                    return 10;
+                }
+            });
         }
 
     }

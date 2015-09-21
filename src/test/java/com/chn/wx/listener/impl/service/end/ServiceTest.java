@@ -23,7 +23,7 @@ import com.chn.wx.listener.ThreadsMode.ClassProvider;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({BeanFactory.class}) 
-@PowerMockIgnore({"javax.crypto.*" })
+@PowerMockIgnore({"javax.crypto.*", "org.apache.log4j.*"})
 public abstract class ServiceTest {
 
     protected MessageHandler handler = new MessageHandler();

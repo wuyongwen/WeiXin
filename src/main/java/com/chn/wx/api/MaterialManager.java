@@ -1,12 +1,3 @@
-/**
- * WeiXin
- * @title FileManager.java
- * @package com.chn.wx.invocation
- * @author lzxz1234<lzxz1234@gmail.com>
- * @date 2014年12月18日-下午3:40:55
- * @version V1.0
- * All Right Reserved
- */
 package com.chn.wx.api;
 
 import java.util.HashMap;
@@ -19,12 +10,12 @@ import com.chn.common.StringTemplate;
 import com.chn.wx.vo.result.UploadFileResult;
 
 /**
- * @class FileManager
+ * @class MaterialManager
  * @author lzxz1234
  * @description 
  * @version v1.0
  */
-public class FileManager {
+public class MaterialManager {
 
     private static final StringTemplate postFileUrl = StringTemplate.compile(WeiXinURL.POST_FILE);
     private static final StringTemplate getFileUrl = StringTemplate.compile(WeiXinURL.GET_FILE);
@@ -37,11 +28,11 @@ public class FileManager {
     }
     
     /**
-     * @description downloadFile
+     * downloadFile
      * @param mediaId
-     * @return 返回可访问的 http 地址
+     * @return 返回文件内容
      */
-    public static byte[] downloadFile(String mediaId) {
+    public static byte[] downloadTemp(String mediaId) {
         
         Map<String, Object> params = new HashMap<>();
         params.put("accessToken", TokenAccessor.getAccessToken());
@@ -52,12 +43,12 @@ public class FileManager {
     }
     
     /**
-     * @description 文件上传，媒体文件在后台保存时间为3天，即3天后media_id失效。 
+     * 文件上传，媒体文件在后台保存时间为3天，即3天后media_id失效。 
      * @param type
      * @param fileContent
      * @return 返回 media_id
     */
-    public static String postFile(Type type, byte[] fileContent) {
+    public static String uploadTemp(Type type, byte[] fileContent) {
         
         UploadFileResult result = null;
         Map<String, Object> params = new HashMap<>();

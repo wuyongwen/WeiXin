@@ -14,8 +14,8 @@ interface WeiXinURL {
     String GET_TOKEN = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${appId}&secret=${appSecret}";
     String SEND_SERVICE = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=${accessToken}";
     
-    String POST_FILE = "http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token=${accessToken}&type=${type}";
-    String GET_FILE = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=${accessToken}&media_id=${mediaId}";
+    String POST_FILE = "http://api.weixin.qq.com/cgi-bin/media/upload?access_token=${accessToken}&type=${type}";
+    String GET_FILE = "http://api.weixin.qq.com/cgi-bin/media/get?access_token=${accessToken}&media_id=${mediaId}";
 
     String CREATE_GROUP = "https://api.weixin.qq.com/cgi-bin/groups/create?access_token=${accessToken}";
     String QUERY_GROUPS = "https://api.weixin.qq.com/cgi-bin/groups/get?access_token=${accessToken}";

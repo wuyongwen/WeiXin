@@ -2,7 +2,6 @@ package com.chn.wx.listener.impl.service.end.message;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import junit.framework.Assert;
 
@@ -25,15 +24,9 @@ public class ImageMessageAdaptorTest extends ServiceTest {
             "<MediaId><![CDATA[${media_id}]]></MediaId>          " + 
             "<MsgId>${msgId}</MsgId>                  " + 
             "</xml>");
-    String toUserName = "toUserName";
-    String fromUserName = "fromUserName";
-    String createTime = "" + System.currentTimeMillis();
-    String picUrl = "http://picurl.com";
-    String msgId = UUID.randomUUID().toString();
-    String mediaId = "mediaid";
+    String picUrl = randomString();
+    String mediaId = randomString();
 
-    String expectReturn = "expectString";
-    
     @Test
     public void testRaw() throws Exception {
         

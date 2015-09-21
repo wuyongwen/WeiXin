@@ -2,7 +2,6 @@ package com.chn.wx.listener.impl.service.end.message;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import junit.framework.Assert;
 
@@ -25,14 +24,8 @@ public class VoiceMessageAdaptorTest extends ServiceTest {
             "<Format><![CDATA[${Format}]]></Format>              " + 
             "<MsgId>${msgId}</MsgId>                  " + 
             "</xml>");
-    String toUserName = "toUserName";
-    String fromUserName = "fromUserName";
-    String createTime = "" + System.currentTimeMillis();
     String format = "speex";
     String mediaId = "mediaid";
-    String msgId = UUID.randomUUID().toString();
-    
-    String expectReturn = "expectString";
     
     @Test
     public void test() throws Exception {

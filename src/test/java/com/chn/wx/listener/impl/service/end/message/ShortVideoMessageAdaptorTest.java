@@ -2,7 +2,6 @@ package com.chn.wx.listener.impl.service.end.message;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import junit.framework.Assert;
 
@@ -25,14 +24,8 @@ public class ShortVideoMessageAdaptorTest extends ServiceTest {
             "<ThumbMediaId><![CDATA[${thumb_media_id}]]></ThumbMediaId> " + 
             "<MsgId>${msgId}</MsgId>                         " + 
             "</xml>");
-    String toUserName = "toUserName";
-    String fromUserName = "fromUserName";
-    String createTime = "" + System.currentTimeMillis();
-    String msgId = UUID.randomUUID().toString();
     String mediaId = "mediaid";
     String thumbMediaId = "thumbmediaid";
-    
-    static String expectReturn = UUID.randomUUID().toString();
     
     @Test
     public void test() throws Exception {
@@ -47,7 +40,7 @@ public class ShortVideoMessageAdaptorTest extends ServiceTest {
         params.put("msgId", msgId);
         
         Context context = this.doPostCtxt(stp.replace(params));
-        Mockito.when(service.doService(context)).thenCallRealMethod();
+        Mockito.when(service.doService(context)).thenReturn(expectReturn);
         
         String realReturn = handler.process(context);
         Assert.assertEquals(expectReturn, realReturn);
@@ -64,7 +57,7 @@ public class ShortVideoMessageAdaptorTest extends ServiceTest {
 
         @Override
         public String doService(Context context) throws Exception {
-            return expectReturn;
+            throw new RuntimeException();
         }
 
     }

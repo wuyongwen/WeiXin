@@ -23,15 +23,11 @@ public class TextMessageAdaptorTest extends ServiceTest {
                  "<Content><![CDATA[%s]]></Content>             " + 
                  "<MsgId>%s</MsgId>                             " + 
                  "</xml>";
-    String toUserName = "toUserName";
-    String fromUserName = "fromUserName";
-    String timestamp = "" + System.currentTimeMillis();
-    String content = "this is content";
-    String msgId = timestamp + "12543";
-    String nonce = "noncexx";
-    String postXml = String.format(tpl, toUserName, fromUserName, timestamp, content, msgId);
+    String content = randomString();
+    String nonce = randomString();
+    String postXml = String.format(tpl, toUserName, fromUserName, createTime, content, msgId);
     
-    String expectReturn = "expectString";
+    String expectReturn = randomString();
     
     @Test
     public void testRaw() throws Exception {
@@ -45,7 +41,7 @@ public class TextMessageAdaptorTest extends ServiceTest {
         Assert.assertEquals(expectReturn, realReturn);
         Assert.assertEquals(toUserName, service.ToUserName);
         Assert.assertEquals(fromUserName, service.FromUserName);
-        Assert.assertEquals(timestamp, service.CreateTime);
+        Assert.assertEquals(createTime, service.CreateTime);
         Assert.assertEquals(content, service.Content);
         Assert.assertEquals(msgId, service.MsgId);
         Mockito.verify(service).doService(context);
@@ -58,21 +54,21 @@ public class TextMessageAdaptorTest extends ServiceTest {
         MockTextMessageService service = preparToTest(MockTextMessageService.class);
         String xmlFormat = "<xml><ToUserName><![CDATA[%s]]></ToUserName><Encrypt><![CDATA[%s]]></Encrypt></xml>";
         
-        String afterEncrpt = msgCrypt.encryptMsg(postXml, timestamp, nonce);
+        String afterEncrpt = msgCrypt.encryptMsg(postXml, createTime, nonce);
         
         Document document = DocumentHelper.parseText(afterEncrpt);
         String encrypt = document.selectSingleNode("//xml/Encrypt").getText();
         
         String toSendXML = String.format(xmlFormat, toUserName, encrypt);
-        String signature = SHA1.getSHA1(App.Info.token, timestamp, nonce, encrypt);
-        String params = String.format("encrypt_type=aes&timestamp=%s&nonce=%s&msg_signature=%s", timestamp, nonce, signature);
+        String signature = SHA1.getSHA1(App.Info.token, createTime, nonce, encrypt);
+        String params = String.format("encrypt_type=aes&timestamp=%s&nonce=%s&msg_signature=%s", createTime, nonce, signature);
         Context context = doPostCtxt(params, toSendXML);
         
         Mockito.when(service.doService(context)).thenReturn(expectReturn);
         handler.process(context);
         Assert.assertEquals(toUserName, service.ToUserName);
         Assert.assertEquals(fromUserName, service.FromUserName);
-        Assert.assertEquals(timestamp, service.CreateTime);
+        Assert.assertEquals(createTime, service.CreateTime);
         Assert.assertEquals(content, service.Content);
         Assert.assertEquals(msgId, service.MsgId);
         Mockito.verify(service).doService(context);

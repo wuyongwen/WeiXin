@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -41,6 +42,17 @@ public abstract class ServiceTest {
             e.printStackTrace();
             System.exit(0);
         }
+    }
+    
+    protected String toUserName = randomString();
+    protected String fromUserName = randomString();
+    protected String msgId = randomString();
+    protected String createTime = Long.toString(System.currentTimeMillis());
+    protected String expectReturn = randomString();
+    
+    protected String randomString() {
+        
+        return UUID.randomUUID().toString();
     }
     
     protected Context doGetCtxt(String params) {

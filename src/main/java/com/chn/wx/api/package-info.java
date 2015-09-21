@@ -7,7 +7,7 @@
  * @version V1.0
  * All Right Reserved
  */
-package com.chn.wx.invocation;
+package com.chn.wx.api;
 
 interface WeiXinURL {
     

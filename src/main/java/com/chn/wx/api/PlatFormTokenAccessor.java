@@ -1,4 +1,4 @@
-package com.chn.wx.invocation;
+package com.chn.wx.api;
 
 import org.apache.log4j.Logger;
 

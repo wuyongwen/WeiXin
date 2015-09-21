@@ -1,4 +1,4 @@
-package com.chn.wx.invocation;
+package com.chn.wx.api;
 
 import static com.chn.common.StringTemplate.compile;
 

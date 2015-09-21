@@ -1,4 +1,4 @@
-package com.chn.wx.invocation;
+package com.chn.wx.api;
 
 import java.util.HashMap;
 import java.util.Map;

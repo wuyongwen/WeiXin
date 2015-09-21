@@ -140,7 +140,7 @@ public class PlatFormManager {
     
     private static class PreAuthRefresher extends Refresher<String> {
         
-        private StringTemplate getPreAuthCodeUrl = StringTemplate.compile(WeiXinURL.PLATFORM_GET_PRE_AUTHCODE);
+        private StringTemplate getPreAuthCodeUrl = compile(WeiXinURL.PLATFORM_GET_PRE_AUTHCODE);
         private long expireTime;
         
         @Override

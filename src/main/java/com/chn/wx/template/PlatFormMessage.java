@@ -1,5 +1,7 @@
 package com.chn.wx.template;
 
+import static com.chn.common.StringTemplate.compile;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,42 +14,37 @@ import com.chn.common.StringTemplate;
  */
 public class PlatFormMessage {
 
-    private static StringTemplate T_GET_ACCESSTOKEN = StringTemplate.compile(
+    private static StringTemplate T_GET_ACCESSTOKEN = compile(
             "{" +
             "\"component_appid\":\"${appid_value}\" ," +
             "\"component_appsecret\": \"${appsecret_value}\", " +
             "\"component_verify_ticket\": \"${ticket_value}\" " +
-            "}\""
-            );
-    private static StringTemplate T_GET_PREAUTHCODE = StringTemplate.compile(
-            "{\"component_appid\":\"${appid_value}\"}"
-            );
-    private static StringTemplate T_GET_AUTH = StringTemplate.compile(
+            "}");
+    private static StringTemplate T_GET_PREAUTHCODE = compile(
+            "{\"component_appid\":\"${appid_value}\"}");
+    private static StringTemplate T_GET_AUTH = compile(
             "{" + 
             "\"component_appid\":\"${appid_value}\" ," + 
             "\" authorization_code\": \"${auth_code_value}\"" + 
             "}");
-    private static StringTemplate T_REFRESH_ACCESSTOKEN = StringTemplate.compile(
+    private static StringTemplate T_REFRESH_ACCESSTOKEN = compile(
             "{" + 
             "\"component_appid\":\"${appid_value}\"," + 
             "\"authorizer_appid\":\"${auth_appid_value}\"," + 
             "\"authorizer_refresh_token\":\"${refresh_token_value}\"," + 
-            "}"
-            );
-    private static StringTemplate T_GET_AUTHORINFO = StringTemplate.compile(
+            "}");
+    private static StringTemplate T_GET_AUTHORINFO = compile(
             "{" + 
             "\"component_appid\":\"${appid_value}\" ," + 
             "\"authorizer_appid\":\"${auth_appid_value}\"" + 
-            "}"
-            );
-    private static StringTemplate T_GET_AUTHOROPTION = StringTemplate.compile(
+            "}");
+    private static StringTemplate T_GET_AUTHOROPTION = compile(
             "{" + 
             "\"component_appid\":\"${appid_value}\"," + 
             "\"authorizer_appid\":\"${auth_appid_value}\"," + 
             "\"option_name\":\"${option_name_value}\"" + 
-            "}"
-            );
-    private static StringTemplate T_SET_AUTHOROPTION = StringTemplate.compile(
+            "}");
+    private static StringTemplate T_SET_AUTHOROPTION = compile(
             "{" + 
             "\"component_appid\":\"${appid_value}\"," + 
             "\"authorizer_appid\":\"${auth_appid_value}\"," + 

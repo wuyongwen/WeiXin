@@ -1,24 +1,15 @@
-﻿/**
- * WeiXin
- * @title FieldUtils.java
- * @package com.chn.common
- * @author lzxz1234<lzxz1234@gmail.com>
- * @date 2014年12月16日-下午4:52:40
- * @version V1.0
- * All Right Reserved
- */
-package com.chn.common;
+﻿package com.chn.common;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+
+import com.chn.common.CacheUtils.Provider;
 
 /**
  * @class FieldUtils
@@ -28,9 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class FieldUtils {
 
-    private static ConcurrentHashMap<Class<?>, Map<String, Field>> fieldsMap = 
-            new ConcurrentHashMap<Class<?>, Map<String, Field>>();
-    
     /** 
      * @param clazz 类名
      * @param field 字段名
@@ -64,43 +52,29 @@ public class FieldUtils {
      */
     private static Map<String, Field> ensureFieldsStored(Class<?> clazz) {
         
-        Map<String, Field> result = fieldsMap.get(clazz);
-        if(result == null) {
-            Field[] fields = clazz.getDeclaredFields();
-            Arrays.sort(fields, new Comparator<Field>() {
-                @Override
-                public int compare(Field o1, Field o2) {
-                    return o1.getName().compareTo(o2.getName());
-                }
-            }); //按字段名自然顺序排序，确保每次返回顺序相同
-            result = new LinkedHashMap<String, Field>();
-            for(Field field : fields) {
-                field.setAccessible(true);
-                result.put(field.getName(), field);
-            }
-            fieldsMap.putIfAbsent(clazz, result);
-        }
-        return result;
-    }
-    
-    /** 
-     * @param clazz
-     * @return 返回非 static 非 transient 字段数组
-     */
-    public static List<Field> getUntransUnstaticFields(Class<?> clazz) {
-        
-        return getFields(clazz, new FieldFilter() {
-    
+        return CacheUtils.getValue(clazz, new Provider<Class<?>, Map<String, Field>>() {
+
             @Override
-            public boolean accept(Field field) {
-    
-                if(Modifier.isStatic(field.getModifiers())) {
-                    return false;
+            public Map<String, Field> get(Class<?> key) {
+                
+                Field[] fields = clazz.getDeclaredFields();
+                Arrays.sort(fields, new Comparator<Field>() {
+                    @Override
+                    public int compare(Field o1, Field o2) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                }); //按字段名自然顺序排序，确保每次返回顺序相同
+                Map<String, Field> result = new LinkedHashMap<>();
+                for(Field field : fields) {
+                    field.setAccessible(true);
+                    result.put(field.getName(), field);
                 }
-                if(Modifier.isTransient(field.getModifiers())) {
-                    return false;
-                }
-                return true;
+                return result;
+            }
+
+            @Override
+            public int maxSize() {
+                return 100;
             }
             
         });
@@ -171,14 +145,6 @@ public class FieldUtils {
             result.addAll(getFields(clazz, filter));
         } while (!(clazz = clazz.getSuperclass()).equals(Object.class));
         return result;
-    }
-    
-    /** 
-     * 清除目标类的缓存信息
-     * @param clazz
-     */
-    public static void remove(Class<?> clazz) {
-        fieldsMap.remove(clazz);
     }
     
     /**

@@ -9,6 +9,8 @@
  */
 package com.chn.wx.template;
 
+import static com.chn.common.StringTemplate.compileFromClassPath;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,70 +26,12 @@ import com.chn.wx.vo.Article;
  */
 public class ServiceMessage {
 
-    private static StringTemplate T_TEXT = StringTemplate.compile(
-              "{"
-            + "    \"touser\":\"${touser}\","
-            + "    \"msgtype\":\"text\","
-            + "    \"text\":"
-            + "    {"
-            + "         \"content\":\"${content}\""
-            + "    }"
-            + "}"
-            );
-    private static StringTemplate T_VOICE = StringTemplate.compile(
-              "{"
-            + "    \"touser\":\"${touser}\","
-            + "    \"msgtype\":\"voice\","
-            + "    \"voice\":"
-            + "    {"
-            + "      \"media_id\":\"${media_id}\""
-            + "    }"
-            + "}"
-            );
-    private static StringTemplate T_VIDEO = StringTemplate.compile(
-              "{"
-            + "    \"touser\":\"${touser}\","
-            + "    \"msgtype\":\"video\","
-            + "    \"video\":"
-            + "    {"
-            + "      \"media_id\":\"${media_id}\","
-            + "      \"thumb_media_id\":\"${thumb_media_id}\","
-            + "      \"title\":\"${title}\","
-            + "      \"description\":\"${description}\""
-            + "    }"
-            + "}"
-            );
-    private static StringTemplate T_MUSIC = StringTemplate.compile(
-              "{"
-            + "    \"touser\":\"${touser}\","
-            + "    \"msgtype\":\"music\","
-            + "    \"music\":"
-            + "    {"
-            + "      \"title\":\"${title}\","
-            + "      \"description\":\"${description}\","
-            + "      \"musicurl\":\"${musicurl}\","
-            + "      \"hqmusicurl\":\"${hqmusicurl}\","
-            + "      \"thumb_media_id\":\"${thumb_media_id}\""
-            + "    }"
-            + "}"
-            );
-    private static StringTemplate T_NEWS = StringTemplate.compile(
-              "{"
-            + "    \"touser\":\"${touser}\","
-            + "    \"msgtype\":\"news\","
-            + "    \"news\":{"
-            + "        \"articles\": [${articles}]"
-            + "    }"
-            + "}"
-            );
-    private static StringTemplate T_NEWS_Article = StringTemplate.compile(
-              "{"
-            + "    \"title\":\"${title}\","
-            + "    \"description\":\"${description}\","
-            + "    \"url\":\"${url}\","
-            + "    \"picurl\":\"${picurl}\""
-            + "}"
-            );
+    private static StringTemplate T_TEXT = compileFromClassPath("/com/chn/wx/template/tpl/service-text.json");
+    private static StringTemplate T_VOICE = compileFromClassPath("/com/chn/wx/template/tpl/service-voice.json");
+    private static StringTemplate T_VIDEO = compileFromClassPath("/com/chn/wx/template/tpl/service-video.json");
+    private static StringTemplate T_MUSIC = compileFromClassPath("/com/chn/wx/template/tpl/service-music.json");
+    private static StringTemplate T_NEWS = compileFromClassPath("/com/chn/wx/template/tpl/service-news.json");
+    private static StringTemplate T_NEWS_Article = compileFromClassPath("/com/chn/wx/template/tpl/service-news-article.json");
     
     /**
      * @param touser 普通用户openid

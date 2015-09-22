@@ -9,6 +9,8 @@
  */
 package com.chn.wx.template;
 
+import static com.chn.common.StringTemplate.compileFromClassPath;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,12 +24,7 @@ import com.chn.common.StringTemplate;
  */
 public class UserMessage {
 
-    private static StringTemplate T_REMARK = StringTemplate.compile(
-              "{"
-            + "    \"openid\":\"${openid}\","
-            + "    \"remark\":\"${remark}\""
-            + "}"
-            );
+    private static StringTemplate T_REMARK = compileFromClassPath("/com/chn/wx/template/tpl/user-remark.json");
     
     /**
      * @param userId 用户标识

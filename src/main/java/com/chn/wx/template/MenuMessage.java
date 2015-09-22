@@ -15,6 +15,8 @@ import java.util.Map;
 import com.chn.common.StringTemplate;
 import com.chn.wx.vo.Button;
 
+import static com.chn.common.StringTemplate.compileFromClassPath;
+
 /**
  * @class MenuMessage
  * @author lzxz1234
@@ -23,21 +25,9 @@ import com.chn.wx.vo.Button;
  */
 public class MenuMessage {
 
-    private static StringTemplate T_CREATE = StringTemplate.compile(
-              "{"
-            + "    \"button\":[${button}]"
-            + "}"
-            );
-    private static StringTemplate T_CREATE_BUTTON = StringTemplate.compile(
-              "{"
-            + "    \"name\": \"${name}\", "
-            + "    \"type\": \"${type}\", "
-            + "    \"key\": \"${key}\", "
-            + "    \"url\": \"${url}\", "
-            + "    \"sub_button\": [${sub_button}]"
-            + "}"
-            );
-    
+    private static StringTemplate T_CREATE = compileFromClassPath("/com/chn/wx/template/tpl/menu-create.json");
+    private static StringTemplate T_CREATE_BUTTON = compileFromClassPath("/com/chn/wx/template/tpl/menu-create-button.json");
+
     /**
      * 修改菜单报文封装
      */

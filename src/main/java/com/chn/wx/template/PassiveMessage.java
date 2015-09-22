@@ -9,6 +9,8 @@
  */
 package com.chn.wx.template;
 
+import static com.chn.common.StringTemplate.compileFromClassPath;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,92 +25,15 @@ import com.chn.wx.vo.Article;
  * @version v1.0
  */
 public class PassiveMessage {
-public static void main(String[] args) {
-    System.out.println("{" + 
-            "\"component_appid\":\"${appid_value}\"," + 
-            "\"authorizer_appid\":\"${auth_appid_value}\"," + 
-            "\"option_name\":\"${option_name_value}\"," + 
-            "\"option_value\":\"${option_value_value}\"" + 
-            "}");
-}
-    private static StringTemplate T_TEXT = StringTemplate.compile(
-              "<xml>"
-            + "<ToUserName><![CDATA[${ToUserName}]]></ToUserName>"
-            + "<FromUserName><![CDATA[${FromUserName}]]></FromUserName>"
-            + "<CreateTime>${CreateTime}</CreateTime>"
-            + "<MsgType><![CDATA[text]]></MsgType>"
-            + "<Content><![CDATA[${Content}]]></Content>"
-            + "</xml>"
-            );
-    private static StringTemplate T_IMAGE = StringTemplate.compile(
-              "<xml>"
-            + "<ToUserName><![CDATA[${ToUserName}]]></ToUserName>"
-            + "<FromUserName><![CDATA[${FromUserName}]]></FromUserName>"
-            + "<CreateTime>${CreateTime}</CreateTime>"
-            + "<MsgType><![CDATA[image]]></MsgType>"
-            + "<Image>"
-            + "<MediaId><![CDATA[${MediaId}]]></MediaId>"
-            + "</Image>"
-            + "</xml>"
-            );
-    private static StringTemplate T_VOICE = StringTemplate.compile(
-              "<xml>"
-            + "<ToUserName><![CDATA[${ToUserName}]]></ToUserName>"
-            + "<FromUserName><![CDATA[${FromUserName}]]></FromUserName>"
-            + "<CreateTime>${CreateTime}</CreateTime>"
-            + "<MsgType><![CDATA[voice]]></MsgType>"
-            + "<Voice>"
-            + "<MediaId><![CDATA[${MediaId}]]></MediaId>"
-            + "</Voice>"
-            + "</xml>"
-            );
-    private static StringTemplate T_VIDEO = StringTemplate.compile(
-              "<xml>"
-            + "<ToUserName><![CDATA[${ToUserName}]]></ToUserName>"
-            + "<FromUserName><![CDATA[${FromUserName}]]></FromUserName>"
-            + "<CreateTime>${CreateTime}</CreateTime>"
-            + "<MsgType><![CDATA[video]]></MsgType>"
-            + "<Video>"
-            + "<MediaId><![CDATA[${MediaId}]]></MediaId>"
-            + "<Title><![CDATA[${Title}]]></Title>"
-            + "<Description><![CDATA[${Description}]]></Description>"
-            + "</Video>"
-            + "</xml>"
-            );
-    private static StringTemplate T_MUSIC = StringTemplate.compile(
-              "<xml>"
-            + "<ToUserName><![CDATA[${ToUserName}]]></ToUserName>"
-            + "<FromUserName><![CDATA[${FromUserName}]]></FromUserName>"
-            + "<CreateTime>${CreateTime}</CreateTime>"
-            + "<MsgType><![CDATA[music]]></MsgType>"
-            + "<Music>"
-            + "<Title><![CDATA[${Title}]]></Title>"
-            + "<Description><![CDATA[${Description}]]></Description>"
-            + "<MusicUrl><![CDATA[${MusicUrl}]]></MusicUrl>"
-            + "<HQMusicUrl><![CDATA[${HQMusicUrl}]]></HQMusicUrl>"
-            + "<ThumbMediaId><![CDATA[${ThumbMediaId}]]></ThumbMediaId>"
-            + "</Music>"
-            + "</xml>"
-            );
-    private static StringTemplate T_NEWS = StringTemplate.compile(
-              "<xml>"
-            + "<ToUserName><![CDATA[${ToUserName}]]></ToUserName>"
-            + "<FromUserName><![CDATA[${FromUserName}]]></FromUserName>"
-            + "<CreateTime>${CreateTime}</CreateTime>"
-            + "<MsgType><![CDATA[news]]></MsgType>"
-            + "<ArticleCount>${ArticleCount}</ArticleCount>"
-            + "<Articles>${Articles}</Articles>"
-            + "</xml>"
-            );
-    private static StringTemplate T_NEWS_Articles = StringTemplate.compile(
-              "<item>"
-            + "<Title><![CDATA[${Title}]]></Title>"
-            + "<Description><![CDATA[${Description}]]></Description>"
-            + "<PicUrl><![CDATA[${PicUrl}]]></PicUrl>"
-            + "<Url><![CDATA[${Url}]]></Url>"
-            + "</item>"
-            );
-    
+
+    private static StringTemplate T_TEXT          = compileFromClassPath("/com/chn/wx/template/tpl/passive-text.xml");
+    private static StringTemplate T_IMAGE         = compileFromClassPath("/com/chn/wx/template/tpl/passive-image.xml");
+    private static StringTemplate T_VOICE         = compileFromClassPath("/com/chn/wx/template/tpl/passive-voice.xml");
+    private static StringTemplate T_VIDEO         = compileFromClassPath("/com/chn/wx/template/tpl/passive-video.xml");
+    private static StringTemplate T_MUSIC         = compileFromClassPath("/com/chn/wx/template/tpl/passive-music.xml");
+    private static StringTemplate T_NEWS          = compileFromClassPath("/com/chn/wx/template/tpl/passive-news.xml");
+    private static StringTemplate T_NEWS_Articles = compileFromClassPath("/com/chn/wx/template/tpl/passive-news-article.xml");
+
     /**
      * @param ToUserName 接收方帐号（收到的OpenID）
      * @param FromUserName 开发者微信号   

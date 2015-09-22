@@ -1,13 +1,6 @@
-/**
- * WeiXin
- * @title UserMessage.java
- * @package com.chn.wx.tplate
- * @author lzxz1234<lzxz1234@gmail.com>
- * @date 2014年12月23日-下午5:37:18
- * @version V1.0
- * All Right Reserved
- */
 package com.chn.wx.template;
+
+import static com.chn.common.StringTemplate.compileFromClassPath;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,18 +15,10 @@ import com.chn.common.StringTemplate;
  */
 public class GroupMessage {
 
-    private static StringTemplate T_CREATE_GROUP = StringTemplate.compile(
-            "{\"group\":{\"name\":\"${name}\"}}"
-            );
-    private static StringTemplate T_SEARCH_GROUP = StringTemplate.compile(
-            "{\"openid\":\"${openid}\"}"
-            );
-    private static StringTemplate T_MODIFY_GROUP = StringTemplate.compile(
-            "{\"group\":{\"id\":${id},\"name\":\"${name}\"}}"
-            );
-    private static StringTemplate T_MODIFY_USERGROUP = StringTemplate.compile(
-            "{\"openid\":\"${openid}\",\"to_groupid\":${to_groupid}}"
-            );
+    private static StringTemplate T_CREATE_GROUP     = compileFromClassPath("/com/chn/wx/template/tpl/group-create.json");
+    private static StringTemplate T_SEARCH_GROUP     = compileFromClassPath("/com/chn/wx/template/tpl/group-search.json");
+    private static StringTemplate T_MODIFY_GROUP     = compileFromClassPath("/com/chn/wx/template/tpl/group-modify.json");
+    private static StringTemplate T_MODIFY_USERGROUP = compileFromClassPath("/com/chn/wx/template/tpl/group-modify-usergroup.json");
     
     /**
      * @param groupName 分组名字（30个字符以内）

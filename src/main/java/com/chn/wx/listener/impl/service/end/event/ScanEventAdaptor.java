@@ -1,13 +1,4 @@
-﻿/**
- * WeiXin
- * @title ScanQrCodeEventAdaptor.java
- * @package com.chn.wx.listener.end.event
- * @author lzxz1234<lzxz1234@gmail.com>
- * @date 2014年12月17日-下午6:29:25
- * @version V1.0
- * All Right Reserved
- */
-package com.chn.wx.listener.impl.service.end.event;
+﻿package com.chn.wx.listener.impl.service.end.event;
 
 import org.apache.log4j.Logger;
 
@@ -18,13 +9,13 @@ import com.chn.wx.listener.Service;
 import com.chn.wx.listener.impl.service.route.EventRouter;
 
 /**
- * @class ScanQrCodeEventAdaptor
+ * @class ScanEventAdaptor
  * @author lzxz1234
  * @description 
  * @version v1.0
  */
 @Node(parents=EventRouter.class, value="SCAN")
-public class ScanQrCodeEventAdaptor implements Service {
+public class ScanEventAdaptor implements Service {
 
     protected Logger log = Logger.getLogger(this.getClass());
     

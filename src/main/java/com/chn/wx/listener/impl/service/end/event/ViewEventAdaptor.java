@@ -1,13 +1,4 @@
-﻿/**
- * WeiXin
- * @title ViewEventAdaptor.java
- * @package com.chn.wx.listener.end.event
- * @author lzxz1234<lzxz1234@gmail.com>
- * @date 2014年12月17日-下午6:31:40
- * @version V1.0
- * All Right Reserved
- */
-package com.chn.wx.listener.impl.service.end.event;
+﻿package com.chn.wx.listener.impl.service.end.event;
 
 import org.apache.log4j.Logger;
 

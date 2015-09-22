@@ -23,7 +23,14 @@ import com.chn.wx.vo.Article;
  * @version v1.0
  */
 public class PassiveMessage {
-
+public static void main(String[] args) {
+    System.out.println("{" + 
+            "\"component_appid\":\"${appid_value}\"," + 
+            "\"authorizer_appid\":\"${auth_appid_value}\"," + 
+            "\"option_name\":\"${option_name_value}\"," + 
+            "\"option_value\":\"${option_value_value}\"" + 
+            "}");
+}
     private static StringTemplate T_TEXT = StringTemplate.compile(
               "<xml>"
             + "<ToUserName><![CDATA[${ToUserName}]]></ToUserName>"

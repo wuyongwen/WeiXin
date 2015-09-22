@@ -9,6 +9,7 @@
  */
 package com.chn.common;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,19 @@ public class StringTemplate {
         }
         list.add(new AppendElement(cs, index1, cs.length - index1));
         return new StringTemplate(list);
+    }
+    
+    public static StringTemplate compileFromClassPath(String src) {
+        
+        InputStream is = null;
+        try {
+            is = StringTemplate.class.getResourceAsStream(src);
+            return compile(IOUtils.toString(is, "UTF-8"));
+        } catch (Exception e) {
+            throw new RuntimeException("加载模板失败：" + src, e);
+        } finally {
+            IOUtils.closeQuietly(is);
+        }
     }
  
     /**

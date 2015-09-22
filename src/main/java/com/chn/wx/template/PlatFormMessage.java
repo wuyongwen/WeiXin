@@ -1,6 +1,6 @@
 package com.chn.wx.template;
 
-import static com.chn.common.StringTemplate.compile;
+import static com.chn.common.StringTemplate.compileFromClassPath;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,44 +13,14 @@ import com.chn.common.StringTemplate;
  * @version v1.0
  */
 public class PlatFormMessage {
-
-    private static StringTemplate T_GET_ACCESSTOKEN = compile(
-            "{" +
-            "\"component_appid\":\"${appid_value}\" ," +
-            "\"component_appsecret\": \"${appsecret_value}\", " +
-            "\"component_verify_ticket\": \"${ticket_value}\" " +
-            "}");
-    private static StringTemplate T_GET_PREAUTHCODE = compile(
-            "{\"component_appid\":\"${appid_value}\"}");
-    private static StringTemplate T_GET_AUTH = compile(
-            "{" + 
-            "\"component_appid\":\"${appid_value}\" ," + 
-            "\" authorization_code\": \"${auth_code_value}\"" + 
-            "}");
-    private static StringTemplate T_REFRESH_ACCESSTOKEN = compile(
-            "{" + 
-            "\"component_appid\":\"${appid_value}\"," + 
-            "\"authorizer_appid\":\"${auth_appid_value}\"," + 
-            "\"authorizer_refresh_token\":\"${refresh_token_value}\"," + 
-            "}");
-    private static StringTemplate T_GET_AUTHORINFO = compile(
-            "{" + 
-            "\"component_appid\":\"${appid_value}\" ," + 
-            "\"authorizer_appid\":\"${auth_appid_value}\"" + 
-            "}");
-    private static StringTemplate T_GET_AUTHOROPTION = compile(
-            "{" + 
-            "\"component_appid\":\"${appid_value}\"," + 
-            "\"authorizer_appid\":\"${auth_appid_value}\"," + 
-            "\"option_name\":\"${option_name_value}\"" + 
-            "}");
-    private static StringTemplate T_SET_AUTHOROPTION = compile(
-            "{" + 
-            "\"component_appid\":\"${appid_value}\"," + 
-            "\"authorizer_appid\":\"${auth_appid_value}\"," + 
-            "\"option_name\":\"${option_name_value}\"," + 
-            "\"option_value\":\"${option_value_value}\"" + 
-            "}");
+    
+    private static StringTemplate T_GET_ACCESSTOKEN     = compileFromClassPath("/com/chn/wx/template/tpl/plat-get-accesstoken.json");
+    private static StringTemplate T_GET_PREAUTHCODE     = compileFromClassPath("/com/chn/wx/template/tpl/plat-get-preauthcode.json");
+    private static StringTemplate T_GET_AUTHINFO        = compileFromClassPath("/com/chn/wx/template/tpl/plat-get-authinfo.json");
+    private static StringTemplate T_REFRESH_ACCESSTOKEN = compileFromClassPath("/com/chn/wx/template/tpl/plat-refresh-accesstoken.json");
+    private static StringTemplate T_GET_AUTHORINFO      = compileFromClassPath("/com/chn/wx/template/tpl/plat-get-authorizer-info.json");
+    private static StringTemplate T_GET_AUTHOROPTION    = compileFromClassPath("/com/chn/wx/template/tpl/plat-get-authorizer-option.json");
+    private static StringTemplate T_SET_AUTHOROPTION    = compileFromClassPath("/com/chn/wx/template/tpl/plat-set-authorizer-option.json");
     
     /**
      * 用于获取第三方平台令牌（component_access_token）
@@ -92,7 +62,7 @@ public class PlatFormMessage {
         Map<String, Object> params = new HashMap<>();
         params.put("appid_value", appId);
         params.put("auth_code_value", authCode);
-        return T_GET_AUTH.replace(params);
+        return T_GET_AUTHINFO.replace(params);
     }
     
     /**

@@ -50,7 +50,7 @@ public class FieldUtils {
      * @param clazz
      * @return 目标类字段信息
      */
-    private static Map<String, Field> ensureFieldsStored(Class<?> clazz) {
+    private static Map<String, Field> ensureFieldsStored(final Class<?> clazz) {
         
         return CacheUtils.getValue(clazz, new Provider<Class<?>, Map<String, Field>>() {
 

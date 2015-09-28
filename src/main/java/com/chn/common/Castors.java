@@ -1,273 +1,104 @@
-﻿/**
- * WeiXin
- * @title Castors.java
- * @package com.chn.common
- * @author lzxz1234<lzxz1234@gmail.com>
- * @date 2014年12月16日-下午5:01:40
- * @version V1.0
- * All Right Reserved
- */
 package com.chn.common;
 
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.reflect.Array;
 
-/**
- * @class Castors
- * @author lzxz1234
- * @description 
- * @version v1.0
- */
+@SuppressWarnings("unchecked")
 public class Castors {
 
-    private static final Map<Class<?>, Converter> converters = new HashMap<>();
+    private static MultiKeyMap map = new MultiKeyMap();
     
     static {
-        converters.put(String.class, new StringConverter());
-        converters.put(byte.class, new ByteConverter());
-        converters.put(Byte.class, new ByteConverter());
-        converters.put(int.class, new IntegerConverter());
-        converters.put(Integer.class, new IntegerConverter());
-        converters.put(short.class, new ShortConverter());
-        converters.put(Short.class, new ShortConverter());
-        converters.put(long.class, new LongConverter());
-        converters.put(Long.class, new LongConverter());
-        converters.put(float.class, new FloatConverter());
-        converters.put(Float.class, new FloatConverter());
-        converters.put(double.class, new DoubleConverter());
-        converters.put(Double.class, new DoubleConverter());
-        converters.put(boolean.class, new BooleanConverter());
-        converters.put(Boolean.class, new BooleanConverter());
-        converters.put(Date.class, new DateConverter());
-        converters.put(Time.class, new TimeConverter());
-        converters.put(Timestamp.class, new TimestampConverter());
-        converters.put(Class.class, new ClassConverter());
+        //初始化转换器
+        map.put(String.class, byte.class, new StringToByte());
+        map.put(String.class, Byte.class, new StringToByte());
+        map.put(String.class, int.class, new StringToInt());
+        map.put(String.class, Integer.class, new StringToInt());
+        map.put(String.class, long.class, new StringToLong());
+        map.put(String.class, Long.class, new StringToLong());
+        map.put(String.class, float.class, new StringToFloat());
+        map.put(String.class, Float.class, new StringToFloat());
+        map.put(String.class, double.class, new StringToDouble());
+        map.put(String.class, Double.class, new StringToDouble());
+        map.put(String.class, boolean.class, new StringToBoolean());
+        map.put(String.class, Boolean.class, new StringToBoolean());
     }
     
-    @SuppressWarnings("unchecked")
-    public static <T> T cast(Class<T> clazz, Object src) {
+    /**
+     * @param fromClass
+     * @param toClass
+     * @param fromObj
+     * @return
+     */
+    private static <F, T> T cast(Class<F> fromClass, Class<T> toClass, F fromObj) {
         
-        if(src == null) return null;
-        if(src.getClass().equals(clazz)) return (T)src;
-        if(src instanceof String) 
-            return cast(clazz, (String)src);
-        return cast(clazz, src.toString());
-    }
-    
-    @SuppressWarnings("unchecked")
-    public static <T> T cast(Class<T> clazz, String src) {
+        if(fromClass == null || toClass == null) throw new NullPointerException("参数禁止为空");
+        if(fromClass.equals(toClass)) return (T) fromObj;
+        if(fromObj == null) return null;
         
-        if(src == null) return null;
-        Converter conv = converters.get(clazz);
-        Assert.notNull(conv, "类[%s]未被支持！", clazz);
-        return (T) conv.convert(src);
-    }
-    
-    private static interface Converter {
-        
-        public Object convert(String s);
-    }
-    
-    private static class StringConverter implements Converter {
-        
-        @Override
-        public Object convert(String s) {
-            
-            return s;
-        }
-    }
-    
-    private static class ByteConverter implements Converter {
-        
-        @Override
-        public Object convert(String s) {
-            
-            Byte result = null;
-            try {
-                result = Byte.valueOf(s.trim());
-            } catch (NumberFormatException nfe) {}
-            
+        if(toClass.isArray()) {
+            Class<?> componentType = toClass.getComponentType();
+            String[] splits = fromObj.toString().split("[, ]+");
+            T result = (T) Array.newInstance(componentType, splits.length);
+            for(int i = 0; i < splits.length; i ++)
+                Array.set(result, i, Castors.cast(componentType, splits[i]));
             return result;
+        } else {
+            Castor<F, T> castor = map.get(fromClass, toClass);
+            return castor.cast(fromObj);
         }
     }
     
-    private static class IntegerConverter implements Converter {
+    /**
+     * 转换类型，将 fromObj 转换为 toClass 类型
+     * @param toClass
+     * @param fromObj
+     * @return
+     */
+    public static <F, T> T cast(Class<T> toClass, F fromObj) {
         
+        Class<F> fromClass = (Class<F>) fromObj.getClass();
+        return cast(fromClass, toClass, fromObj);
+    }
+    
+    private static class StringToByte implements Castor<String, Byte> {
         @Override
-        public Object convert(String s) {
-            
-            Integer result = null;
-            try {
-                result = Integer.valueOf(s.trim());
-            } catch (NumberFormatException nfe) {}
-            
-            return result;
+        public Byte cast(String from) {
+            return new Byte(from);
+        }
+    }
+    private static class StringToInt implements Castor<String, Integer> {
+        @Override
+        public Integer cast(String from) {
+            return new Integer(from);
+        }
+    }
+    private static class StringToLong implements Castor<String, Long> {
+        @Override
+        public Long cast(String from) {
+            return new Long(from);
+        }
+    }
+    private static class StringToFloat implements Castor<String, Float> {
+        @Override
+        public Float cast(String from) {
+            return new Float(from);
+        }
+    }
+    private static class StringToDouble implements Castor<String, Double> {
+        @Override
+        public Double cast(String from) {
+            return new Double(from);
+        }
+    }
+    private static class StringToBoolean implements Castor<String, Boolean> {
+        @Override
+        public Boolean cast(String from) {
+            return Boolean.valueOf(from);
         }
     }
     
-    private static class ShortConverter implements Converter {
-        
-        @Override
-        public Object convert(String s) {
-            
-            Short result = null;
-            try {
-                result = Short.valueOf(s.trim());
-            } catch (NumberFormatException nfe) {}
-            
-            return result;
-        }
+    public static interface Castor<F, T> {
+        public T cast(F from);
     }
     
-    private static class LongConverter implements Converter {
-        
-        @Override
-        public Object convert(String s) {
-            
-            Long result = null;
-            try {
-                result = Long.valueOf(s.trim());
-            } catch (NumberFormatException nfe) {}
-            
-            return result;
-        }
-    }
-    
-    private static class FloatConverter implements Converter {
-        
-        @Override
-        public Object convert(String s) {
-            
-            Float result = null;
-            try {
-                result = Float.valueOf(s.trim());
-            } catch (NumberFormatException nfe) {}
-            
-            return result;
-        }
-    }
-    
-    private static class DoubleConverter implements Converter {
-        
-        @Override
-        public Object convert(String s) {
-            
-            Double result = null;
-            try {
-                result = Double.valueOf(s.trim());
-            } catch (NumberFormatException nfe) {}
-            
-            return result;
-        }
-    }
-    
-    private static class BooleanConverter implements Converter {
-        
-        @Override
-        public Object convert(String s) {
-            
-            //Boolean result = (T) Boolean.valueOf(s.trim());
-            Boolean result = null;
-            String value = s.trim();
-            if ("true".equalsIgnoreCase(value) || "yes".equalsIgnoreCase(value) 
-                    || "y".equalsIgnoreCase(value) || "1".equalsIgnoreCase(value)) {
-                result = Boolean.TRUE;
-            } else if ("false".equalsIgnoreCase(value) || "no".equalsIgnoreCase(value) 
-                    || "n".equalsIgnoreCase(value) || "0".equalsIgnoreCase(value)) {
-                result = Boolean.FALSE;
-            }
-            
-            return result;
-        }
-    }
-    
-    private static class DateConverter implements Converter {
-        
-        @Override
-        public Object convert(String s) {
-            
-            Date result = null;
-            try {
-                result = new Date((new SimpleDateFormat("yyyy-MM-dd")).parse(s.trim()).getTime());
-            } catch (ParseException e1) {
-                try {
-                    result = new Date((new SimpleDateFormat("yyyyMMdd")).parse(s.trim()).getTime());
-                } catch (ParseException e2) {}
-            }
-            
-            return result;
-        }
-    }
-    
-    private static class TimeConverter implements Converter {
-        
-        @Override
-        public Object convert(String s) {
-            
-            Time result = null;
-            try {
-                result = new Time((new SimpleDateFormat("HH:mm:ss.SSS")).parse(s.trim()).getTime());
-            } catch (ParseException e1) {
-                try {
-                    result = new Time((new SimpleDateFormat("HHmmssSSS")).parse(s.trim()).getTime());
-                } catch (ParseException e2) {
-                    try {
-                        result = new Time((new SimpleDateFormat("HH:mm:ss")).parse(s.trim()).getTime());
-                    } catch (ParseException e3) {
-                        try {
-                            result = new Time((new SimpleDateFormat("HHmmss")).parse(s.trim()).getTime());
-                        } catch (ParseException e4) {}
-                    }
-                }
-            }
-            
-            return result;
-        }
-    }
-    
-    private static class TimestampConverter implements Converter {
-        
-        @Override
-        public Object convert(String s) {
-            
-            Timestamp result = null;
-            try {
-                result = new Timestamp((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")).parse(s.trim()).getTime());
-            } catch (ParseException e1) {
-                try {
-                    result = new Timestamp((new SimpleDateFormat("yyyyMMddHHmmssSSS")).parse(s.trim()).getTime());
-                } catch (ParseException e2) {
-                    try {
-                        result = new Timestamp((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).parse(s.trim()).getTime());
-                    } catch (ParseException e3) {
-                        try {
-                            result = new Timestamp((new SimpleDateFormat("yyyyMMddHHmmss")).parse(s.trim()).getTime());
-                        } catch (ParseException e4) {}
-                    }
-                }
-            }
-            
-            return result;
-        }
-    }
-    
-    private static class ClassConverter implements Converter {
-        
-        @Override
-        public Object convert(String s) {
-            
-            Class<?> result = null;
-            try {
-                result = Class.forName(s);
-            } catch (ClassNotFoundException e) {}
-            
-            return result;
-        }
-    }
-
 }

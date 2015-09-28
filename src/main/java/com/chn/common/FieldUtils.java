@@ -1,4 +1,4 @@
-﻿package com.chn.common;
+package com.chn.common;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -13,9 +13,7 @@ import com.chn.common.CacheUtils.Provider;
 
 /**
  * @class FieldUtils
- * @author lzxz1234
- * @description 
- * @version v1.0
+ * @author lzxz1234<lzxz1234@gmail.com>
  */
 public class FieldUtils {
 

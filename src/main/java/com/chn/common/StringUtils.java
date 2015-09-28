@@ -1,4 +1,4 @@
-﻿/**
+/**
  * WeiXin
  * @title StringUtils.java
  * @package com.chn.common

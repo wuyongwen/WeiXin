@@ -85,12 +85,10 @@ public class HttpUtils {
             throw new RuntimeException("请求错误！", e);
         } finally {
             IOUtils.closeQuietly(is);
-            IOUtils.close(conn);
         }
     }
     
     public static String get(String urlLocation) {
-        
         
         HttpURLConnection conn = null;
         InputStream is = null;
@@ -110,7 +108,6 @@ public class HttpUtils {
             throw new RuntimeException("请求错误！", e);
         } finally {
             IOUtils.closeQuietly(is);
-            IOUtils.close(conn);
         }
     }
     
@@ -140,7 +137,6 @@ public class HttpUtils {
             throw new RuntimeException("请求错误！", e);
         } finally {
             IOUtils.closeQuietly(is);
-            IOUtils.close(conn);
         }
     }
 
@@ -176,7 +172,6 @@ public class HttpUtils {
             throw new RuntimeException("请求错误！", e);
         } finally {
             IOUtils.closeQuietly(is);
-            IOUtils.close(conn);
         }
     }
 

@@ -1,31 +1,41 @@
 package com.chn.common;
 
 import java.io.ByteArrayOutputStream;
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URLConnection;
 
+import org.apache.log4j.Logger;
+
+/**
+ * IO 操作工具类
+ * @version v1.0
+ */
 public class IOUtils {
 
-    public static void closeQuietly(Closeable os) {
+    private static Logger log = Logger.getLogger(IOUtils.class);
+    
+    /**
+     * 调用无参的 close() 方法且不会抛出异常
+     * @param x
+     */
+    public static final void closeQuietly(Object x) {
         
         try {
-            if(os != null) os.close();
+            if(x == null) return;
+            InvokeUtils.invoke(x, "close");
         } catch (Exception e) {
-            //Ignore
+            log.warn("[close]方法调用失败", e);
         }
     }
 
-    public static void close(URLConnection conn) {
-        if(conn instanceof HttpURLConnection) {
-            ((HttpURLConnection)conn).disconnect();
-        }
-    }
-
+    /**
+     * 将输入流读取成字节数组后返回 
+     * @param input 输入流
+     * @return
+     * @throws IOException
+     */
     public static byte[] toByteArray(InputStream input) throws IOException {
         
         ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -33,6 +43,13 @@ public class IOUtils {
         return output.toByteArray();
     }
     
+    /**
+     * 将输入流中的全部内容读取后写到输出流
+     * @param input 输入流
+     * @param output 输出流
+     * @return 总拷贝长度
+     * @throws IOException
+     */
     public static int copy(InputStream input, OutputStream output) 
             throws IOException {
         
@@ -46,6 +63,14 @@ public class IOUtils {
         return (int)count;
     }
 
+    /**
+     * 读取输入流中的内容并按指定编码方式组成字符串后返回
+     * @param is 输入流
+     * @param characterEncoding 输入流的编码格式
+     * @return
+     * @throws UnsupportedEncodingException
+     * @throws IOException
+     */
     public static String toString(InputStream is, String characterEncoding) 
             throws UnsupportedEncodingException, IOException {
         

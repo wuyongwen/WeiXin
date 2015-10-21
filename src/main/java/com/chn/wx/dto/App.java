@@ -22,11 +22,11 @@ import com.chn.common.Cfg;
 public class App {
 
     private static Logger log = Logger.getLogger(App.class);
-    private static Cfg cfg = Cfg.getCfg("/weixin.properties");
+    private static Cfg cfg = Cfg.getClassPathCfg("/weixin.properties");
     
     static {
         try {
-            cfg = Cfg.getCfg("/weixin.properties");
+            cfg = Cfg.getClassPathCfg("/weixin.properties");
         } catch (Exception e) {
             log.error("系统初始化失败", e);
             System.exit(0);

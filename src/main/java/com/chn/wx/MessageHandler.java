@@ -36,7 +36,7 @@ public class MessageHandler {
     
 	public void init() {
 
-		this.init(Cfg.getCfg("/weixin.properties"));
+		this.init(Cfg.getClassPathCfg("/weixin.properties"));
 	}
 	
 	public void init(Cfg cfg) {

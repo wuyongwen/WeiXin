@@ -9,7 +9,7 @@
  */
 package com.chn.common;
 
-import java.io.IOException;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
@@ -30,26 +30,36 @@ public class Cfg {
      * @param path classpath，如果是classes目录下的config.properties那么传参应为 '/config.properties'
      * @return 
      */
-    public static Cfg getCfg(String path) {
+    public static Cfg getClassPathCfg(String path) {
         
-        return new Cfg(path);
+        try {
+            return new Cfg(Cfg.class.getResourceAsStream(path));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Config file[classpath: " + path + "] can't be loaded!", e);
+        } 
     }
     
-    private Cfg(String path) {
+    public static Cfg getFileSystemCfg(String path) {
         
-        InputStream is = this.getClass().getResourceAsStream(path);
-        if (is != null) {
-            try {
-                Properties props = new Properties();
-                props.load(new InputStreamReader(is, "UTF-8"));
-                this.prop = props;
-            } catch (IOException e) {
-                throw new IllegalArgumentException("Config file[classpath: " + path + "] can't be loaded!", e);
-            } finally {
-                IOUtils.closeQuietly(is);
-            }
-        } else {
-            throw new IllegalArgumentException("Config file[classpath: " + path + "] is not found!");
+        InputStream is = null;
+        try {
+            is = new FileInputStream(path);
+            return new Cfg(is);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Config file[classpath: " + path + "] can't be loaded!", e);
+        } finally {
+            IOUtils.closeQuietly(is);
+        }
+    }
+    
+    private Cfg(InputStream is) throws Exception {
+        
+        try {
+            Properties props = new Properties();
+            props.load(new InputStreamReader(is, "UTF-8"));
+            this.prop = props;
+        } finally {
+            IOUtils.closeQuietly(is);
         }
     }
     

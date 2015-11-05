@@ -1,26 +1,11 @@
-/**
- * WeiXin
- * @title QueryUserInfoResult.java
- * @package com.chn.wx.vo.result
- * @author lzxz1234<lzxz1234@gmail.com>
- * @date 2014年12月26日-上午9:17:26
- * @version V1.0
- * All Right Reserved
- */
 package com.chn.wx.vo.result;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-/**
- * @class QueryUserInfoResult
- * @author lzxz1234
- * @description 
- * @version v1.0
- */
-public class QueryUserInfoResult {
+public class QueryUserInfoResult extends BasicResult {
 
-    @JSONField(name="errcode") private String errcode;
-    @JSONField(name="errmsg") private String errmsg;
+    private static final long serialVersionUID = 7424246262162850089L;
+
     /**
      * 用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。
      */
@@ -67,18 +52,6 @@ public class QueryUserInfoResult {
      */
     @JSONField(name="unionid") private String unionId;
     
-    public String getErrcode() {
-        return errcode;
-    }
-    public void setErrcode(String errcode) {
-        this.errcode = errcode;
-    }
-    public String getErrmsg() {
-        return errmsg;
-    }
-    public void setErrmsg(String errmsg) {
-        this.errmsg = errmsg;
-    }
     public Integer getSubscribe() {
         return subscribe;
     }

@@ -40,5 +40,5 @@ interface WeiXinURL {
     String PLATFORM_GET_AUTHORIZER_INFO = "https://api.weixin.qq.com/cgi-bin/component/api_get_authorizer_info?component_access_token=${component_access_token}";
     String PLATFORM_GET_AUTHORIZER_OPTION = "https://api.weixin.qq.com/cgi-bin/component/api_get_authorizer_option?component_access_token=${component_access_token}";
     String PLATFORM_SET_AUTHORIZER_OPTION = "https://api.weixin.qq.com/cgi-bin/component/ api_set_authorizer_option?component_access_token=${component_access_token}";
-    
+    String PLATFORM_LOGINURL = "https://mp.weixin.qq.com/cgi-bin/componentloginpage?component_appid=${component_appid}&pre_auth_code=${pre_auth_code}&redirect_uri=${loogined_redirect_url}";
 }

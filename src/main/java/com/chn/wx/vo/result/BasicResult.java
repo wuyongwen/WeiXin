@@ -9,6 +9,8 @@
  */
 package com.chn.wx.vo.result;
 
+import java.io.Serializable;
+
 import com.alibaba.fastjson.annotation.JSONField;
 
 /**
@@ -17,7 +19,9 @@ import com.alibaba.fastjson.annotation.JSONField;
  * @description 
  * @version v1.0
  */
-public class BasicResult {
+public class BasicResult implements Serializable {
+    
+    private static final long serialVersionUID = 3379612749505864582L;
     
     @JSONField(name="errcode") private String errcode;
     @JSONField(name="errmsg") private String errmsg;

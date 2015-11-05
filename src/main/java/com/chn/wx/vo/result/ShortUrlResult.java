@@ -2,24 +2,12 @@ package com.chn.wx.vo.result;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-public class ShortUrlResult {
+public class ShortUrlResult extends BasicResult {
     
-    @JSONField(name="errcode") private String errcode;
-    @JSONField(name="errmsg") private String errmsg;
+    private static final long serialVersionUID = -1241041155300095624L;
+    
     @JSONField(name="short_url") private String shortUrl;
     
-    public String getErrcode() {
-        return errcode;
-    }
-    public void setErrcode(String errcode) {
-        this.errcode = errcode;
-    }
-    public String getErrmsg() {
-        return errmsg;
-    }
-    public void setErrmsg(String errmsg) {
-        this.errmsg = errmsg;
-    }
     public String getShortUrl() {
         return shortUrl;
     }

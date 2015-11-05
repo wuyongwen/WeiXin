@@ -17,10 +17,9 @@ import com.alibaba.fastjson.annotation.JSONField;
  * @description 
  * @version v1.0
  */
-public class OAuth2AccessTokenResult {
+public class OAuth2AccessTokenResult extends BasicResult {
     
-    @JSONField(name="errcode") private String errcode;
-    @JSONField(name="errmsg") private String errmsg;
+    private static final long serialVersionUID = -899751390636415007L;
     
     @JSONField(name="access_token") private String accessToken;
     @JSONField(name="expires_in") private Integer expiresIn;
@@ -29,18 +28,6 @@ public class OAuth2AccessTokenResult {
     @JSONField(name="scope") private String scope;
     @JSONField(name="unionid") private String unionId;
     
-    public String getErrcode() {
-        return errcode;
-    }
-    public void setErrcode(String errcode) {
-        this.errcode = errcode;
-    }
-    public String getErrmsg() {
-        return errmsg;
-    }
-    public void setErrmsg(String errmsg) {
-        this.errmsg = errmsg;
-    }
     public String getAccessToken() {
         return accessToken;
     }

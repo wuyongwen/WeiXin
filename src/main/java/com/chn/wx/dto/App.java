@@ -9,8 +9,6 @@
  */
 package com.chn.wx.dto;
 
-import org.apache.log4j.Logger;
-
 import com.chn.common.Cfg;
 
 /**
@@ -21,18 +19,6 @@ import com.chn.common.Cfg;
  */
 public class App {
 
-    private static Logger log = Logger.getLogger(App.class);
-    private static Cfg cfg = Cfg.getClassPathCfg("/weixin.properties");
-    
-    static {
-        try {
-            cfg = Cfg.getClassPathCfg("/weixin.properties");
-        } catch (Exception e) {
-            log.error("系统初始化失败", e);
-            System.exit(0);
-        }
-    }
-    
     public static class Info {
         
         /**
@@ -43,14 +29,16 @@ public class App {
         public static final String secret;
         public static final String aesKey;
         public static final String token;
+        public static final String loginedUrl;
         
         static {
+            Cfg cfg = Cfg.getClassPathCfg("/weixin.properties");
             id = cfg.get("weixin.app.id");
             name = cfg.get("weixin.app.name");
             secret = cfg.get("weixin.app.secret");
             aesKey = cfg.get("weixin.app.aeskey");
             token = cfg.get("weixin.app.token");
-            cfg = null;
+            loginedUrl = cfg.get("weixin.thirdparty.logined.redirect");
         }
     }
 }

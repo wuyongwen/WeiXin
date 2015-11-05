@@ -31,6 +31,7 @@ public class PlatFormManager {
 
     private static Logger log = Logger.getLogger(PlatFormManager.class);
     
+    private static StringTemplate getLoginUrl = compile(WeiXinURL.PLATFORM_LOGINURL);
     private static StringTemplate getAuthInfoUrl = compile(WeiXinURL.PLATFORM_GET_AUTHINFO);
     private static StringTemplate getAuthAccessTokenUrl = compile(WeiXinURL.PLATFORM_GET_ACCESSTOKEN);
     private static StringTemplate getAuthorizerInfoUrl = compile(WeiXinURL.PLATFORM_GET_AUTHORIZER_INFO);
@@ -38,6 +39,15 @@ public class PlatFormManager {
     private static StringTemplate setAuthorizerOptionUrl = compile(WeiXinURL.PLATFORM_SET_AUTHORIZER_OPTION);
     
     private static Refresher<String> preAuthRefresher = new PreAuthRefresher();
+    
+    public static String getLoginUrl() {
+        
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("component_appid", App.Info.id);
+        params.put("pre_auth_code", PlatFormManager.getPreAuthCode());
+        params.put("loogined_redirect_url", App.Info.loginedUrl);
+        return getLoginUrl.replace(params);
+    }
     
     /**
      * 该API用于获取预授权码。预授权码用于公众号授权时的第三方平台方安全验证。

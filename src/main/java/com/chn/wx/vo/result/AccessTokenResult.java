@@ -1,4 +1,4 @@
-﻿/**
+/**
  * WeiXin
  * @title AccessTokenResult.java
  * @package com.chn.wx.vo
@@ -17,26 +17,13 @@ import com.alibaba.fastjson.annotation.JSONField;
  * @description 
  * @version v1.0
  */
-public class AccessTokenResult {
+public class AccessTokenResult extends BasicResult {
 
-    @JSONField(name="errcode") private String errcode;
-    @JSONField(name="errmsg") private String errmsg;
+    private static final long serialVersionUID = -8150125867084144128L;
     
     @JSONField(name="access_token") private String accessToken;
     @JSONField(name="expires_in") private Integer expiresIn;
     
-    public String getErrcode() {
-        return errcode;
-    }
-    public void setErrcode(String errcode) {
-        this.errcode = errcode;
-    }
-    public String getErrmsg() {
-        return errmsg;
-    }
-    public void setErrmsg(String errmsg) {
-        this.errmsg = errmsg;
-    }
     public String getAccessToken() {
         return accessToken;
     }

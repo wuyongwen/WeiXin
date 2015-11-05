@@ -56,6 +56,7 @@ public class Castors {
      */
     public static <F, T> T cast(Class<T> toClass, F fromObj) {
         
+        if(fromObj == null) return null;
         Class<F> fromClass = (Class<F>) fromObj.getClass();
         return cast(fromClass, toClass, fromObj);
     }

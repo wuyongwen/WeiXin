@@ -1,12 +1,3 @@
-/**
- * WeiXin
- * @title QueryGroupsResult.java
- * @package com.chn.wx.vo.result
- * @author lzxz1234<lzxz1234@gmail.com>
- * @date 2014年12月23日-下午6:17:47
- * @version V1.0
- * All Right Reserved
- */
 package com.chn.wx.vo.result;
 
 import java.util.List;
@@ -14,30 +5,12 @@ import java.util.List;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.chn.wx.vo.Group;
 
-/**
- * @class QueryGroupsResult
- * @author lzxz1234
- * @description 
- * @version v1.0
- */
-public class QueryGroupsResult {
+public class QueryGroupsResult extends BasicResult {
 
-    @JSONField(name="errcode") private String errcode;
-    @JSONField(name="errmsg") private String errmsg;
+    private static final long serialVersionUID = -3968413508337662979L;
+    
     @JSONField(name="groups") private List<Group> groups;
     
-    public String getErrcode() {
-        return errcode;
-    }
-    public void setErrcode(String errcode) {
-        this.errcode = errcode;
-    }
-    public String getErrmsg() {
-        return errmsg;
-    }
-    public void setErrmsg(String errmsg) {
-        this.errmsg = errmsg;
-    }
     public List<Group> getGroups() {
         return groups;
     }

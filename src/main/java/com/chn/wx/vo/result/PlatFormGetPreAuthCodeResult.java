@@ -2,8 +2,10 @@ package com.chn.wx.vo.result;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-public class PlatFormGetPreAuthCodeResult {
+public class PlatFormGetPreAuthCodeResult extends BasicResult {
 
+    private static final long serialVersionUID = 7492889147130582442L;
+    
     @JSONField(name="pre_auth_code") private String preAuthCode;
     @JSONField(name="expires_in") private Integer expiresIn;
     

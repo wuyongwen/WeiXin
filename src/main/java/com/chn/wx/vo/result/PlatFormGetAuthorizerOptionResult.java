@@ -2,8 +2,10 @@ package com.chn.wx.vo.result;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-public class PlatFormGetAuthorizerOptionResult {
+public class PlatFormGetAuthorizerOptionResult extends BasicResult {
 
+    private static final long serialVersionUID = -4376993323688333514L;
+    
     @JSONField(name="authorizer_appid") private String authorizerAppid;
     @JSONField(name="option_name") private String optionName;
     @JSONField(name="option_value") private String optionValue;

@@ -1,40 +1,13 @@
-/**
- * WeiXin
- * @title QueryUserGroupResult.java
- * @package com.chn.wx.vo.result
- * @author lzxz1234<lzxz1234@gmail.com>
- * @date 2014年12月23日-下午6:20:40
- * @version V1.0
- * All Right Reserved
- */
 package com.chn.wx.vo.result;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-/**
- * @class QueryUserGroupResult
- * @author lzxz1234
- * @description 
- * @version v1.0
- */
-public class QueryUserGroupResult {
+public class QueryUserGroupResult extends BasicResult {
 
-    @JSONField(name="errcode") private String errcode;
-    @JSONField(name="errmsg") private String errmsg;
+    private static final long serialVersionUID = -5596685310697861789L;
+    
     @JSONField(name="groupid") private String groupid;
     
-    public String getErrcode() {
-        return errcode;
-    }
-    public void setErrcode(String errcode) {
-        this.errcode = errcode;
-    }
-    public String getErrmsg() {
-        return errmsg;
-    }
-    public void setErrmsg(String errmsg) {
-        this.errmsg = errmsg;
-    }
     public String getGroupid() {
         return groupid;
     }

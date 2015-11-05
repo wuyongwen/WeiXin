@@ -1,24 +1,11 @@
-/**
- * WeiXin
- * @title QueryFollowerResult.java
- * @package com.chn.wx.vo.result
- * @author lzxz1234<lzxz1234@gmail.com>
- * @date 2014年12月26日-上午9:37:26
- * @version V1.0
- * All Right Reserved
- */
 package com.chn.wx.vo.result;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-/**
- * @class QueryFollowerResult
- * @author lzxz1234
- * @description 
- * @version v1.0
- */
-public class QueryFollowerResult {
+public class QueryFollowerResult extends BasicResult {
 
+    private static final long serialVersionUID = -1883945992231019683L;
+    
     @JSONField(name="total") private int total;
     @JSONField(name="count") private int count;
     @JSONField(name="data") private Data data;

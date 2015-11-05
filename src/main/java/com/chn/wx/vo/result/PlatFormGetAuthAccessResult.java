@@ -2,10 +2,12 @@ package com.chn.wx.vo.result;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-public class PlatFormGetAuthAccessResult {
+public class PlatFormGetAuthAccessResult extends BasicResult {
 
+    private static final long serialVersionUID = -1392505130233185759L;
+    
     @JSONField(name="authorizer_access_token") private String authorizerAccessToken;
-    @JSONField(name="expires_in") private String expiresIn;
+    @JSONField(name="expires_in") private Integer expiresIn;
     @JSONField(name="authorizer_refresh_token") private String authorizerRefreshToken;
     
     /**
@@ -20,10 +22,10 @@ public class PlatFormGetAuthAccessResult {
     /**
      * @return 有效期，为2小时
      */
-    public String getExpiresIn() {
+    public Integer getExpiresIn() {
         return expiresIn;
     }
-    public void setExpiresIn(String expiresIn) {
+    public void setExpiresIn(Integer expiresIn) {
         this.expiresIn = expiresIn;
     }
     /**

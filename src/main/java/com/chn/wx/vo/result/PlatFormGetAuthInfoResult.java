@@ -2,72 +2,80 @@ package com.chn.wx.vo.result;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-public class PlatFormGetAuthInfoResult {
+public class PlatFormGetAuthInfoResult extends BasicResult {
     
-    @JSONField(name="authorization_info") private String authorizationInfo;
-    @JSONField(name="authorizer_appid") private String authorizerAppId;
-    @JSONField(name="authorizer_access_token") private String authorizerAccessToken;
-    @JSONField(name="expires_in") private String expiresIn;
-    @JSONField(name="authorizer_refresh_token") private String authorizerRefreshToken;
-    @JSONField(name="func_info") private FuncInfo[] funcInfo;
+    private static final long serialVersionUID = -4554229536745019368L;
+    
+    @JSONField(name="authorization_info") private AuthorizationInfo authorizationInfo;
     
     /**
      * @return 授权信息
      */
-    public String getAuthorizationInfo() {
+    public AuthorizationInfo getAuthorizationInfo() {
         return authorizationInfo;
     }
-    public void setAuthorizationInfo(String authorizationInfo) {
+    public void setAuthorizationInfo(AuthorizationInfo authorizationInfo) {
         this.authorizationInfo = authorizationInfo;
     }
-    /**
-     * @return 授权方appid
-     */
-    public String getAuthorizerAppId() {
-        return authorizerAppId;
-    }
-    public void setAuthorizerAppId(String authorizerAppId) {
-        this.authorizerAppId = authorizerAppId;
-    }
-    /**
-     * @return 授权方令牌（在授权的公众号具备API权限时，才有此返回值）
-     */
-    public String getAuthorizerAccessToken() {
-        return authorizerAccessToken;
-    }
-    public void setAuthorizerAccessToken(String authorizerAccessToken) {
-        this.authorizerAccessToken = authorizerAccessToken;
-    }
-    /**
-     * @return 有效期（在授权的公众号具备API权限时，才有此返回值）
-     */
-    public String getExpiresIn() {
-        return expiresIn;
-    }
-    public void setExpiresIn(String expiresIn) {
-        this.expiresIn = expiresIn;
-    }
-    /**
-     * @return 刷新令牌（在授权的公众号具备API权限时，才有此返回值），刷新令牌主要用于公众
-     * 号第三方平台获取和刷新已授权用户的access_token，只会在授权时刻提供，请妥善保存。 一
-     * 旦丢失，只能让用户重新授权，才能再次拿到新的刷新令牌
-     */
-    public String getAuthorizerRefreshToken() {
-        return authorizerRefreshToken;
-    }
-    public void setAuthorizerRefreshToken(String authorizerRefreshToken) {
-        this.authorizerRefreshToken = authorizerRefreshToken;
-    }
-    /**
-     * @return 公众号授权给开发者的权限集列表
-     */
-    public FuncInfo[] getFuncInfo() {
-        return funcInfo;
-    }
-    public void setFuncInfo(FuncInfo[] funcInfo) {
-        this.funcInfo = funcInfo;
-    }
 
+    public static class AuthorizationInfo {
+        
+        @JSONField(name="authorizer_appid") private String authorizerAppId;
+        @JSONField(name="authorizer_access_token") private String authorizerAccessToken;
+        @JSONField(name="expires_in") private String expiresIn;
+        @JSONField(name="authorizer_refresh_token") private String authorizerRefreshToken;
+        @JSONField(name="func_info") private FuncInfo[] funcInfo;
+        
+        /**
+         * @return 授权方appid
+         */
+        public String getAuthorizerAppId() {
+            return authorizerAppId;
+        }
+        public void setAuthorizerAppId(String authorizerAppId) {
+            this.authorizerAppId = authorizerAppId;
+        }
+        /**
+         * @return 授权方令牌（在授权的公众号具备API权限时，才有此返回值）
+         */
+        public String getAuthorizerAccessToken() {
+            return authorizerAccessToken;
+        }
+        public void setAuthorizerAccessToken(String authorizerAccessToken) {
+            this.authorizerAccessToken = authorizerAccessToken;
+        }
+        /**
+         * @return 有效期（在授权的公众号具备API权限时，才有此返回值）
+         */
+        public String getExpiresIn() {
+            return expiresIn;
+        }
+        public void setExpiresIn(String expiresIn) {
+            this.expiresIn = expiresIn;
+        }
+        /**
+         * @return 刷新令牌（在授权的公众号具备API权限时，才有此返回值），刷新令牌主要用于公众
+         * 号第三方平台获取和刷新已授权用户的access_token，只会在授权时刻提供，请妥善保存。 一
+         * 旦丢失，只能让用户重新授权，才能再次拿到新的刷新令牌
+         */
+        public String getAuthorizerRefreshToken() {
+            return authorizerRefreshToken;
+        }
+        public void setAuthorizerRefreshToken(String authorizerRefreshToken) {
+            this.authorizerRefreshToken = authorizerRefreshToken;
+        }
+        /**
+         * @return 公众号授权给开发者的权限集列表
+         */
+        public FuncInfo[] getFuncInfo() {
+            return funcInfo;
+        }
+        public void setFuncInfo(FuncInfo[] funcInfo) {
+            this.funcInfo = funcInfo;
+        }
+        
+    }
+    
     public static class FuncInfo {
         
         @JSONField(name="funcscope_category") private FuncScopCategory funcscopCategory;

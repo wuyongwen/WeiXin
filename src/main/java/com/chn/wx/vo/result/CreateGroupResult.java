@@ -18,24 +18,12 @@ import com.chn.wx.vo.Group;
  * @description 
  * @version v1.0
  */
-public class CreateGroupResult {
+public class CreateGroupResult extends BasicResult {
 
-    @JSONField(name="errcode") private String errcode;
-    @JSONField(name="errmsg") private String errmsg;
+    private static final long serialVersionUID = -3426481289162868652L;
+    
     @JSONField(name="group") private Group group;
     
-    public String getErrcode() {
-        return errcode;
-    }
-    public void setErrcode(String errcode) {
-        this.errcode = errcode;
-    }
-    public String getErrmsg() {
-        return errmsg;
-    }
-    public void setErrmsg(String errmsg) {
-        this.errmsg = errmsg;
-    }
     public Group getGroup() {
         return group;
     }

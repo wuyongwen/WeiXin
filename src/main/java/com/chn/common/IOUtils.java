@@ -1,9 +1,11 @@
 package com.chn.common;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
 import org.apache.log4j.Logger;
@@ -76,5 +78,27 @@ public class IOUtils {
         
         return new String(toByteArray(is), characterEncoding);
     }
-      
+    
+    /**
+     * 读取输入流中的内容并组成字符串后返回
+     * @param reader
+     * @return
+     * @throws IOException
+     */
+    public static String toString(Reader reader) throws IOException {
+        
+        if (!(reader instanceof BufferedReader))
+            reader = new BufferedReader(reader);
+        StringBuilder sb = new StringBuilder();
+        
+        char[] data = new char[64];
+        int len;
+        while (true) {
+            if ((len = reader.read(data)) == -1)
+                break;
+            sb.append(data, 0, len);
+        }
+        return sb.toString();
+    }
+    
 }

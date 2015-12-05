@@ -16,15 +16,12 @@ public abstract class ThreadsMode {
     
     public abstract String process(Context context);
     
-    public void loadClass(ClassProvider... providers) {
+    public ThreadsMode(ClassProvider provider) {
 
         LinkedHashSet<Class<?>> allClass = new LinkedHashSet<>();
-        for (ClassProvider provider : providers) {
-            //删除重加是为了改变顺序，当两个结点具有同一个位置定义时顺序起关键作用
-            Set<Class<?>> allClasses = provider.getClasses();
-            allClass.removeAll(allClasses);
-            allClass.addAll(allClasses);
-        }
+        Set<Class<?>> allClasses = provider.getClasses();
+        allClass.removeAll(allClasses);
+        allClass.addAll(allClasses);
         this.load(this.filtService(allClass), root);
     }
     

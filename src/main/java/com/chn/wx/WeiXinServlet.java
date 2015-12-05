@@ -1,4 +1,4 @@
-﻿/**
+/**
  * WeiXin
  * @title WeiXinServlet.java
  * @package com.chn.wx
@@ -37,18 +37,6 @@ public class WeiXinServlet extends HttpServlet {
     private Logger log = Logger.getLogger(WeiXinServlet.class);
     private MessageHandler handler = new MessageHandler();
     
-    @Override
-    public void destroy() {
-        
-        this.handler.destroy();
-    }
-
-    @Override
-    public void init() throws ServletException {
-        
-        this.handler.init();
-    }
-
     @Override
     public void service(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

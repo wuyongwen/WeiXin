@@ -1,5 +1,6 @@
 package com.chn.common;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +12,42 @@ import com.chn.common.CacheUtils.Provider;
 
 public class MethodUtils {
 
+    /**
+     * 递归查找构造函数
+     * @param target
+     * @param args
+     * @return
+     * @throws  
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> Constructor<T> getConstructor(Class<?> target, Class<?>... args) throws NoSuchMethodException {
+        
+        Class<?>[] tmp = Arrays.copyOf(args, args.length);
+        for(int i = 0; i < args.length; i ++) {
+            while(true) {
+                try {
+                    return (Constructor<T>) target.getConstructor(tmp);
+                } catch (NoSuchMethodException e) {
+                    if(!tmp[i].equals(Object.class))
+                        tmp[i] = tmp[i].getSuperclass();
+                    else 
+                        break;
+                }
+            }
+            Class<?>[] interfaces = args[i].getInterfaces();
+            for(int j = 0; j < interfaces.length; j ++) {
+                tmp[i] = interfaces[j];
+                try {
+                    return (Constructor<T>) target.getConstructor(tmp);
+                } catch (NoSuchMethodException e) {
+                    
+                }
+            }
+            tmp[i] = args[i];
+        }
+        return (Constructor<T>) target.getConstructor();
+    }
+    
     /**
      * 方法重载时可能返回任意 name 命名的方法对象
      * @param clazz

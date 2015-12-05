@@ -10,6 +10,11 @@ import com.chn.wx.listener.ThreadsMode;
 
 public class AsyncThreadMode extends ThreadsMode {
 
+    public AsyncThreadMode(ClassProvider provider) {
+        
+        super(provider);
+    }
+
     private final Logger log = Logger.getLogger(AsyncThreadMode.class);
     
     @Override

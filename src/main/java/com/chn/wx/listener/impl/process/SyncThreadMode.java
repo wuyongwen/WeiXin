@@ -9,6 +9,11 @@ public class SyncThreadMode extends ThreadsMode {
 
     private final Logger log = Logger.getLogger(SyncThreadMode.class);
     
+    public SyncThreadMode(ClassProvider provider) {
+        
+        super(provider);
+    }
+    
     @Override
     public String process(Context context) {
         

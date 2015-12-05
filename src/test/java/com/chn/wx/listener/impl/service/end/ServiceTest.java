@@ -1,9 +1,9 @@
 package com.chn.wx.listener.impl.service.end;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 import org.junit.runner.RunWith;
@@ -19,19 +19,23 @@ import com.chn.common.StringUtils;
 import com.chn.wx.MessageHandler;
 import com.chn.wx.MessageHandler.PackageClassProvider;
 import com.chn.wx.dto.Context;
+import com.chn.wx.ioc.Ioc;
 import com.chn.wx.listener.BeanFactory;
-import com.chn.wx.listener.ThreadsMode.ClassProvider;
+import com.chn.wx.listener.impl.process.AsyncThreadMode;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({BeanFactory.class}) 
 @PowerMockIgnore({"javax.crypto.*", "org.apache.log4j.*"})
 public abstract class ServiceTest {
 
-    protected MessageHandler handler = new MessageHandler();
+    protected Ioc ioc;
+    protected MessageHandler handler;
     {
         
         try {
-            handler.init();
+            InputStream is = Ioc.class.getResourceAsStream("/weixin.js");
+            Ioc ioc = new Ioc(new InputStreamReader(is));
+            handler = ioc.getObject("root");
             PowerMockito.mockStatic(BeanFactory.class, new Answer<Object>() {
                 @Override
                 public Object answer(InvocationOnMock invocation) throws Throwable {
@@ -95,25 +99,9 @@ public abstract class ServiceTest {
     public <T> T preparToTest(Class<T> clazz) throws Exception {
         
         T instance = Mockito.mock(clazz);
-        handler.getThreadsMode().loadClass(
-                new PackageClassProvider("com.chn.wx.listener.impl.service"), 
-                new SingleClassProvider(clazz));
+        handler.setThreadsMode(new AsyncThreadMode(new PackageClassProvider("com.chn.wx.listener.impl.service|" + clazz.getName())));
         PowerMockito.when(BeanFactory.getInstance(clazz)).thenReturn(instance);
         return instance;
     }
     
-    private class SingleClassProvider implements ClassProvider {
-
-        private Class<?> clazz;
-        public SingleClassProvider(Class<?> clazz) {
-            this.clazz = clazz;
-        }
-        @Override
-        public Set<Class<?>> getClasses() {
-            Set<Class<?>> result = new HashSet<Class<?>>();
-            result.add(clazz);
-            return result;
-        }
-        
-    }
 }

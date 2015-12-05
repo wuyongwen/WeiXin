@@ -10,8 +10,9 @@ import java.util.Map;
 
 public class Json {
 
-    public static Object parse(Reader reader) throws IOException {
-        return new JsonTokenScan(reader).read();
+    @SuppressWarnings("unchecked")
+    public static <T> T parse(Reader reader) throws IOException {
+        return (T) new JsonTokenScan(reader).read();
     }
     
 }

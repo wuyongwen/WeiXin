@@ -1,31 +1,23 @@
 package com.chn.wx.ioc;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import com.chn.common.Json;
+import com.chn.wx.ioc.provider.IocProvider;
+
 
 public class Ioc {
 
-    private BeanFactory factory;
+    private IocProvider[] providers;
     
-    @SuppressWarnings("unchecked")
-    public Ioc(Reader is) throws IOException {
+    public synchronized void registProvider(IocProvider provider) {
         
-        factory = new BeanFactory();
-        Map<String, Object> ioc = (Map<String, Object>) Json.parse(is);
-        Iterator<Entry<String, Object>> it = ioc.entrySet().iterator();
-        while(it.hasNext()) {
-            Entry<String, Object> entry = it.next();
-            factory.regist(entry.getKey(), entry.getValue());
-        }
+        List<IocProvider> list = new ArrayList<>();
+        if(providers != null)
+            list.addAll(Arrays.asList(providers));
+        list.add(provider);
+        providers = list.toArray(new IocProvider[0]);
     }
     
-    public <T> T getObject(String name) throws Exception {
-        
-        return factory.get(name);
-    }
 }

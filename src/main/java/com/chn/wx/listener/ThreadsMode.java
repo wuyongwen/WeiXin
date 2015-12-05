@@ -16,14 +16,14 @@ public abstract class ThreadsMode {
     
     public abstract String process(Context context);
     
-    public ThreadsMode(ClassProvider provider) {
+    /*public ThreadsMode(ClassProvider provider) {
 
         LinkedHashSet<Class<?>> allClass = new LinkedHashSet<>();
         Set<Class<?>> allClasses = provider.getClasses();
         allClass.removeAll(allClasses);
         allClass.addAll(allClasses);
         this.load(this.filtService(allClass), root);
-    }
+    }*/
     
     private void load(Map<Node, Class<? extends Service>> allNodes, 
                       ServiceAgent holder) {

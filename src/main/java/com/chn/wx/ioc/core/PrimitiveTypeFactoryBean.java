@@ -1,4 +1,4 @@
-package com.chn.wx.ioc;
+package com.chn.wx.ioc.core;
 
 
 public class PrimitiveTypeFactoryBean<T> extends FactoryBean<T> {

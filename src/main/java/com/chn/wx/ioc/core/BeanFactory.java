@@ -1,4 +1,4 @@
-package com.chn.wx.ioc;
+package com.chn.wx.ioc.core;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +23,16 @@ public class BeanFactory {
         
         if(obj instanceof Map) 
             return fromMap((Map<?, ?>) obj);
+        if(obj instanceof Class)
+            return fromClass((Class<?>) obj);
         return new PrimitiveTypeFactoryBean<T>(this, (T) obj);
+    }
+    
+    private <T> ProtoTypeFactoryBean<T> fromClass(Class<?> clazz) {
+        
+        ProtoTypeFactoryBean<T> result = new ProtoTypeFactoryBean<T>(this);
+        result.setType(clazz);
+        return result;
     }
     
     private <T> ProtoTypeFactoryBean<T> fromMap(Map<?, ?> params) {

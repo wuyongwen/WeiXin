@@ -1,4 +1,4 @@
-package com.chn.wx.ioc;
+package com.chn.wx.ioc.core;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.chn.common.InvokeUtils;
+import com.chn.common.Lang;
 import com.chn.common.MethodUtils;
 import com.chn.common.StringUtils;
 
@@ -56,16 +57,14 @@ public class ProtoTypeFactoryBean<T> extends FactoryBean<T> {
     
     public void setType(Object type) {
         
-        if(!(type instanceof String))
-            throw new IllegalArgumentException("type 不允许非字符串类型");
-        String typeStr = (String) type;
-        if(StringUtils.isEmpty(typeStr))
-            throw new IllegalArgumentException("类型不允许为空");
-        try {
-            this.type = Class.forName(typeStr);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("配置类未找到", e);
-        }
+        if(type == null)
+            throw new NullPointerException("type 不允许为空");
+        else if(type instanceof Class)
+            this.type = (Class<?>)type;
+        else if(type instanceof String) 
+            this.type = Lang.forName((String) type);
+        else
+            throw new IllegalArgumentException("不识别的 type：" + type);
     }
     
     public void setArgs(Object params) {

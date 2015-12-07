@@ -31,9 +31,8 @@ public class ComponentVerifyTicketAdaptorTest extends ServiceTest {
         params.put("createTime", createTime);
         params.put("appId", appId);
         params.put("ticket", ticket);
-        Context context = this.doPostCtxt(stp.replace(params));
-        
         MockComponentVerifyTicketService service = this.preparToTest(MockComponentVerifyTicketService.class);
+        Context context = this.doPostCtxt(stp.replace(params));
         Mockito.when(service.doService(context)).thenReturn(expectReturn);
         
         String realReturn = handler.process(context);

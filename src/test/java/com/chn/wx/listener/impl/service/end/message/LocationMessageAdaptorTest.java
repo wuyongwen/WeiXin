@@ -43,9 +43,8 @@ public class LocationMessageAdaptorTest extends ServiceTest {
         params.put("scale", scale);
         params.put("label", label);
         params.put("msgId", msgId);
-        Context context = this.doPostCtxt(stp.replace(params));
-        
         MockLocationService service = this.preparToTest(MockLocationService.class);
+        Context context = this.doPostCtxt(stp.replace(params));
         Mockito.when(service.doService(context)).thenReturn(expectReturn);
         
         String realReturn = handler.process(context);

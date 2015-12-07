@@ -6,13 +6,15 @@ import org.apache.log4j.Logger;
 
 import com.chn.common.Exec;
 import com.chn.wx.dto.Context;
+import com.chn.wx.ioc.core.BeanFactory;
+import com.chn.wx.listener.Service;
 import com.chn.wx.listener.ThreadsMode;
 
 public class AsyncThreadMode extends ThreadsMode {
 
-    public AsyncThreadMode(ClassProvider provider) {
+    public AsyncThreadMode(BeanFactory factory) {
         
-        super(provider);
+        super(factory);
     }
 
     private final Logger log = Logger.getLogger(AsyncThreadMode.class);
@@ -26,7 +28,7 @@ public class AsyncThreadMode extends ThreadsMode {
             public String call() throws Exception {
                 
                 try {
-                    AsyncThreadMode.this.root.doService(context);
+                    AsyncThreadMode.this.routeToNext(Service.class, "root", context);
                 } catch (Exception e) {
                     log.error("任务处理出错", e);
                 }

@@ -32,7 +32,7 @@ public class Castors {
     private static <F, T> T cast(Class<F> fromClass, Class<T> toClass, F fromObj) {
         
         if(fromClass == null || toClass == null) throw new NullPointerException("参数禁止为空");
-        if(fromClass.equals(toClass)) return (T) fromObj;
+        if(toClass.isAssignableFrom(fromClass)) return (T) fromObj;
         if(fromObj == null) return null;
         
         if(toClass.isArray()) {
@@ -44,6 +44,8 @@ public class Castors {
             return result;
         } else {
             Castor<F, T> castor = map.get(fromClass, toClass);
+            if(castor == null)
+                throw new IllegalArgumentException("不允许的类型转换 " + fromClass +"-->" + toClass);
             return castor.cast(fromObj);
         }
     }

@@ -1,12 +1,3 @@
-﻿/**
- * WeiXin
- * @title MessageService.java
- * @package com.chn.wx.core
- * @author lzxz1234<lzxz1234@gmail.com>
- * @date 2014年12月15日-下午6:27:04
- * @version V1.0
- * All Right Reserved
- */
 package com.chn.wx.listener.impl.service.route;
 
 import java.util.Iterator;
@@ -20,7 +11,7 @@ import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
-import com.chn.wx.listener.ServiceAgent;
+import com.chn.wx.listener.ThreadsMode;
 
 /**
  * @class MessageService
@@ -34,7 +25,7 @@ public final class RawMessageRouter implements Service {
     protected Logger log = Logger.getLogger(RawMessageRouter.class);
     
     @Param private String xmlContent;
-    @Param private ServiceAgent serviceAgent;
+    @Param private ThreadsMode threadsMode;
     
     @Override
     public String doService(Context context) throws Exception {
@@ -49,11 +40,11 @@ public final class RawMessageRouter implements Service {
         String appId = context.getAttribute(String.class, "AppId");
         if(appId != null) { //此时为第三方服务平台服务自身的消息
             log.debug("路由到第三方平台服务自身");
-            return serviceAgent.routeToNext("platform", context);
+            return threadsMode.routeToNext(this.getClass(), "platform", context);
         } else {
             String routeKey = context.getAttribute(String.class, "MsgType");
             log.debug(String.format("根据消息类型[%s]作路由", routeKey));
-            return serviceAgent.routeToNext(routeKey, context);
+            return threadsMode.routeToNext(this.getClass(), routeKey, context);
         }
     }
 

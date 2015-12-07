@@ -35,8 +35,18 @@ public class WeiXinServlet extends HttpServlet {
     private static final long serialVersionUID = 1785566409069051059L;
     
     private Logger log = Logger.getLogger(WeiXinServlet.class);
-    private MessageHandler handler = new MessageHandler();
+    private MessageHandler handler;
     
+    @Override
+    public void init() throws ServletException {
+        
+        try {
+            handler = new MessageHandler();
+        } catch (Exception e) {
+            throw new ServletException("加载失败", e);
+        }
+    }
+
     @Override
     public void service(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

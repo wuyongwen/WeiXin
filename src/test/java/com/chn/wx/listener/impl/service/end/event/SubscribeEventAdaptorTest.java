@@ -35,9 +35,9 @@ public class SubscribeEventAdaptorTest extends ServiceTest {
         params.put("createtime", createTime);
         params.put("eventkey", eventKey);
         params.put("ticket", ticket);
+        MockSubscribeEventService service = this.preparToTest(MockSubscribeEventService.class);
         Context context = this.doPostCtxt(template.replace(params));
         
-        MockSubscribeEventService service = this.preparToTest(MockSubscribeEventService.class);
         Mockito.when(service.doService(context)).thenReturn(expectReturn);
         
         String realReturn = handler.process(context);

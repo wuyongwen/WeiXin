@@ -19,6 +19,13 @@ import com.chn.common.Cfg;
  */
 public class App {
 
+    private static Cfg cfg = Cfg.getClassPathCfg("/weixin.properties");
+    
+    public static String getConfig(String key) {
+        
+        return cfg.get(key);
+    }
+    
     public static class Info {
         
         /**
@@ -32,7 +39,6 @@ public class App {
         public static final String loginedUrl;
         
         static {
-            Cfg cfg = Cfg.getClassPathCfg("/weixin.properties");
             id = cfg.get("weixin.app.id");
             name = cfg.get("weixin.app.name");
             secret = cfg.get("weixin.app.secret");

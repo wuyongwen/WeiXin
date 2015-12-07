@@ -40,9 +40,9 @@ public class LinkMessageAdaptorTest extends ServiceTest {
         params.put("title", title);
         params.put("description", description);
         params.put("url", url);
+        MockLinkService service = this.preparToTest(MockLinkService.class);
         Context context = this.doPostCtxt(stp.replace(params));
         
-        MockLinkService service = this.preparToTest(MockLinkService.class);
         Mockito.when(service.doService(context)).thenReturn(expectReturn);
         
         String realReturn = handler.process(context);

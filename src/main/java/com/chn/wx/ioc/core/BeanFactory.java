@@ -1,22 +1,50 @@
 package com.chn.wx.ioc.core;
 
-import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+
+import org.apache.log4j.Logger;
+
+import com.chn.wx.ioc.SingletonFactoryBean;
 
 @SuppressWarnings("unchecked")
-public class BeanFactory {
+public class BeanFactory implements Iterable<Entry<String, FactoryBean<?>>> {
 
-    private Map<String, FactoryBean<?>> map = new HashMap<>();
+    private Logger log = Logger.getLogger(BeanFactory.class);
+    private Map<String, FactoryBean<?>> map = new LinkedHashMap<>();
     
-    public <T> T get(String name) throws Exception {
+    public <T> FactoryBean<T> get(String name) {
         
-        return (T) map.get(name).get();
+        return (FactoryBean<T>) map.get(name);
+    }
+    
+    public Iterator<Entry<String, FactoryBean<?>>> iterator() {
+        
+        return map.entrySet().iterator();
     }
     
     public void regist(String name, Object obj) {
         
         FactoryBean<?> target = from(obj);
-        this.map.put(name, target);
+        FactoryBean<?> previous = this.map.put(name, target);
+        if(previous != null)
+            throw new RuntimeException("重复 bean 定义" + name + "-" + target.getType() 
+                    + "-" + previous.getType());
+        else
+            log.info(String.format(">>加载 bean 定义 %s-%s", name, target.getType()));
+    }
+    
+    public void replace(String name, Object obj) {
+        
+        FactoryBean<?> target = from(obj);
+        FactoryBean<?> previous = this.map.put(name, target);
+        if(previous != null)
+            log.info(String.format(">> %s 定义从 %s 切换为 %s", name ,previous.getType() 
+                    , target.getType()));
+        else
+            log.info(String.format(">>加载 bean 定义 %s-%s", name, target.getType()));
     }
     
     protected <T> FactoryBean<T> from(Object obj) {
@@ -35,15 +63,23 @@ public class BeanFactory {
         return result;
     }
     
-    private <T> ProtoTypeFactoryBean<T> fromMap(Map<?, ?> params) {
+    private <T> FactoryBean<T> fromMap(Map<?, ?> params) {
         
         if(params == null || params.size() == 0)
             throw new IllegalArgumentException("配置项错误");
-        ProtoTypeFactoryBean<T> result = new ProtoTypeFactoryBean<T>(this);
-        result.setType(params.get("type"));
-        result.setArgs(params.get("args"));
-        result.setFields(params.get("fields"));
-        return result;
+        if(params.containsKey("refer")) {
+            ReferFactoryBean<T> result = new ReferFactoryBean<T>(this);
+            result.setRefer((String) params.get("refer"));
+            return result;
+        } else {
+            boolean isSingleton = params.get("singleton") != null && ("true".equals(params.get("singleton").toString()));
+            ProtoTypeFactoryBean<T> result = isSingleton ? new SingletonFactoryBean<T>(this) : new ProtoTypeFactoryBean<T>(this);
+            result.setType(params.get("type"));
+            result.setArgs(params.get("args"));
+            result.setFields(params.get("fields"));
+            result.setInit(params.get("init"));
+            return result;
+        }
     }
 
 }

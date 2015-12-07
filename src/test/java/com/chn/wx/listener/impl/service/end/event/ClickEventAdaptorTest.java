@@ -33,9 +33,8 @@ public class ClickEventAdaptorTest extends ServiceTest {
         params.put("fromUser", fromUserName);
         params.put("createTime", createTime);
         params.put("eventkey", eventKey);
-        Context context = this.doPostCtxt(stp.replace(params));
-        
         MockClickEventService service = this.preparToTest(MockClickEventService.class);
+        Context context = this.doPostCtxt(stp.replace(params));
         Mockito.when(service.doService(context)).thenReturn(expectReturn);
         
         String realReturn = handler.process(context);

@@ -39,9 +39,8 @@ public class LocationEventAdaptorTest extends ServiceTest {
         params.put("latitude", latitude);
         params.put("longitude", longitude);
         params.put("precision", precision);
-        Context context = this.doPostCtxt(template.replace(params));
-        
         MockLocationEventService service = this.preparToTest(MockLocationEventService.class);
+        Context context = this.doPostCtxt(template.replace(params));
         Mockito.when(service.doService(context)).thenReturn(expectReturn);
         
         String realReturn = handler.process(context);

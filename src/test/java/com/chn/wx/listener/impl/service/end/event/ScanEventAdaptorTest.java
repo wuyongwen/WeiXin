@@ -36,9 +36,8 @@ public class ScanEventAdaptorTest extends ServiceTest {
         params.put("createtime", createTime);
         params.put("eventkey", eventKey);
         params.put("ticket", ticket);
-        Context context = this.doPostCtxt(template.replace(params));
-        
         MockScanEventService service = this.preparToTest(MockScanEventService.class);
+        Context context = this.doPostCtxt(template.replace(params));
         Mockito.when(service.doService(context)).thenReturn(expectReturn);
         
         String realReturn = handler.process(context);

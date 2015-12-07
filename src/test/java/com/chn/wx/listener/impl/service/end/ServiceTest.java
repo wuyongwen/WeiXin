@@ -1,52 +1,30 @@
 package com.chn.wx.listener.impl.service.end;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import com.chn.common.Lang;
 import com.chn.common.StringUtils;
-import com.chn.wx.MessageHandler;
-import com.chn.wx.MessageHandler.PackageClassProvider;
+import com.chn.wx.annotation.Node;
+import com.chn.wx.dto.App;
 import com.chn.wx.dto.Context;
-import com.chn.wx.ioc.Ioc;
-import com.chn.wx.listener.BeanFactory;
-import com.chn.wx.listener.impl.process.AsyncThreadMode;
+import com.chn.wx.ioc.core.BeanFactory;
+import com.chn.wx.ioc.core.FactoryBean;
+import com.chn.wx.ioc.provider.AnnotationProvider;
+import com.chn.wx.ioc.provider.JsonIocProvider;
+import com.chn.wx.listener.ThreadsMode;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({BeanFactory.class}) 
 @PowerMockIgnore({"javax.crypto.*", "org.apache.log4j.*"})
 public abstract class ServiceTest {
 
-    protected Ioc ioc;
-    protected MessageHandler handler;
-    {
-        
-        try {
-            InputStream is = Ioc.class.getResourceAsStream("/weixin.js");
-            Ioc ioc = new Ioc(new InputStreamReader(is));
-            handler = ioc.getObject("root");
-            PowerMockito.mockStatic(BeanFactory.class, new Answer<Object>() {
-                @Override
-                public Object answer(InvocationOnMock invocation) throws Throwable {
-                    return invocation.callRealMethod();
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(0);
-        }
-    }
+    protected ThreadsMode handler;
     
     protected String toUserName = randomString();
     protected String fromUserName = randomString();
@@ -79,6 +57,7 @@ public abstract class ServiceTest {
         Context context = new Context(decodeParams(params));
         context.setAttribute("method", method.toUpperCase());
         context.setAttribute("xmlContent", xmlContent);
+        context.setAttribute("threadsMode", handler);
         return context;
     }
     
@@ -99,8 +78,15 @@ public abstract class ServiceTest {
     public <T> T preparToTest(Class<T> clazz) throws Exception {
         
         T instance = Mockito.mock(clazz);
-        handler.setThreadsMode(new AsyncThreadMode(new PackageClassProvider("com.chn.wx.listener.impl.service|" + clazz.getName())));
-        PowerMockito.when(BeanFactory.getInstance(clazz)).thenReturn(instance);
+        BeanFactory factory = new BeanFactory();
+        factory.regist("beanFactory", factory);
+        new AnnotationProvider<Node>("com.chn.wx.listener", Node.class).registTo(factory);
+        new AnnotationProvider<Node>(App.getConfig("weixin.service.package"), Node.class).registTo(factory);
+        new JsonIocProvider(new String(Lang.loadFromClassPath("/weixin.js"))).registTo(factory);
+        
+        factory.replace(clazz.getSuperclass().getName(), instance);
+        FactoryBean<ThreadsMode> factoryBean = factory.get("root");
+        handler = factoryBean.get();
         return instance;
     }
     

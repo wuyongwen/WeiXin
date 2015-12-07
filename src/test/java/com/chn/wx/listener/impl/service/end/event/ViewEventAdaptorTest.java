@@ -33,9 +33,9 @@ public class ViewEventAdaptorTest extends ServiceTest {
         params.put("fromUser", fromUserName);
         params.put("createTime", createTime);
         params.put("eventKey", eventKey);
-        Context context = this.doPostCtxt(stp.replace(params));
         
         MockViewEventService service = this.preparToTest(MockViewEventService.class);
+        Context context = this.doPostCtxt(stp.replace(params));
         Mockito.when(service.doService(context)).thenReturn(expectReturn);
         
         String realReturn = handler.process(context);

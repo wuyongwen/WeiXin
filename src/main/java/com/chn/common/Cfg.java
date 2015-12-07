@@ -1,12 +1,3 @@
-/**
- * WeiXin
- * @title Cfg.java
- * @package com.chn.common
- * @author lzxz1234<lzxz1234@gmail.com>
- * @date 2015年4月27日-下午9:01:46
- * @version V1.0
- * All Right Reserved
- */
 package com.chn.common;
 
 import java.io.FileInputStream;

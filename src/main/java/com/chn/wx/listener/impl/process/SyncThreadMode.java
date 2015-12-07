@@ -3,15 +3,16 @@ package com.chn.wx.listener.impl.process;
 import org.apache.log4j.Logger;
 
 import com.chn.wx.dto.Context;
+import com.chn.wx.ioc.core.BeanFactory;
 import com.chn.wx.listener.ThreadsMode;
 
 public class SyncThreadMode extends ThreadsMode {
 
     private final Logger log = Logger.getLogger(SyncThreadMode.class);
     
-    public SyncThreadMode(ClassProvider provider) {
+    public SyncThreadMode(BeanFactory factory) {
         
-        super(provider);
+        super(factory);
     }
     
     @Override
@@ -19,7 +20,7 @@ public class SyncThreadMode extends ThreadsMode {
         
         try {
             
-            return this.root.doService(context);
+            return super.process(context);
         } catch (Exception e) {
             log.error("任务处理出错", e);
         }

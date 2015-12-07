@@ -19,9 +19,9 @@ public class CertifyServiceTest extends ServiceTest {
         String nonce = "nonce";
         String echostr = "succ";
         String params = String.format(url, signature, timestamp, nonce, echostr);
-        Context context = this.doGetCtxt(params);
-        
         MockCertifyService service = this.preparToTest(MockCertifyService.class);
+        
+        Context context = this.doGetCtxt(params);
         Mockito.when(service.doService(context)).thenCallRealMethod();
         
         Assert.assertEquals(echostr, handler.process(context));

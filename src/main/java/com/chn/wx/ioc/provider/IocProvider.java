@@ -1,7 +1,9 @@
 package com.chn.wx.ioc.provider;
 
+import com.chn.wx.ioc.core.BeanFactory;
+
 public interface IocProvider {
 
-    public <T> T getObject(String name) throws Exception;
+    public void registTo(BeanFactory factory);
     
 }

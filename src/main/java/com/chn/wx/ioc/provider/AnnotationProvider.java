@@ -3,26 +3,28 @@ package com.chn.wx.ioc.provider;
 import java.lang.annotation.Annotation;
 
 import com.chn.common.Scans;
+import com.chn.common.StringUtils;
 import com.chn.wx.ioc.core.BeanFactory;
 
 public class AnnotationProvider<A extends Annotation> implements IocProvider {
 
-    private BeanFactory factory;
+    private String[] packages;
+    private Class<A> anno;
     
-    public AnnotationProvider(String packagestr, Class<A> anno) {
+    public AnnotationProvider(String packages, Class<A> anno) {
         
-        factory = new BeanFactory();
-        String[] packages = packagestr.split("\\|");
-        for(String each : packages) 
-            for(Class<?> clazz : Scans.getClasses(each)) 
-                if(clazz.getAnnotation(anno) != null)
-                    factory.regist(clazz.getName(), clazz);
+        this.packages = packages.split("\\|");
+        this.anno = anno;
     }
-    
+
     @Override
-    public <T> T getObject(String name) throws Exception {
+    public void registTo(BeanFactory factory) {
         
-        return factory.get(name);
+        for(String each : packages) 
+            if(!StringUtils.isEmpty(each))
+                for(Class<?> clazz : Scans.getClasses(each)) 
+                    if(clazz.getAnnotation(anno) != null)
+                        factory.regist(clazz.getName(), clazz);
     }
 
 }

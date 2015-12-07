@@ -29,9 +29,8 @@ public class UnSubscribeEventAdaptorTest extends ServiceTest {
         params.put("toUser", toUserName);
         params.put("fromUser", fromUserName);
         params.put("createtime", createTime);
-        Context context = this.doPostCtxt(template.replace(params));
-        
         MockUnSubscribeEventService service = this.preparToTest(MockUnSubscribeEventService.class);
+        Context context = this.doPostCtxt(template.replace(params));
         Mockito.when(service.doService(context)).thenReturn(expectReturn);
         
         String realReturn = handler.process(context);

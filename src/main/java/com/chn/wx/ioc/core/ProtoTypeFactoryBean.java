@@ -21,6 +21,7 @@ public class ProtoTypeFactoryBean<T> extends FactoryBean<T> {
     private Class<?> type;
     private FactoryBean<?>[] args;
     private Map<String, FactoryBean<?>> fields;
+    private String init;
     
     @Override
     @SuppressWarnings("unchecked")
@@ -46,6 +47,8 @@ public class ProtoTypeFactoryBean<T> extends FactoryBean<T> {
                 InvokeUtils.setFieldValue(result, entry.getKey(), entry.getValue().get());
             }
         }
+        if(!StringUtils.isEmpty(init))
+            InvokeUtils.invoke(result, init);
         return (T) result;
     }
 
@@ -65,6 +68,15 @@ public class ProtoTypeFactoryBean<T> extends FactoryBean<T> {
             this.type = Lang.forName((String) type);
         else
             throw new IllegalArgumentException("不识别的 type：" + type);
+    }
+    
+    public void setInit(Object init) {
+        
+        if(init == null) return;
+        if(init instanceof String)
+            this.init = (String)init;
+        else
+            throw new IllegalArgumentException("初始化设置只允许字符串，但实际为 :" + init.getClass());
     }
     
     public void setArgs(Object params) {

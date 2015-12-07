@@ -31,9 +31,8 @@ public class UnAuthorizedAdaptorTest extends ServiceTest {
         params.put("createTime", createTime);
         params.put("appId", appId);
         params.put("authAppId", authAppId);
-        Context context = this.doPostCtxt(stp.replace(params));
-        
         MockUnAuthorizedService service = this.preparToTest(MockUnAuthorizedService.class);
+        Context context = this.doPostCtxt(stp.replace(params));
         Mockito.when(service.doService(context)).thenReturn(expectReturn);
         
         String realReturn = handler.process(context);

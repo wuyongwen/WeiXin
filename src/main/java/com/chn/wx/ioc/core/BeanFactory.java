@@ -30,10 +30,10 @@ public class BeanFactory implements Iterable<Entry<String, FactoryBean<?>>> {
         FactoryBean<?> target = from(obj);
         FactoryBean<?> previous = this.map.put(name, target);
         if(previous != null)
-            throw new RuntimeException("重复 bean 定义" + name + "-" + target.getType() 
-                    + "-" + previous.getType());
+            throw new RuntimeException("重复 bean 定义" + name + "-" + target.getType().getName()
+                    + "-" + previous.getType().getName());
         else
-            log.info(String.format(">>加载 bean 定义 %s-%s", name, target.getType()));
+            log.info(String.format(">>加载 bean 定义 %s-%s", name, target.getType().getName()));
     }
     
     public void replace(String name, Object obj) {
@@ -41,10 +41,10 @@ public class BeanFactory implements Iterable<Entry<String, FactoryBean<?>>> {
         FactoryBean<?> target = from(obj);
         FactoryBean<?> previous = this.map.put(name, target);
         if(previous != null)
-            log.info(String.format(">> %s 定义从 %s 切换为 %s", name ,previous.getType() 
-                    , target.getType()));
+            log.info(String.format(">> %s 定义从 %s 切换为 %s", name ,previous.getType().getName()
+                    , target.getType().getName()));
         else
-            log.info(String.format(">>加载 bean 定义 %s-%s", name, target.getType()));
+            log.info(String.format(">>加载 bean 定义 %s-%s", name, target.getType().getName()));
     }
     
     protected <T> FactoryBean<T> from(Object obj) {

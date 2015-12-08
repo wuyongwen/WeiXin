@@ -39,11 +39,14 @@ public abstract class ThreadsMode {
             for(Class<? extends Service> each : node.parents()) {
                 String path = each.getName() + "." + node.value();
                 FactoryBean<? extends Service> newNode = (FactoryBean<? extends Service>) entry.getValue();
-                FactoryBean<? extends Service> previous = route.put(path, newNode);
-                if(previous != null) 
-                    log.info(String.format(">>>路径 %s 的处理类由 %s 切换为 %s", path, previous.getType(), newNode.getType()));
-                else
+                FactoryBean<? extends Service> previous = route.get(path);
+                if(previous == null) {
+                    route.put(path, newNode);
                     log.info(String.format(">>>路径 %s 的处理类加载为 %s", path, newNode.getType()));
+                } else if (previous.getType().isAssignableFrom(newNode.getType())) {
+                    route.put(path, newNode);
+                    log.info(String.format(">>>路径 %s 的处理类由 %s 切换为 %s", path, previous.getType(), newNode.getType()));
+                }
             }
         }
     }

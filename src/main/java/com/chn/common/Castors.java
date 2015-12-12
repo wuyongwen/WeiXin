@@ -4,7 +4,6 @@ import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
 @SuppressWarnings("unchecked")
 public class Castors {
 
@@ -35,11 +34,11 @@ public class Castors {
      * @param fromObj
      * @return
      */
-    private static <F, T> T cast(Class<F> fromClass, Class<T> toClass, F fromObj) {
+    private static <F, T> T cast(Class<F> fromClass, Class<T> toClass, F fromObj, T defaultValue) {
         
         if(fromClass == null || toClass == null) throw new NullPointerException("参数禁止为空");
         if(toClass.isAssignableFrom(fromClass)) return (T) fromObj;
-        if(fromObj == null) return null;
+        if(fromObj == null) return defaultValue;
         
         if(toClass.isArray()) {
             Class<?> componentType = toClass.getComponentType();
@@ -52,7 +51,7 @@ public class Castors {
             Castor<F, T> castor = map.get(fromClass, toClass);
             if(castor == null)
                 throw new IllegalArgumentException("不允许的类型转换 " + fromClass +"-->" + toClass);
-            return castor.cast(fromObj);
+            return castor.cast(fromObj, defaultValue);
         }
     }
     
@@ -64,51 +63,56 @@ public class Castors {
      */
     public static <F, T> T cast(Class<T> toClass, F fromObj) {
         
-        if(fromObj == null) return null;
+        return cast(toClass, fromObj, null);
+    }
+    
+    public static <F, T> T cast(Class<T> toClass, F fromObj, T defaultValue) {
+        
+        if(fromObj == null) return defaultValue;
         Class<F> fromClass = (Class<F>) fromObj.getClass();
-        return cast(fromClass, toClass, fromObj);
+        return cast(fromClass, toClass, fromObj, defaultValue);
     }
     
     private static class StringToByte implements Castor<String, Byte> {
         @Override
-        public Byte cast(String from) {
-            return StringUtils.isEmpty(from) ? null : new Byte(from);
+        public Byte cast(String from, Byte defauleValue) {
+            return StringUtils.isEmpty(from) ? defauleValue : new Byte(from);
         }
     }
     private static class StringToInt implements Castor<String, Integer> {
         @Override
-        public Integer cast(String from) {
-            return StringUtils.isEmpty(from) ? null : new Integer(from);
+        public Integer cast(String from, Integer defauleValue) {
+            return StringUtils.isEmpty(from) ? defauleValue : new Integer(from);
         }
     }
     private static class StringToShort implements Castor<String, Short> {
         @Override
-        public Short cast(String from) {
-            return StringUtils.isEmpty(from) ? null : new Short(from);
+        public Short cast(String from, Short defauleValue) {
+            return StringUtils.isEmpty(from) ? defauleValue : new Short(from);
         }
     }
     private static class StringToLong implements Castor<String, Long> {
         @Override
-        public Long cast(String from) {
-            return StringUtils.isEmpty(from) ? null : new Long(from);
+        public Long cast(String from, Long defauleValue) {
+            return StringUtils.isEmpty(from) ? defauleValue : new Long(from);
         }
     }
     private static class StringToFloat implements Castor<String, Float> {
         @Override
-        public Float cast(String from) {
-            return StringUtils.isEmpty(from) ? null : new Float(from);
+        public Float cast(String from, Float defauleValue) {
+            return StringUtils.isEmpty(from) ? defauleValue : new Float(from);
         }
     }
     private static class StringToDouble implements Castor<String, Double> {
         @Override
-        public Double cast(String from) {
-            return StringUtils.isEmpty(from) ? null : new Double(from);
+        public Double cast(String from, Double defauleValue) {
+            return StringUtils.isEmpty(from) ? defauleValue : new Double(from);
         }
     }
     private static class StringToBoolean implements Castor<String, Boolean> {
         @Override
-        public Boolean cast(String from) {
-            return Boolean.valueOf(from);
+        public Boolean cast(String from, Boolean defaultValue) {
+            return StringUtils.isEmpty(from) ? defaultValue : Boolean.valueOf(from);
         }
     }
     private static class StringToDate implements Castor<String, Date> {
@@ -117,7 +121,8 @@ public class Castors {
             "yyy-MM-dd",
         };
         @Override
-        public Date cast(String from) {
+        public Date cast(String from, Date defaultValue) {
+            if(StringUtils.isEmpty(from)) return defaultValue;
             for(String format : FORMATS)
                 if(tryCast(from, format) != null)
                     return tryCast(from, format);
@@ -125,7 +130,7 @@ public class Castors {
         }
         private Date tryCast(String from, String format) {
             try {
-                return StringUtils.isEmpty(from) ? null : new SimpleDateFormat(format).parse(from);
+                return new SimpleDateFormat(format).parse(from);
             } catch (Exception e) {
                 return null;
             }
@@ -133,7 +138,7 @@ public class Castors {
     }
     
     public static interface Castor<F, T> {
-        public T cast(F from);
+        public T cast(F from, T defaultValue);
     }
     
 }

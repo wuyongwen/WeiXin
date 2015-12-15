@@ -1,12 +1,3 @@
-﻿/**
- * WeiXin
- * @title HttpUtils.java
- * @package com.chn.wx.util
- * @author lzxz1234<lzxz1234@gmail.com>
- * @date 2014年12月16日-上午10:21:41
- * @version V1.0
- * All Right Reserved
- */
 package com.chn.common;
 
 import java.io.BufferedOutputStream;

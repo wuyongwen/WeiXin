@@ -49,9 +49,10 @@ public class Castors {
             return result;
         } else {
             Castor<F, T> castor = map.get(fromClass, toClass);
-            if(castor == null)
-                throw new IllegalArgumentException("不允许的类型转换 " + fromClass +"-->" + toClass);
-            return castor.cast(fromObj, defaultValue);
+            if(castor != null) return castor.cast(fromObj, defaultValue);
+            Castor<T, F> castor2 = map.get(toClass, fromClass);
+            if(castor2 != null) return castor2.reverse(fromObj, defaultValue);
+            throw new IllegalArgumentException("不允许的类型转换 " + fromClass +"-->" + toClass);
         }
     }
     
@@ -73,51 +74,52 @@ public class Castors {
         return cast(fromClass, toClass, fromObj, defaultValue);
     }
     
-    private static class StringToByte implements Castor<String, Byte> {
+    private static class StringToByte extends StringAdapter<Byte> {
         @Override
         public Byte cast(String from, Byte defauleValue) {
             return StringUtils.isEmpty(from) ? defauleValue : new Byte(from);
         }
     }
-    private static class StringToInt implements Castor<String, Integer> {
+    private static class StringToInt extends StringAdapter<Integer> {
         @Override
         public Integer cast(String from, Integer defauleValue) {
             return StringUtils.isEmpty(from) ? defauleValue : new Integer(from);
         }
     }
-    private static class StringToShort implements Castor<String, Short> {
+    private static class StringToShort extends StringAdapter<Short> {
         @Override
         public Short cast(String from, Short defauleValue) {
             return StringUtils.isEmpty(from) ? defauleValue : new Short(from);
         }
     }
-    private static class StringToLong implements Castor<String, Long> {
+    private static class StringToLong extends StringAdapter<Long> {
         @Override
         public Long cast(String from, Long defauleValue) {
             return StringUtils.isEmpty(from) ? defauleValue : new Long(from);
         }
     }
-    private static class StringToFloat implements Castor<String, Float> {
+    private static class StringToFloat extends StringAdapter<Float> {
         @Override
         public Float cast(String from, Float defauleValue) {
             return StringUtils.isEmpty(from) ? defauleValue : new Float(from);
         }
     }
-    private static class StringToDouble implements Castor<String, Double> {
+    private static class StringToDouble extends StringAdapter<Double> {
         @Override
         public Double cast(String from, Double defauleValue) {
             return StringUtils.isEmpty(from) ? defauleValue : new Double(from);
         }
     }
-    private static class StringToBoolean implements Castor<String, Boolean> {
+    private static class StringToBoolean extends StringAdapter<Boolean> {
         @Override
         public Boolean cast(String from, Boolean defaultValue) {
             return StringUtils.isEmpty(from) ? defaultValue : Boolean.valueOf(from);
         }
     }
-    private static class StringToDate implements Castor<String, Date> {
+    private static class StringToDate extends StringAdapter<Date> {
         private static final String[] FORMATS = new String[] {
             "yyy-MM-dd HH:mm:ss",
+            "yyy-MM-dd HH:mm",
             "yyy-MM-dd",
         };
         @Override
@@ -136,9 +138,18 @@ public class Castors {
             }
         }
     }
+    private static abstract class StringAdapter<T> implements Castor<String, T> {
+
+        @Override
+        public String reverse(T from, String defaultValue) {
+            return from == null ? defaultValue : from.toString();
+        }
+        
+    }
     
     public static interface Castor<F, T> {
         public T cast(F from, T defaultValue);
+        public F reverse(T from, F defaultValue);
     }
     
 }

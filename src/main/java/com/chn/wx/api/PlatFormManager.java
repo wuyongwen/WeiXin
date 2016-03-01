@@ -87,7 +87,6 @@ public class PlatFormManager {
      */
     public static PlatFormAccessTokenResult getAuthAccessToken(String authAppId, 
             String refreshToken) {
-        
         Map<String, Object> params = new HashMap<>();
         params.put("component_access_token", PlatFormTokenAccessor.getAccessToken());
         String urlLocation = getAuthAccessTokenUrl.replace(params);

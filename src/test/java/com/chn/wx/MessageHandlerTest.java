@@ -11,5 +11,5 @@ public class MessageHandlerTest {
 	public void test() {
 		new JsonIocProvider(new String(Lang.loadFromClassPath("/weixin.js")));
 	}
-;
+
 }

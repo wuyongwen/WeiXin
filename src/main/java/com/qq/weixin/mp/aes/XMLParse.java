@@ -45,7 +45,11 @@ class XMLParse {
 			NodeList nodelist2 = root.getElementsByTagName("ToUserName");
 			result[0] = 0;
 			result[1] = nodelist1.item(0).getTextContent();
-			result[2] = nodelist2.item(0).getTextContent();
+			if(nodelist2!=null){
+				if(nodelist2.item(0)!=null){
+					result[2] = nodelist2.item(0).getTextContent();
+				}
+			}
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();

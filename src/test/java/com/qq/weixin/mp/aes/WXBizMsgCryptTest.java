@@ -113,7 +113,7 @@ public class WXBizMsgCryptTest {
 		}
 		fail("错误流程不抛出异常？？？");
 	}
-
+	
 	@Test
 	public void testValidateSignatureError() throws ParserConfigurationException, SAXException,
 			IOException {
@@ -149,5 +149,23 @@ public class WXBizMsgCryptTest {
 		String echoStr = "P9nAzCzyDtyTWESHep1vC5X9xho/qYX3Zpb4yKa9SKld1DsH3Iyt3tP3zNdtp+4RPcs8TgAE7OaBO+FZXvnaqQ==";
 		wxcpt.verifyUrl(verifyMsgSig, timeStamp, nonce, echoStr);
 		// 只要不抛出异常就好
+	}
+	@Test
+	public void test() throws AesException{
+		String timetamp = "1456907505";
+		String encrypt_type = "aes";
+		String nonce = "1231152662";
+		String xmlContent = "<xml>"+
+	    "<AppId><![CDATA[wx7613bea5e4d18127]]></AppId>"+
+	    "<Encrypt><![CDATA[MyFm7jGFq7JwVR6TRPYsk7vFpDrO8Q51ZBzXVNbWBRDw7dhkFEE9QNIHtV6Oe2I27SjWoZ1cTx+s4YJOJM0wR5w6wC63T6LQ44lg51jpkjYW37FmS0VOnAvPzN2JzZWBtfvBqezh1/E06fNHiQJQR4hkrpjsocDOcxjAg8UJ3GiXQukGpJE71S6frCAfgMFKLzXb63TLpCbO8DFLPDnIa9nAX3eyv+HBNw7Ckih1cwlejq3pF6kr9oFLIgNsPB3AfhKSwwgPQjBy6NUzQaJIDOwrvNA6fgWMvL7Qpf7wP6So9fsXD/ILSGrjrcFEi7jmspThO8JY2/ERfU2NXzNv7l/El5KtzPappwY7r2X2Gk35Fhap6ao1AKbJqFiuHAdKIBmUesfrtGACz2mZ03U71qL2wsDZMU92WOtwhTPqhNuGNeESmHVhVfFUJ4Obb94lymX74ronMkV+Vw9oeirLMw==]]></Encrypt>"+
+	    "</xml>";
+		String msg_signature = "a25c1dc7796b63db9472abc040f9549f258abacf";
+		String signature = "5ff423fff7c316e95f0a06cfe799222e50c0a379";
+		String token = "wxtoken";
+		String appId = "wx7613bea5e4d18127";
+		String encodingAesKey = "KgwVOifMrDO0tQNbzdoeWP6abSF2MIN97UuSlZDLrAI";
+		WXBizMsgCrypt pc = new WXBizMsgCrypt(token, encodingAesKey, appId);
+		String decrptMsg = pc.decryptMsg(msg_signature, timetamp, nonce, xmlContent);
+		System.out.println(decrptMsg);
 	}
 }

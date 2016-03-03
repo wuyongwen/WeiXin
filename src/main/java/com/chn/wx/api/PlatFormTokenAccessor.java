@@ -1,7 +1,6 @@
 package com.chn.wx.api;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSON;
 import com.chn.common.HttpUtils;
@@ -24,7 +23,7 @@ import com.chn.wx.vo.result.PlatFormAccessTokenResult;
  */
 public class PlatFormTokenAccessor {
 
-	private static Logger log = LoggerFactory.getLogger(PlatFormTokenAccessor.class);
+	private static Logger log = Logger.getLogger(PlatFormTokenAccessor.class);
 	private static PlatFormTokenRefresher refresher = new PlatFormTokenRefresher();
 
 	public static synchronized String getAccessToken() throws WxErrorException {
@@ -55,7 +54,7 @@ public class PlatFormTokenAccessor {
 			
 			ErrorUtils.checkWXError(result);
 			
-			log.debug("获取的component_access_token:{}", result);
+			log.debug("获取的component_access_token:" + result);
 			expireTime = System.currentTimeMillis() + result.getExpiresIn() * 900;
 			return result.getComponentAccessToken();
 		}

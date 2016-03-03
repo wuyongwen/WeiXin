@@ -150,7 +150,7 @@ public class WXBizMsgCryptTest {
 		wxcpt.verifyUrl(verifyMsgSig, timeStamp, nonce, echoStr);
 		// 只要不抛出异常就好
 	}
-	@Test
+	//@Test
 	public void test() throws AesException{
 		String timetamp = "1456907505";
 		String encrypt_type = "aes";

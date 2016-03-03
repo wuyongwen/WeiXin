@@ -12,6 +12,7 @@ package com.chn.wx.vo.result;
 import java.io.Serializable;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.chn.common.StringUtils;
 
 /**
  * @class BasicResult
@@ -38,5 +39,12 @@ public class BasicResult implements Serializable {
     public void setErrmsg(String errmsg) {
         this.errmsg = errmsg;
     }
-    
+    public Boolean hasError(){
+    	if(!StringUtils.isEmpty(errcode))
+    		return false;
+    	return true;
+    }
+	public String getErrorMsg() {
+		return "微信错误: errcode=" + errcode + ", errmsg=" + errmsg;
+	}
 }

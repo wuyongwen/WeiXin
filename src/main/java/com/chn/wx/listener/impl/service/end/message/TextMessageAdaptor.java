@@ -38,7 +38,7 @@ public class TextMessageAdaptor implements Service {
     public String doService(Context context) throws Exception {
         
         log.debug(String.format("收到来自 %s 的文本信息 %s", FromUserName, Content));
-        return DEFAULT_RETURN;
+        return Content;
     }
 
 }

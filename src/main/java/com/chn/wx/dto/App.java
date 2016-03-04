@@ -38,6 +38,8 @@ public class App {
         public static final String token;
         public static final String loginedUrl;
         
+        public static final String defaultTicket;
+        
         static {
             id = cfg.get("weixin.app.id");
             name = cfg.get("weixin.app.name");
@@ -45,6 +47,8 @@ public class App {
             aesKey = cfg.get("weixin.app.aeskey");
             token = cfg.get("weixin.app.token");
             loginedUrl = cfg.get("weixin.thirdparty.logined.redirect");
+            
+            defaultTicket = cfg.get("weixin.default.componentverifyticket");
         }
     }
 }

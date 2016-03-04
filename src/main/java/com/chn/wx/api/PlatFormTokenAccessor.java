@@ -46,7 +46,9 @@ public class PlatFormTokenAccessor {
 		public String refresh() throws WxErrorException {
 			PlatFormAccessTokenResult result = null;
 			if (StringUtils.isEmpty(componentVerifyTicket)) {
-				throw new WxErrorException(ERROR.TICKET.build());
+				componentVerifyTicket = App.Info.defaultTicket;
+				if (StringUtils.isEmpty(componentVerifyTicket)) 
+					throw new WxErrorException(ERROR.TICKET.build());
 			}
 			String postJson = PlatFormMessage.wrapGetAccessToken(App.Info.id, App.Info.secret, componentVerifyTicket);
 			String respJson = HttpUtils.post(platformTokenUrl, postJson);

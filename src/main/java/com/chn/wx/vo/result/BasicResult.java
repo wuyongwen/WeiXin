@@ -40,11 +40,6 @@ public class BasicResult implements Serializable {
         this.errmsg = errmsg;
     }
     public Boolean hasError(){
-    	if(!StringUtils.isEmpty(errcode))
-    		return false;
-    	return true;
+    	return !StringUtils.isEmpty(errcode);
     }
-	public String getErrorMsg() {
-		return "微信错误: errcode=" + errcode + ", errmsg=" + errmsg;
-	}
 }

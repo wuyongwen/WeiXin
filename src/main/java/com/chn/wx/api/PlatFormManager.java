@@ -51,6 +51,7 @@ public class PlatFormManager {
     
     /**
      * 该API用于获取预授权码。预授权码用于公众号授权时的第三方平台方安全验证。
+     * pre_auth_code
      * @return 
      */
     public static String getPreAuthCode() {

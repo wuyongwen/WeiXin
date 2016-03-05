@@ -10,6 +10,8 @@ import com.chn.wx.api.exception.ERROR;
 import com.chn.wx.api.exception.ErrorUtils;
 import com.chn.wx.api.exception.WxErrorException;
 import com.chn.wx.dto.App;
+import com.chn.wx.store.PlatformConfigStorage;
+import com.chn.wx.store.PlatformConfigYamlStorage;
 import com.chn.wx.template.PlatFormMessage;
 import com.chn.wx.vo.result.PlatFormAccessTokenResult;
 
@@ -25,15 +27,18 @@ public class PlatFormTokenAccessor {
 
 	private static Logger log = Logger.getLogger(PlatFormTokenAccessor.class);
 	private static PlatFormTokenRefresher refresher = new PlatFormTokenRefresher();
+	private static PlatformConfigStorage configStorage = new PlatformConfigYamlStorage();
 
 	public static synchronized String getAccessToken() throws WxErrorException {
-
+		if(!configStorage.isAccessTokenExpired())
+			return configStorage.getAccessToken();
 		return refresher.get();
 	}
 
 	public static void updatePlatFormVerifyTicket(String componentVerifyTicket) {
 
 		refresher.componentVerifyTicket = componentVerifyTicket;
+		configStorage.updateVerifyTicket(componentVerifyTicket);
 	}
 
 	private static class PlatFormTokenRefresher extends Refresher<String> {
@@ -41,12 +46,11 @@ public class PlatFormTokenAccessor {
 		protected String componentVerifyTicket;
 		private long expireTime;
 		private String platformTokenUrl = WeiXinURL.PLATFORM_GET_ACCESSTOKEN;
-
 		@Override
-		public String refresh() throws WxErrorException {
+		public String refresh(){
 			PlatFormAccessTokenResult result = null;
 			if (StringUtils.isEmpty(componentVerifyTicket)) {
-				componentVerifyTicket = App.Info.defaultTicket;
+				componentVerifyTicket = configStorage.getTicket();
 				if (StringUtils.isEmpty(componentVerifyTicket)) 
 					throw new WxErrorException(ERROR.TICKET.build());
 			}
@@ -58,6 +62,7 @@ public class PlatFormTokenAccessor {
 			
 			log.debug("获取的component_access_token:" + result);
 			expireTime = System.currentTimeMillis() + result.getExpiresIn() * 900;
+			configStorage.updateAccessToken(result.getComponentAccessToken(), result.getExpiresIn());
 			return result.getComponentAccessToken();
 		}
 

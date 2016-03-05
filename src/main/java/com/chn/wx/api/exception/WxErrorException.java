@@ -9,7 +9,7 @@ package com.chn.wx.api.exception;
 public class WxErrorException extends RuntimeException {
 
 	/**
-	 * 
+	 * 	
 	 */
 	private static final long serialVersionUID = 5738954907239458916L;
 	private ErrorMsg error;

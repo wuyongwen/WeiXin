@@ -14,6 +14,7 @@ import com.chn.common.StringTemplate;
 import com.chn.wx.dto.App;
 import com.chn.wx.template.PlatFormMessage;
 import com.chn.wx.vo.result.PlatFormAccessTokenResult;
+import com.chn.wx.vo.result.PlatFormGetAuthAccessResult;
 import com.chn.wx.vo.result.PlatFormGetAuthInfoResult;
 import com.chn.wx.vo.result.PlatFormGetAuthorizerInfoResult;
 import com.chn.wx.vo.result.PlatFormGetAuthorizerOptionResult;
@@ -33,7 +34,7 @@ public class PlatFormManager {
     
     private static StringTemplate getLoginUrl = compile(WeiXinURL.PLATFORM_LOGINURL);
     private static StringTemplate getAuthInfoUrl = compile(WeiXinURL.PLATFORM_GET_AUTHINFO);
-    private static StringTemplate getAuthAccessTokenUrl = compile(WeiXinURL.PLATFORM_GET_ACCESSTOKEN);
+    private static StringTemplate getAuthAccessTokenUrl = compile(WeiXinURL.PLATFORM_GET_AUTHACCESSTOKEN);
     private static StringTemplate getAuthorizerInfoUrl = compile(WeiXinURL.PLATFORM_GET_AUTHORIZER_INFO);
     private static StringTemplate getAuthorizerOptionUrl = compile(WeiXinURL.PLATFORM_GET_AUTHORIZER_OPTION);
     private static StringTemplate setAuthorizerOptionUrl = compile(WeiXinURL.PLATFORM_SET_AUTHORIZER_OPTION);
@@ -86,14 +87,14 @@ public class PlatFormManager {
      * 权，才能再次拿到新的刷新令牌
      * @return
      */
-    public static PlatFormAccessTokenResult getAuthAccessToken(String authAppId, 
+    public static PlatFormGetAuthAccessResult getAuthAccessToken(String authAppId, 
             String refreshToken) {
         Map<String, Object> params = new HashMap<>();
         params.put("component_access_token", PlatFormTokenAccessor.getAccessToken());
         String urlLocation = getAuthAccessTokenUrl.replace(params);
         String postContent = PlatFormMessage.wrapGetAuthAccessToken(App.Info.id, authAppId, refreshToken);
         String respJson = HttpUtils.post(urlLocation, postContent);
-        return JSON.parseObject(respJson, PlatFormAccessTokenResult.class);
+        return JSON.parseObject(respJson, PlatFormGetAuthAccessResult.class);
     }
     
     /**

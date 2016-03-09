@@ -11,11 +11,13 @@ package com.chn.wx.listener.impl.service.end.message;
 
 import org.apache.log4j.Logger;
 
+import com.chn.turing.api.TuringRobotApi;
 import com.chn.wx.annotation.Node;
 import com.chn.wx.annotation.Param;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
 import com.chn.wx.listener.impl.service.route.RawMessageRouter;
+import com.chn.wx.template.PassiveMessage;
 
 /**
  * @class TextMessageAdaptor
@@ -36,9 +38,8 @@ public class TextMessageAdaptor implements Service {
     
     @Override
     public String doService(Context context) throws Exception {
-        
         log.debug(String.format("收到来自 %s 的文本信息 %s", FromUserName, Content));
-        return Content;
+        String content = PassiveMessage.wrapText(FromUserName, ToUserName, TuringRobotApi.talking(Content, FromUserName).getTextInfo());
+        return content;
     }
-
 }

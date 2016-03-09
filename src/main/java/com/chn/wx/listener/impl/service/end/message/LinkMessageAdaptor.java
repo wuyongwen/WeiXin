@@ -16,6 +16,7 @@ import com.chn.wx.annotation.Param;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
 import com.chn.wx.listener.impl.service.route.RawMessageRouter;
+import com.chn.wx.template.PassiveMessage;
 
 /**
  * @class LinkMessageAdaptor
@@ -40,7 +41,7 @@ public class LinkMessageAdaptor implements Service {
     public String doService(Context context) throws Exception {
 
         log.debug(String.format("收到来自 %s 的链接信息 %s", FromUserName, Title));
-        return DEFAULT_RETURN;
+        return PassiveMessage.wrapText(FromUserName,ToUserName, Url);
     }
 
 }

@@ -16,6 +16,7 @@ import com.chn.wx.annotation.Param;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
 import com.chn.wx.listener.impl.service.route.RawMessageRouter;
+import com.chn.wx.template.PassiveMessage;
 
 /**
  * @class ImageMessageAdaptor
@@ -39,7 +40,8 @@ public class ImageMessageAdaptor implements Service {
     public String doService(Context context) throws Exception {
 
         log.debug(String.format("收到来自 %s 的图片信息 %s", FromUserName, MediaId));
-        return DEFAULT_RETURN;
+       
+        return  PassiveMessage.wrapImage(FromUserName,ToUserName,MediaId);
     }
 
 }

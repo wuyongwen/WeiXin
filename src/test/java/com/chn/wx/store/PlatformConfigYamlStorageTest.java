@@ -10,11 +10,6 @@ public class PlatformConfigYamlStorageTest {
 	@Test
 	public void test() {
 		
-		Assert.assertEquals(null, configStore.getTicket());
-		Assert.assertEquals(null, configStore.getAccessToken());
-		Assert.assertEquals(true, configStore.isAccessTokenExpired());
-		configStore.updateVerifyTicket("ticket");
-		Assert.assertEquals("ticket", configStore.getTicket());
 	}
 
 }

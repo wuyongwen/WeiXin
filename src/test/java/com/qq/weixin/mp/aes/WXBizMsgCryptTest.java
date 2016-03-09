@@ -168,4 +168,16 @@ public class WXBizMsgCryptTest {
 		String decrptMsg = pc.decryptMsg(msg_signature, timetamp, nonce, xmlContent);
 		System.out.println(decrptMsg);
 	}
+	@Test
+	public void testEcryptMsg() throws AesException{
+		String xmlContent = "<xml>"+
+			"<Encrypt><![CDATA[tgXIn7z9imMUj+F0URED+Qtl9QnDLW/vCq8jrWe/tAW2nal7jDHWBm3hW9/MP7TWYETVd6VFPY3aNVwqKPCLi783kBMNDF0TyGCAI9v5xFyGET5nK+fNemOq/foGfDNkZXqlVukWjvuPZn7qUlSF46Qb1pUbIrgsOiEaRhJHWu15SuUWzFKFoCKTKc4MLXN7N+M6hwVdnvclDPM/jSO6evvlbQVR/56+u9TrVUlYYmaiIGqF6wvJ0XFiYKXfL8IkLcNp2NU9DyZ5C14t2QLrJFjb3LKk+qUCq1CLw7mHzOnzEOuTb/g1kOJv7cz61E294OP16s5MaQ+5XO1LjYSYIDTckKxLnDeUZTLPJH4G+1IbPmpl3DDajlDT3Lsz7xH+D4pzHDn1vP5hn96AZHt/LHsA3L5y928iQw6wkjzXWC5eaepra96Wwz0+pV5vZg2FBiEQfSv9c37BWvOHVQZHszqQO3awg1e2CkSt56Yu4BIUdYbWZk8efdjVx21vwin86MNZ9QlXPJSbc5eFqo+O2TmOkx1VSGV4iAc7k5Jh5n3WAMSQawVr69FRYfBqaETRpbIxjubBKeoS5WZ1C4mvmg6J0/sPut2Gbj3Ah/3NzZiOPemlkh6gUGgNWRvL5Ijq]]></Encrypt>"+
+			"<MsgSignature><![CDATA[48753b98b03d7d734cfbaa1f659aa6be0c8da1ae]]></MsgSignature>"+
+			"<TimeStamp>1457515354</TimeStamp>"+
+			"<Nonce><![CDATA[843317629]]></Nonce>"+
+			"</xml>";
+		WXBizMsgCrypt pc = new WXBizMsgCrypt("wxtoken", "KgwVOifMrDO0tQNbzdoeWP6abSF2MIN97UuSlZDLrAI", "wx7613bea5e4d18127");
+		String decrptMsg = pc.decryptMsg("e4f7b51bb9946cd57103ad816781e2c901c3fe3d", "1457520226", "76784791", xmlContent);
+		System.out.println(decrptMsg);
+	}
 }

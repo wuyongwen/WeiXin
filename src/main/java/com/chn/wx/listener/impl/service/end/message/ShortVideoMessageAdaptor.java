@@ -7,6 +7,7 @@ import com.chn.wx.annotation.Param;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
 import com.chn.wx.listener.impl.service.route.RawMessageRouter;
+import com.chn.wx.template.PassiveMessage;
 
 /**
  * @class ShortVideoMessageAdaptor
@@ -30,7 +31,7 @@ public class ShortVideoMessageAdaptor implements Service{
     public String doService(Context context) throws Exception {
 
         log.debug(String.format("收到来自 %s 的视频信息 %s", FromUserName, MediaId));
-        return DEFAULT_RETURN;
+        return PassiveMessage.wrapVideo(FromUserName, ToUserName, MediaId);
     }
 
 }

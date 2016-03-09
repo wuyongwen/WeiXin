@@ -16,6 +16,7 @@ import com.chn.wx.annotation.Param;
 import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
 import com.chn.wx.listener.impl.service.route.RawMessageRouter;
+import com.chn.wx.template.PassiveMessage;
 
 /**
  * @class LocationMessageAdaptor
@@ -42,7 +43,7 @@ public class LocationMessageAdaptor implements Service {
 
         log.debug(String.format("收到来自 %s 的位置信息 %s-%s", FromUserName, 
                                 Location_X, Location_Y));
-        return DEFAULT_RETURN;
+        return PassiveMessage.wrapText(FromUserName, ToUserName, Label);
     }
     
     

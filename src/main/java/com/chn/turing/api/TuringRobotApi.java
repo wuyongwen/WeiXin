@@ -1,12 +1,7 @@
 package com.chn.turing.api;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 
 import com.alibaba.fastjson.JSON;
 import com.chn.common.NetWorkCenter;
@@ -28,9 +23,5 @@ public class TuringRobotApi {
 		String resultJson = !r.hasError() ? r.getErrmsg() : r.toJsonString();
 		TuringRobotBean response = JSON.parseObject(resultJson, TuringRobotBean.class);
 		return response;
-	}
-	public static void main(String[] args) {
-		String info = talking("今天的新闻", null).getTextInfo();
-		System.out.println(info);
 	}
 }

@@ -10,6 +10,7 @@
 package com.chn.common;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,8 +19,18 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.http.HeaderElement;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 
 /**
  * @class HttpUtils
@@ -87,7 +98,26 @@ public class HttpUtils {
             IOUtils.closeQuietly(is);
         }
     }
-    
+    public static File downloadFile(String urlLocation){
+    	HttpURLConnection conn = null;
+        InputStream is = null;
+        try {
+            URL url = new URL(urlLocation);
+            conn = (HttpURLConnection)url.openConnection();
+            conn.setInstanceFollowRedirects( true );
+            conn.setUseCaches(true);
+            
+            String fileType = getSuffix(conn.getContentType());
+            is = conn.getInputStream();
+            File tempFile = FileUtils.createTmpFile(is, UUID.randomUUID().toString(), fileType);
+            return tempFile;
+        } catch (Exception e) {
+            throw new RuntimeException("请求错误！", e);
+        } finally {
+            IOUtils.closeQuietly(is);
+        }
+    	
+    }
     public static String get(String urlLocation) {
         
         HttpURLConnection conn = null;
@@ -174,5 +204,15 @@ public class HttpUtils {
             IOUtils.closeQuietly(is);
         }
     }
-
+    public static final Map<String, String> types = new HashMap<String, String>(){{
+		put( "image/gif", ".gif" );
+		put( "image/jpeg", ".jpg" );
+		put( "image/jpg", ".jpg" );
+		put( "image/png", ".png" );
+		put( "image/bmp", ".bmp" );
+	}};
+	
+	public static String getSuffix ( String mime ) {
+		return types.get( mime );
+	}
 }

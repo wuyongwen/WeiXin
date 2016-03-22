@@ -18,7 +18,7 @@ public class PlatformConfigYamlStorage implements PlatformConfigStorage {
 	static PlatformConfig config = PlatformConfigYamlStorage.load();
 
 	@Override
-	public void updateVerifyTicket(String verify_ticketb) {
+	public void updateVerifyTicket(String verify_ticketb,String createTime) {
 		config.setVerifyTicket(verify_ticketb);
 		store();
 	}
@@ -46,7 +46,7 @@ public class PlatformConfigYamlStorage implements PlatformConfigStorage {
 	}
 
 	@Override
-	public void updateAccessToken(String accessToken, int expiresIn) {
+	public void updateAccessToken(String accessToken, Integer expiresIn) {
 		config.setAccessToken(accessToken);
 		config.setExpiresIn(System.currentTimeMillis() + (expiresIn - 200)* 1000l);
 		store();
@@ -62,6 +62,24 @@ public class PlatformConfigYamlStorage implements PlatformConfigStorage {
 	@Override
 	public boolean isAccessTokenExpired() {
 		return System.currentTimeMillis() > config.getExpiresIn();
+	}
+
+	@Override
+	public void updatePreAuthCode(String preAuthCode, Integer expiresIn) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getPreAuthCode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isPreAuthCodeExpired() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

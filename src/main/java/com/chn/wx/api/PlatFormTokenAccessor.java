@@ -2,18 +2,8 @@ package com.chn.wx.api;
 
 import org.apache.log4j.Logger;
 
-import com.alibaba.fastjson.JSON;
-import com.chn.common.HttpUtils;
 import com.chn.common.Refresher;
-import com.chn.common.StringUtils;
-import com.chn.wx.api.exception.ERROR;
-import com.chn.wx.api.exception.ErrorUtils;
 import com.chn.wx.api.exception.WxErrorException;
-import com.chn.wx.dto.App;
-import com.chn.wx.store.PlatformConfigStorage;
-import com.chn.wx.store.PlatformConfigYamlStorage;
-import com.chn.wx.template.PlatFormMessage;
-import com.chn.wx.vo.result.PlatFormAccessTokenResult;
 
 /**
  * 公众号第三方公众平台的 AccessToken 管理器
@@ -26,51 +16,40 @@ import com.chn.wx.vo.result.PlatFormAccessTokenResult;
 public class PlatFormTokenAccessor {
 
 	private static Logger log = Logger.getLogger(PlatFormTokenAccessor.class);
-	private static PlatFormTokenRefresher refresher = new PlatFormTokenRefresher();
-	private static PlatformConfigStorage configStorage = new PlatformConfigYamlStorage();
-
-	public static synchronized String getAccessToken() throws WxErrorException {
-		if(!configStorage.isAccessTokenExpired())
-			return configStorage.getAccessToken();
-		return refresher.get();
-	}
-
-	public static void updatePlatFormVerifyTicket(String componentVerifyTicket) {
-
-		refresher.componentVerifyTicket = componentVerifyTicket;
-		configStorage.updateVerifyTicket(componentVerifyTicket);
-	}
-
-	private static class PlatFormTokenRefresher extends Refresher<String> {
-
-		protected String componentVerifyTicket;
-		private long expireTime;
-		private String platformTokenUrl = WeiXinURL.PLATFORM_GET_ACCESSTOKEN;
-		@Override
-		public String refresh(){
-			PlatFormAccessTokenResult result = null;
-			if (StringUtils.isEmpty(componentVerifyTicket)) {
-				componentVerifyTicket = configStorage.getTicket();
-				if (StringUtils.isEmpty(componentVerifyTicket)) 
-					throw new WxErrorException(ERROR.TICKET.build());
-			}
-			String postJson = PlatFormMessage.wrapGetAccessToken(App.Info.id, App.Info.secret, componentVerifyTicket);
-			String respJson = HttpUtils.post(platformTokenUrl, postJson);
-			result = JSON.parseObject(respJson, PlatFormAccessTokenResult.class);
-			
-			ErrorUtils.checkWXError(result);
-			
-			log.debug("获取的component_access_token:" + result);
-			expireTime = System.currentTimeMillis() + result.getExpiresIn() * 900;
-			configStorage.updateAccessToken(result.getComponentAccessToken(), result.getExpiresIn());
-			return result.getComponentAccessToken();
+	private static PlatFormTokenRefresher refresher;
+	private static Refresher<String> preAuthRefresher;
+	
+	public static PlatFormTokenRefresher getRefresher() {
+		if(refresher == null){
+			refresher = new PlatFormTokenRefresher();
 		}
-
-		@Override
-		public boolean isExpired() {
-			return System.currentTimeMillis() > expireTime;
-		}
-
+		return refresher;
 	}
 
+	public static void setRefresher(PlatFormTokenRefresher refresher) {
+		PlatFormTokenAccessor.refresher = refresher;
+	}
+
+	public static Refresher<String> getPreAuthRefresher() {
+		if(preAuthRefresher == null){
+			preAuthRefresher = new PreAuthRefresher();
+		}
+		return preAuthRefresher;
+	}
+
+	public static void setPreAuthRefresher(Refresher<String> preAuthRefresher) {
+		PlatFormTokenAccessor.preAuthRefresher = preAuthRefresher;
+	}
+
+	public  synchronized String getPreAuthCode() {
+		return getPreAuthRefresher().get();
+	}
+
+	public  synchronized String getAccessToken() throws WxErrorException {
+		return getRefresher().get();
+	}
+
+	public  void updatePlatFormVerifyTicket(String componentVerifyTicket, String createTime) {
+		getRefresher().setComponentVerifyTicket(componentVerifyTicket,createTime);
+	}
 }

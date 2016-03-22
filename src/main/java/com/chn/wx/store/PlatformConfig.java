@@ -1,5 +1,9 @@
 package com.chn.wx.store;
-
+/**
+ * 微信开发平台验证参数
+ * @author wuyongwen
+ * @Date 2016年3月22日下午3:10:42
+ */
 public class PlatformConfig {
 	private String verifyTicket;
 	private String accessToken;
@@ -22,5 +26,4 @@ public class PlatformConfig {
 	public void setExpiresIn(long expiresIn) {
 		this.expiresIn = expiresIn;
 	}
-	
 }

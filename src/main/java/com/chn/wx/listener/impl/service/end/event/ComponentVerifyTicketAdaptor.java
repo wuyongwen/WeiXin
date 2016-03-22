@@ -22,7 +22,7 @@ public class ComponentVerifyTicketAdaptor implements Service {
     @Override
     public String doService(Context context) throws Exception {
         
-        PlatFormTokenAccessor.updatePlatFormVerifyTicket(ComponentVerifyTicket);
+        new PlatFormTokenAccessor().updatePlatFormVerifyTicket(ComponentVerifyTicket,CreateTime);
         log.debug(String.format("收到刷新授权Ticket请求，新Ticket: %s", ComponentVerifyTicket));
         return DEFAULT_RETURN;
     }

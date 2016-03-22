@@ -33,7 +33,7 @@ public class MenuManager {
     private static StringTemplate createButtons = compile(WeiXinURL.CREATE_BUTTONS);
     private static StringTemplate queryMenu = compile(WeiXinURL.QUERY_MENU);
     private static StringTemplate deleteMenu = compile(WeiXinURL.DELETE_MENU);
-    
+    private static PlatFormManager platFormManager = new PlatFormManagerImp();
     /**
      * @description 自定义菜单创建接口
      * @param button
@@ -84,7 +84,7 @@ public class MenuManager {
             Button... button) {
         
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("accessToken", PlatFormManager.getAuthAccessToken(authAppId, refreshToken));
+        params.put("accessToken", platFormManager.getAuthAccessToken(authAppId, refreshToken));
         String urlLocation = createButtons.replace(params);
         String respString = HttpUtils.post(urlLocation, MenuMessage.wrapCreateButtons(button));
         return JSON.parseObject(respString, BasicResult.class);
@@ -97,7 +97,7 @@ public class MenuManager {
     public static QueryMenuResult queryMenu(String authAppId, String refreshToken) {
         
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("accessToken", PlatFormManager.getAuthAccessToken(authAppId, refreshToken));
+        params.put("accessToken", platFormManager.getAuthAccessToken(authAppId, refreshToken));
         String urlLocation = queryMenu.replace(params);
         String respString = HttpUtils.get(urlLocation);
         return JSON.parseObject(respString, QueryMenuResult.class);
@@ -110,7 +110,7 @@ public class MenuManager {
     public static BasicResult deleteMenu(String authAppId, String refreshToken) {
         
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("accessToken", PlatFormManager.getAuthAccessToken(authAppId, refreshToken));
+        params.put("accessToken", platFormManager.getAuthAccessToken(authAppId, refreshToken));
         String urlLocation = deleteMenu.replace(params);
         String respString = HttpUtils.get(urlLocation);
         return JSON.parseObject(respString, BasicResult.class);

@@ -32,7 +32,7 @@ public interface PlatFormManager {
      * （authorizer_refresh_token）获取新的令牌。
      * @param authAppId 授权方appid
      * @param refreshToken 授权方的刷新令牌，刷新令牌主要用于公众号第三方平台获取和刷新已
-     * 授权用户的access_token，只会在授权时刻提供，请妥善保存。 一旦丢失，只能让用户重新授
+     * 授权用户的refreshToken，只会在授权时刻提供，请妥善保存。 一旦丢失，只能让用户重新授
      * 权，才能再次拿到新的刷新令牌
      * @return
      */

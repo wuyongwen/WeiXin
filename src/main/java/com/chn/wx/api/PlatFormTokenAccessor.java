@@ -3,7 +3,7 @@ package com.chn.wx.api;
 import org.apache.log4j.Logger;
 
 import com.chn.common.Refresher;
-import com.chn.wx.api.exception.WxErrorException;
+import com.chn.wx.api.exception.WechatErrorException;
 
 /**
  * 公众号第三方公众平台的 AccessToken 管理器
@@ -16,40 +16,40 @@ import com.chn.wx.api.exception.WxErrorException;
 public class PlatFormTokenAccessor {
 
 	private static Logger log = Logger.getLogger(PlatFormTokenAccessor.class);
-	private static PlatFormTokenRefresher refresher;
-	private static Refresher<String> preAuthRefresher;
-	
-	public static PlatFormTokenRefresher getRefresher() {
-		if(refresher == null){
+	private PlatFormTokenRefresher refresher;
+	private Refresher<String> preAuthRefresher;
+
+	public PlatFormTokenRefresher getRefresher() {
+		if (refresher == null) {
 			refresher = new PlatFormTokenRefresher();
 		}
 		return refresher;
 	}
 
-	public static void setRefresher(PlatFormTokenRefresher refresher) {
-		PlatFormTokenAccessor.refresher = refresher;
+	public void setRefresher(PlatFormTokenRefresher refresher) {
+		this.refresher = refresher;
 	}
 
-	public static Refresher<String> getPreAuthRefresher() {
-		if(preAuthRefresher == null){
+	public  Refresher<String> getPreAuthRefresher() {
+		if (preAuthRefresher == null) {
 			preAuthRefresher = new PreAuthRefresher();
 		}
 		return preAuthRefresher;
 	}
 
-	public static void setPreAuthRefresher(Refresher<String> preAuthRefresher) {
-		PlatFormTokenAccessor.preAuthRefresher = preAuthRefresher;
+	public void setPreAuthRefresher(Refresher<String> preAuthRefresher) {
+		this.preAuthRefresher = preAuthRefresher;
 	}
 
-	public  synchronized String getPreAuthCode() {
+	public synchronized String getPreAuthCode() {
 		return getPreAuthRefresher().get();
 	}
 
-	public  synchronized String getAccessToken() throws WxErrorException {
+	public synchronized String getAccessToken() throws WechatErrorException {
 		return getRefresher().get();
 	}
 
-	public  void updatePlatFormVerifyTicket(String componentVerifyTicket, String createTime) {
-		getRefresher().setComponentVerifyTicket(componentVerifyTicket,createTime);
+	public void updatePlatFormVerifyTicket(String componentVerifyTicket, String createTime) {
+		getRefresher().setComponentVerifyTicket(componentVerifyTicket, createTime);
 	}
 }

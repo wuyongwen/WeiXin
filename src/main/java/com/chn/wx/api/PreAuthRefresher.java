@@ -21,8 +21,8 @@ public class PreAuthRefresher extends Refresher<String> {
 	private static Logger log = Logger.getLogger(PreAuthRefresher.class);
 	private StringTemplate getPreAuthCodeUrl = compile(WeiXinURL.PLATFORM_GET_PRE_AUTHCODE);
 
-	private PlatformConfigStorage configStorage;
-
+	protected PlatformConfigStorage configStorage;
+	protected PlatFormTokenAccessor platFormTokenAccessor;
 	public  PlatformConfigStorage getConfigStorage() {
 		if (configStorage == null)
 			configStorage = new PlatformConfigYamlStorage();
@@ -33,11 +33,21 @@ public class PreAuthRefresher extends Refresher<String> {
 		this.configStorage = configStorage;
 	}
 
+	public PlatFormTokenAccessor getPlatFormTokenAccessor() {
+		if(platFormTokenAccessor == null)
+			platFormTokenAccessor = new PlatFormTokenAccessor();
+		return platFormTokenAccessor;
+	}
+
+	public void setPlatFormTokenAccessor(PlatFormTokenAccessor platFormTokenAccessor) {
+		this.platFormTokenAccessor = platFormTokenAccessor;
+	}
+
 	@Override
 	public String refresh() {
 
 		Map<String, Object> params = new HashMap<>();
-		params.put("component_access_token", new PlatFormTokenAccessor().getAccessToken());
+		params.put("component_access_token", getPlatFormTokenAccessor().getAccessToken());
 		String urlLocation = getPreAuthCodeUrl.replace(params);
 
 		PlatFormGetPreAuthCodeResult result = null;

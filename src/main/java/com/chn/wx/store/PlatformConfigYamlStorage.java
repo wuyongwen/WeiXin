@@ -14,15 +14,8 @@ import com.chn.common.Lang;
 public class PlatformConfigYamlStorage implements PlatformConfigStorage {
 	public static Logger log = Logger
 			.getLogger(PlatformConfigYamlStorage.class);
-	static final String YML = "platformconf.yml";
-	static PlatformConfig config = PlatformConfigYamlStorage.load();
-
-	@Override
-	public void updateVerifyTicket(String verify_ticketb,String createTime) {
-		config.setVerifyTicket(verify_ticketb);
-		store();
-	}
-
+	private static final String YML = "platformconf.yml";
+	private static PlatformConfig config = PlatformConfigYamlStorage.load();
 	private void store() {
 		try {
 			Yaml.dump(config, Lang.saveClassPathFile(YML));
@@ -38,6 +31,12 @@ public class PlatformConfigYamlStorage implements PlatformConfigStorage {
 			return new PlatformConfig();
 		return (PlatformConfig) Yaml.load(new String(Lang
 				.loadFromClassPath("/"+YML)));
+	}
+	@Override
+	public void updateVerifyTicket(String verify_ticketb,String createTime) {
+		config.setVerifyTicket(verify_ticketb);
+		config.setCreateTime(Long.parseLong(createTime));
+		store();
 	}
 
 	@Override
@@ -58,7 +57,6 @@ public class PlatformConfigYamlStorage implements PlatformConfigStorage {
 		return config.getAccessToken();
 	}
 
-	
 	@Override
 	public boolean isAccessTokenExpired() {
 		return System.currentTimeMillis() > config.getExpiresIn();
@@ -66,20 +64,19 @@ public class PlatformConfigYamlStorage implements PlatformConfigStorage {
 
 	@Override
 	public void updatePreAuthCode(String preAuthCode, Integer expiresIn) {
-		// TODO Auto-generated method stub
-		
+		config.setPreAuthCode(preAuthCode);
+		config.setPreAuthCodeExpiresIn(System.currentTimeMillis() + (expiresIn - 120)* 1000l);
+		store();
 	}
 
 	@Override
 	public String getPreAuthCode() {
-		// TODO Auto-generated method stub
-		return null;
+		return config.getPreAuthCode();
 	}
 
 	@Override
 	public boolean isPreAuthCodeExpired() {
-		// TODO Auto-generated method stub
-		return false;
+		return System.currentTimeMillis() > config.getPreAuthCodeExpiresIn();
 	}
 	
 }

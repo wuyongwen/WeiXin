@@ -37,7 +37,7 @@ public class PlatFormTokenRefresher extends Refresher<String> {
 		PlatFormAccessTokenResult result = null;
 		if (!getConfigStorage().isAccessTokenExpired())
 			return getConfigStorage().getAccessToken();
-		String postJson = PlatFormMessage.wrapGetAccessToken(App.Info.id, App.Info.secret, configStorage.getTicket());
+		String postJson = PlatFormMessage.wrapGetAccessToken(App.Info.id, App.Info.secret, getConfigStorage().getTicket());
 		String respJson = HttpUtils.post(platformTokenUrl, postJson);
 		result = JSON.parseObject(respJson, PlatFormAccessTokenResult.class);
 

@@ -33,7 +33,6 @@ public class MessageHandler {
     }
 
     public String process(Context context) throws Exception {
-
         context.setAttribute("threadsMode", proxy);
         return proxy.process(context);
     }

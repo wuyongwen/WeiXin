@@ -8,14 +8,22 @@ public class PlatFormGetAuthorizerInfoResult extends BasicResult {
     
     @JSONField(name="authorizer_info") private AuthorizerInfo authorizerInfo;
     @JSONField(name="authorization_info") private AuthorizationInfo authorizationInfo;
-    
+    @JSONField(name="qrcode_url") private String qrcodeUrl;
     public AuthorizerInfo getAuthorizerInfo() {
         return authorizerInfo;
     }
     public void setAuthorizerInfo(AuthorizerInfo authorizerInfo) {
         this.authorizerInfo = authorizerInfo;
     }
-    
+    /**
+     * @return 二维码图片的URL，开发者最好自行也进行保存
+     */
+    public String getQrcodeUrl() {
+        return qrcodeUrl;
+    }
+    public void setQrcodeUrl(String qrcodeUrl) {
+        this.qrcodeUrl = qrcodeUrl;
+    }
     /**
      * @return 授权信息
      */
@@ -70,9 +78,15 @@ public class PlatFormGetAuthorizerInfoResult extends BasicResult {
         @JSONField(name="user_name") private String userName;
         @JSONField(name="business_info") private BusinessInfo businessInfo;
         @JSONField(name="alias") private String alias;
-        @JSONField(name="qrcode_url") private String qrcodeUrl;
+        @JSONField(name="open_shake") private String openShake;
         
-        /**
+        public String getOpenShake() {
+			return openShake;
+		}
+		public void setOpenShake(String openShake) {
+			this.openShake = openShake;
+		}
+		/**
          * @return 开通状况
          */
         public BusinessInfo getBusinessInfo() {
@@ -129,16 +143,6 @@ public class PlatFormGetAuthorizerInfoResult extends BasicResult {
         public void setAlias(String alias) {
             this.alias = alias;
         }
-        /**
-         * @return 二维码图片的URL，开发者最好自行也进行保存
-         */
-        public String getQrcodeUrl() {
-            return qrcodeUrl;
-        }
-        public void setQrcodeUrl(String qrcodeUrl) {
-            this.qrcodeUrl = qrcodeUrl;
-        }
-        
     }
     
     public static class FuncScopCategory {
@@ -158,7 +162,9 @@ public class PlatFormGetAuthorizerInfoResult extends BasicResult {
          * 10 微信连WIFI权限集<br>
          * 11 素材管理权限集<br>
          * 12 摇一摇周边权限集<br>
-         * 13 微信门店权限集
+         * 13 微信门店权限集<br>
+         * 14 微信支付权限<br>
+自	     * 15   定义菜单权限
          */
         public Integer getId() {
             return id;

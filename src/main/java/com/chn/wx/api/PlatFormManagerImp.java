@@ -40,13 +40,8 @@ public class PlatFormManagerImp implements PlatFormManager {
 	private PlatFormTokenAccessor platFormTokenAccessor;
 	
 	public PlatFormTokenAccessor getPlatFormTokenAccessor() {
-		if(platFormTokenAccessor==null){
-			synchronized (platFormTokenAccessor) {
-				if(platFormTokenAccessor==null){
-					platFormTokenAccessor = new PlatFormTokenAccessor();
-				}
-			}
-		}
+		if(platFormTokenAccessor==null)
+			platFormTokenAccessor = new PlatFormTokenAccessor();
 		return platFormTokenAccessor;
 	}
 
@@ -66,14 +61,14 @@ public class PlatFormManagerImp implements PlatFormManager {
 
 	@Override
 	public String getPreAuthCode() {
-		return platFormTokenAccessor.getPreAuthCode();
+		return getPlatFormTokenAccessor().getPreAuthCode();
 	}
 
 	@Override
 	public PlatFormGetAuthInfoResult getAuthInfo(String authCode) {
 
 		Map<String, Object> params = new HashMap<>();
-		params.put("component_access_token", platFormTokenAccessor.getAccessToken());
+		params.put("component_access_token", getPlatFormTokenAccessor().getAccessToken());
 		String urlLocation = getAuthInfoUrl.replace(params);
 		String postContent = PlatFormMessage.wrapGetAuthInfo(App.Info.id, authCode);
 		String respJson = HttpUtils.post(urlLocation, postContent);
@@ -83,7 +78,7 @@ public class PlatFormManagerImp implements PlatFormManager {
 	@Override
 	public PlatFormGetAuthAccessResult getAuthAccessToken(String authAppId, String refreshToken) {
 		Map<String, Object> params = new HashMap<>();
-		params.put("component_access_token", platFormTokenAccessor.getAccessToken());
+		params.put("component_access_token", getPlatFormTokenAccessor().getAccessToken());
 		String urlLocation = getAuthAccessTokenUrl.replace(params);
 		String postContent = PlatFormMessage.wrapGetAuthAccessToken(App.Info.id, authAppId, refreshToken);
 		String respJson = HttpUtils.post(urlLocation, postContent);
@@ -94,7 +89,7 @@ public class PlatFormManagerImp implements PlatFormManager {
 	public PlatFormGetAuthorizerInfoResult getAuthorizerInfo(String authAppId) {
 
 		Map<String, Object> params = new HashMap<>();
-		params.put("component_access_token", platFormTokenAccessor.getAccessToken());
+		params.put("component_access_token", getPlatFormTokenAccessor().getAccessToken());
 		String urlLocation = getAuthorizerInfoUrl.replace(params);
 		String postContent = PlatFormMessage.wrapGetAuthorizerInfo(App.Info.id, authAppId);
 		String respJson = HttpUtils.post(urlLocation, postContent);
@@ -105,7 +100,7 @@ public class PlatFormManagerImp implements PlatFormManager {
 	public PlatFormGetAuthorizerOptionResult getAuthorizerOption(String authAppId, String optionName) {
 
 		Map<String, Object> params = new HashMap<>();
-		params.put("component_access_token", platFormTokenAccessor.getAccessToken());
+		params.put("component_access_token", getPlatFormTokenAccessor().getAccessToken());
 		String urlLocation = getAuthorizerOptionUrl.replace(params);
 		String postContent = PlatFormMessage.wrapGetAuthorizerOption(App.Info.id, authAppId, optionName);
 		String respJson = HttpUtils.post(urlLocation, postContent);
@@ -117,7 +112,7 @@ public class PlatFormManagerImp implements PlatFormManager {
 			String optionValue) {
 
 		Map<String, Object> params = new HashMap<>();
-		params.put("component_access_token", platFormTokenAccessor.getAccessToken());
+		params.put("component_access_token", getPlatFormTokenAccessor().getAccessToken());
 		String urlLocation = setAuthorizerOptionUrl.replace(params);
 		String postContent = PlatFormMessage.wrapSetAuthorizerOption(App.Info.id, authAppId, optionName, optionValue);
 		String respJson = HttpUtils.post(urlLocation, postContent);

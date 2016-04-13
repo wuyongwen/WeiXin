@@ -11,7 +11,7 @@ import com.chn.common.HttpUtils;
 import com.chn.common.Refresher;
 import com.chn.common.StringTemplate;
 import com.chn.wx.api.exception.ErrorUtils;
-import com.chn.wx.api.exception.WxErrorException;
+import com.chn.wx.api.exception.WechatErrorException;
 import com.chn.wx.dto.App;
 import com.chn.wx.vo.result.AccessTokenResult;
 
@@ -30,7 +30,7 @@ public class TokenAccessor {
 	private static StringTemplate accessTokenUrl = StringTemplate.compile(WeiXinURL.GET_TOKEN);
 	private static TokenAccessorRefresher refresher = new TokenAccessorRefresher();
 
-	public static synchronized String getAccessToken() throws WxErrorException {
+	public static synchronized String getAccessToken() throws WechatErrorException {
 
 		return refresher.get();
 	}
@@ -40,7 +40,7 @@ public class TokenAccessor {
 		private long expireTime;
 
 		@Override
-		public String refresh() throws WxErrorException {
+		public String refresh() throws WechatErrorException {
 
 			Map<String, Object> params = new HashMap<>();
 			params.put("appId", App.Info.id);

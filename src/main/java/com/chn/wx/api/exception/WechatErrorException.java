@@ -6,7 +6,7 @@ package com.chn.wx.api.exception;
  * @author wuyongwen
  * @Date 2016年3月3日下午3:24:58
  */
-public class WxErrorException extends RuntimeException {
+public class WechatErrorException extends RuntimeException {
 
 	/**
 	 * 	
@@ -14,7 +14,7 @@ public class WxErrorException extends RuntimeException {
 	private static final long serialVersionUID = 5738954907239458916L;
 	private ErrorMsg error;
 
-	public WxErrorException(ErrorMsg error) {
+	public WechatErrorException(ErrorMsg error) {
 		super(error.toString());
 		this.error = error;
 	}

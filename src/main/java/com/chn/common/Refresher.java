@@ -15,7 +15,7 @@ public abstract class Refresher<T> {
     
     public T get() {
         
-        if(isExpired()) 
+        if(isExpired()||current==null) 
             current = refresh();
         return current;
     }

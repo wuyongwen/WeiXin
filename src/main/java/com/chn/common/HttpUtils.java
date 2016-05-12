@@ -30,6 +30,10 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.log4j.Logger;
+import org.apache.log4j.spi.LoggerFactory;
+
+import com.chn.wx.WeiXinServlet;
 
 
 /**
@@ -39,9 +43,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
  * @version v1.0
  */
 public class HttpUtils {
-
+	private static final Logger log = Logger.getLogger(HttpUtils.class);
     private static final int TIME_OUT = 3000;
-    
     public static String read(HttpServletRequest req) throws IOException {
         
         InputStream is = req.getInputStream();
@@ -112,7 +115,8 @@ public class HttpUtils {
             File tempFile = FileUtils.createTmpFile(is, UUID.randomUUID().toString(), fileType);
             return tempFile;
         } catch (Exception e) {
-            throw new RuntimeException("请求错误！", e);
+        	log.error("获取文件错误!",e);
+            return null;
         } finally {
             IOUtils.closeQuietly(is);
         }

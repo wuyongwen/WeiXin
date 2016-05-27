@@ -48,7 +48,14 @@ public class PlatFormManagerImp implements PlatFormManager {
 	public void setPlatFormTokenAccessor(PlatFormTokenAccessor platFormTokenAccessor) {
 		this.platFormTokenAccessor = platFormTokenAccessor;
 	}
-
+	@Override
+	public String getLoginUrl(String url) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("component_appid", App.Info.id);
+		params.put("pre_auth_code", this.getPreAuthCode());
+		params.put("loogined_redirect_url", url);
+		return getLoginUrl.replace(params);
+	}
 	@Override
 	public String getLoginUrl() {
 
@@ -58,7 +65,7 @@ public class PlatFormManagerImp implements PlatFormManager {
 		params.put("loogined_redirect_url", App.Info.loginedUrl);
 		return getLoginUrl.replace(params);
 	}
-
+	
 	@Override
 	public String getPreAuthCode() {
 		return getPlatFormTokenAccessor().getPreAuthCode();

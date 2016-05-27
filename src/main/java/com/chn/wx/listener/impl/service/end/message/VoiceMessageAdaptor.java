@@ -41,8 +41,9 @@ public class VoiceMessageAdaptor implements Service {
     public String doService(Context context) throws Exception {
 
         log.debug(String.format("收到来自 %s 的音频信息 %s", FromUserName, MediaId));
-        String content = TuringRobotApi.talking(Recognition, FromUserName).getTextInfo();
-        return PassiveMessage.wrapText(FromUserName,ToUserName, content);
+        /*String content = TuringRobotApi.talking(Recognition, FromUserName).getTextInfo();
+        return PassiveMessage.wrapText(FromUserName,ToUserName, content);*/
+        return DEFAULT_RETURN;
     }
 
 }

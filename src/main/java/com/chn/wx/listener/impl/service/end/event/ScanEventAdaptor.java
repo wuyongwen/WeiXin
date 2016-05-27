@@ -9,6 +9,7 @@ import com.chn.wx.listener.Service;
 import com.chn.wx.listener.impl.service.route.EventRouter;
 
 /**
+ * 二维码扫描事件
  * @class ScanEventAdaptor
  * @author lzxz1234
  * @description 

@@ -36,7 +36,9 @@ public final class RawMessageRouter implements Service {
             Element ele = (Element)it.next();
             context.addAttribute(ele.getName(), ele.getText());
         }
-        
+        log.info("=============消息解密完成=============");
+        log.info(context.toString());
+        log.info("==================================");
         String appId = context.getAttribute(String.class, "AppId");
         if(appId != null) { //此时为第三方服务平台服务自身的消息
             log.debug("路由到第三方平台服务自身");

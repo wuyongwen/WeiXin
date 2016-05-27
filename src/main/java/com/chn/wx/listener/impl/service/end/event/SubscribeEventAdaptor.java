@@ -9,6 +9,7 @@ import com.chn.wx.listener.Service;
 import com.chn.wx.listener.impl.service.route.EventRouter;
 
 /**
+ * 公众号关注事件
  * @class SubscribeEventAdaptor
  * @author lzxz1234
  * @description 订阅事件可能有多个来源，非扫描二维码来的订阅时相关字段不可用

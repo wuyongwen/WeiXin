@@ -9,7 +9,11 @@ import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
 import com.chn.wx.listener.impl.service.route.EventRouter;
 import com.chn.wx.listener.impl.service.route.PlatFormEventRouter;
-
+/**
+ * 授权ticket更新
+ * @author wuyongwen
+ * @Date 2016年5月26日下午2:44:50
+ */
 @Node(parents={PlatFormEventRouter.class, EventRouter.class}, value="component_verify_ticket")
 public class ComponentVerifyTicketAdaptor implements Service {
 

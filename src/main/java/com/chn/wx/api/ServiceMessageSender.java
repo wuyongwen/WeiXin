@@ -107,5 +107,21 @@ public class ServiceMessageSender {
         String urlLocation = sendServiceUrl.replace(params);
         return  HttpUtils.post(urlLocation, xml);
     }
-    
+    private static String send(String xml,String token) {
+        
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("accessToken", token);
+        String urlLocation = sendServiceUrl.replace(params);
+        return  HttpUtils.post(urlLocation, xml);
+    }
+    /**
+     * @param touser 普通用户openid
+     * @param content 文本消息内容
+     * @param tocken 
+    */
+    public static void sendTestText(String touser, String content,String accessToken) {
+        
+        send(ServiceMessage.wrapText(touser, content),accessToken);
+        log.info(String.format("向用户[%s]发送信息[%s]", touser, content));
+    }
 }

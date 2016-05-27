@@ -9,10 +9,7 @@ import com.chn.wx.listener.Service;
 import com.chn.wx.listener.impl.service.route.EventRouter;
 
 /**
- * @class UnSubscribeEventAdaptor
- * @author lzxz1234
- * @description 
- * @version v1.0
+ * 取消关注公众号
  */
 @Node(parents=EventRouter.class, value="unsubscribe")
 public class UnSubscribeEventAdaptor implements Service {

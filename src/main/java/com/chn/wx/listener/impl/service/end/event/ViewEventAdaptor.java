@@ -9,10 +9,7 @@ import com.chn.wx.listener.Service;
 import com.chn.wx.listener.impl.service.route.EventRouter;
 
 /**
- * @class ViewEventAdaptor
- * @author lzxz1234
- * @description 
- * @version v1.0
+ * 点击链接菜单
  */
 @Node(parents=EventRouter.class, value="VIEW")
 public class ViewEventAdaptor implements Service {

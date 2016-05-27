@@ -8,7 +8,9 @@ import com.chn.wx.dto.Context;
 import com.chn.wx.listener.Service;
 import com.chn.wx.listener.impl.service.route.EventRouter;
 import com.chn.wx.listener.impl.service.route.PlatFormEventRouter;
-
+/**
+ * 取消授权公众号
+ */
 @Node(parents={PlatFormEventRouter.class, EventRouter.class}, value="unauthorized")
 public class UnAuthorizedAdaptor implements Service {
 

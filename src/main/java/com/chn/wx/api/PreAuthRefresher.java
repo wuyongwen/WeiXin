@@ -45,7 +45,7 @@ public class PreAuthRefresher extends Refresher<String> {
 
 	@Override
 	public String refresh() {
-
+		log.info("更新 PreAuthCode");
 		Map<String, Object> params = new HashMap<>();
 		params.put("component_access_token", getPlatFormTokenAccessor().getAccessToken());
 		String urlLocation = getPreAuthCodeUrl.replace(params);

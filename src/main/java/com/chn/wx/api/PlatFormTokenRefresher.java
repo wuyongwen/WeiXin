@@ -34,6 +34,7 @@ public class PlatFormTokenRefresher extends Refresher<String> {
 
 	@Override
 	public String refresh() {
+		log.info("更新平台component_access_token");
 		PlatFormAccessTokenResult result = null;
 		if (!getConfigStorage().isAccessTokenExpired())
 			return getConfigStorage().getAccessToken();

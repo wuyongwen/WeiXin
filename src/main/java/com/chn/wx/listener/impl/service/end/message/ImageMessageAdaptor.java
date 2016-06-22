@@ -41,7 +41,8 @@ public class ImageMessageAdaptor implements Service {
 
         log.debug(String.format("收到来自 %s 的图片信息 %s", FromUserName, MediaId));
        
-        return  PassiveMessage.wrapImage(FromUserName,ToUserName,MediaId);
+       // return  PassiveMessage.wrapImage(FromUserName,ToUserName,MediaId);
+        return DEFAULT_RETURN;
     }
 
 }

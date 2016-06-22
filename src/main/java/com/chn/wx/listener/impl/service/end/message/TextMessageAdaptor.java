@@ -40,7 +40,8 @@ public class TextMessageAdaptor implements Service {
     @Override
     public String doService(Context context) throws Exception {
         log.debug(String.format("收到来自 %s 的文本信息 %s", FromUserName, Content));
-        String content = PassiveMessage.wrapText(FromUserName, ToUserName, TuringRobotApi.talking(Content, FromUserName).getTextInfo());
-        return content;
+       // String content = PassiveMessage.wrapText(FromUserName, ToUserName, TuringRobotApi.talking(Content, FromUserName).getTextInfo());
+       // return content;
+        return DEFAULT_RETURN;
     }
 }

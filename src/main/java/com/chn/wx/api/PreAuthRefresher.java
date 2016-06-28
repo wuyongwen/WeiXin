@@ -58,7 +58,7 @@ public class PreAuthRefresher extends Refresher<String> {
 			log.error("请求 PreAuthCode 失败，继续采用之前 AuthCode！", e);
 			return current;
 		}
-		log.info("更新 PreAuthCode：" + result.getPreAuthCode());
+		log.info("更新 PreAuthCode：" + result.toJsonString());
 		getConfigStorage().updatePreAuthCode(result.getPreAuthCode(), result.getExpiresIn());
 		return result.getPreAuthCode();
 	}

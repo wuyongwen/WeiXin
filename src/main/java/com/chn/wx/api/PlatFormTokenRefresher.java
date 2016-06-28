@@ -53,4 +53,10 @@ public class PlatFormTokenRefresher extends Refresher<String> {
 	public boolean isExpired() {
 		return getConfigStorage().isAccessTokenExpired();
 	}
+
+	@Override
+	public String get() {
+		current = getConfigStorage().getAccessToken();
+		return super.get();
+	}
 }

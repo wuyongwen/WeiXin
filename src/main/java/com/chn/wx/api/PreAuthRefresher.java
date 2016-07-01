@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSON;
 import com.chn.common.HttpUtils;
 import com.chn.common.Refresher;
 import com.chn.common.StringTemplate;
+import com.chn.wx.api.exception.ErrorUtils;
 import com.chn.wx.dto.App;
 import com.chn.wx.store.PlatformConfigStorage;
 import com.chn.wx.store.PlatformConfigYamlStorage;
@@ -54,6 +55,7 @@ public class PreAuthRefresher extends Refresher<String> {
 		try {
 			String respJson = HttpUtils.post(urlLocation, PlatFormMessage.wrapGetPreAuthCode(App.Info.id));
 			result = JSON.parseObject(respJson, PlatFormGetPreAuthCodeResult.class);
+			ErrorUtils.checkWXError(result);
 		} catch (Exception e) {
 			log.error("请求 PreAuthCode 失败，继续采用之前 AuthCode！", e);
 			return current;
